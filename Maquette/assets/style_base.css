@@ -1,0 +1,484 @@
+/* ---------------- Fonts ---------------- */
+@font-face {
+    font-family: 'Raleway';
+    src: url('raleway/Raleway-ExtraBold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('raleway/Raleway-SemiBold.ttf') format('truetype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Raleway-Light';
+    src: url('raleway/Raleway-Light.ttf') format('truetype');
+    font-weight: normal;
+}
+
+/* ---------------- Global Styles ---------------- */
+html {
+    scroll-behavior: smooth;    
+}
+
+body {
+    background-color: #f3f3f3;
+    font-family: Raleway, sans-serif;
+    font-weight: lighter;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    margin-left: 30px;
+}
+
+.center {
+    text-align: center;
+}
+
+@media screen and (min-width: 701px) {
+    h1 {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    h2 {
+        font-size: 18px;
+        font-weight: normal;
+    }
+
+    h3 {
+        font-size: 16px;
+        font-weight: bold;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    h1 {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    h2 {
+        font-size: 12px;
+        font-weight: normal;
+    }
+
+    h3 {
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .infos .list span {
+        font-size: 10px;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/* ---------------- Navigation Bar ---------------- */
+@media screen and (min-width: 701px) {
+    .burger {
+        display: none;
+    }
+
+    .navbar {
+        display: flex;
+        font-size: 20px;
+        justify-content: space-between;
+        padding: 13px 15px;
+        background-color: black;
+        color: white;
+    }
+
+    .navbar .bar,
+    .navbar .account {
+        display: flex;
+        gap: 5px;
+    }
+
+    .navbar .bar a,
+    .navbar .account a {
+        color: white;
+        transition: all 0.1s linear;
+    }
+
+    .navbar .bar a:hover,
+    .navbar .account div:hover {
+        color: orangered;
+    }
+
+    .navbar .bar div,
+    .navbar .account div {
+        display: fixed;
+        transition: all 0.2s ease-out;
+    }
+
+    .navbar .bar div:hover,
+    .navbar .account div:hover {
+        text-decoration: underline;
+        color: orangered;
+        transform: scale(1.05);
+    }
+
+    .navbar .account .inscription {
+        background-color: white;
+        border-radius: 5px;
+        color: black;
+        padding: 3px 5px;
+        font-family: 'Raleway';
+    }
+
+    .navbar .bar div .selected {
+        color: orangered;
+        font-family: 'Raleway';
+    }
+}
+
+@media screen and (max-width: 701px) {
+    .navbar {
+        display: none;
+    }
+
+    .burger {
+        width: 20%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        font-size: 3.5vw;
+        transition: all 0.5s ease-out;
+        color: white;
+    }
+
+    .burger .burger-icon {
+        background-color: rgba(0, 0, 0, 0.65);
+        width: 100%;
+        height: 50px;
+        transition: all 0.3s ease-out;
+        text-align: center;
+    }
+
+    .burger .burger-icon img:hover {
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+
+    .burger .burger-icon img {
+        max-height: 50px;
+        transition: all 0.3s ease-out;
+    }
+
+    .burger .bar {
+        width: 100%;
+        padding-bottom: 5px;
+        background-color: rgba(0, 0, 0, 0.65);
+        text-align: center;
+        opacity: 0;
+        transform: translateX(-200%);
+        transition: all 0.5s ease-out;
+    }
+
+    .burger.expanded .bar {
+        opacity: 1;
+        display: block;
+        transform: translateX(0);
+        gap: 5px;
+    }
+
+    .burger .bar a {
+        color: white;
+        transition: all 0.1s linear;
+    }
+
+    .burger .bar a:hover {
+        color: orangered;
+    }
+
+    .burger .bar div {
+        display: fixed;
+        transition: all 0.2s ease-out;
+    }
+
+    .burger .bar div:hover {
+        text-decoration: underline;
+        color: orangered;
+    }
+
+    .burger .bar div .selected {
+        color: orangered;
+        font-family: 'Raleway';
+    }
+}
+
+
+/* ---------------- Tree Structure ---------------- */
+.tree {
+    font-size: 17px;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px 15px;
+    background-color: #E8ECEF;
+}
+
+.tree .selected {
+    color: black;
+}
+
+.tree a {
+    color: lightskyblue;
+}
+
+.tree a:hover {
+    text-decoration: underline;
+}
+
+/* ---------------- Footer ---------------- */
+.footer {
+    background-color: black;
+    font-style: italic;
+    color: white;
+    margin-top: 50px;
+    font-size: 0.8em;
+    padding: 30px 10px;
+}
+
+/* ---------------- Categories ---------------- */
+.category ul {
+    list-style: none;
+    display: flex;
+    gap: 5px;
+}
+
+.category li a {
+    color: black;
+}
+
+.category li:not(:last-child)::after {
+    content: " -";
+}
+
+/* ---------------- Articles Table ---------------- */
+.articles thead {
+    background-color: black;
+    color: white;
+}
+
+.articles th,
+.articles td {
+    padding: 10px;
+    text-align: left;
+}
+
+.articles tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.articles tbody tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+/* ---------------- Containers ---------------- */
+.container {
+    display: flex;
+}
+
+.bloc1, .bloc2 {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: solid black 2px;
+    margin: 10px;
+    font-size: 1em;
+}
+
+.bloc1 {
+    width: 50%;
+}
+
+/* ---------------- Text Styles ---------------- */
+.small,
+.smaller,
+.specifications {
+    font-family: 'Raleway-Light';
+    color: gray;
+}
+
+.small {
+    font-size: 15px;
+}
+
+.smaller {
+    font-size: 12px;
+    font-style: italic;
+}
+
+.title {
+    font-size: 20px;
+}
+
+.specifications {
+    margin: 0px;
+    margin-top: 3px;
+    font-size: 12px;
+    color: black;
+}
+
+.clickable {
+    margin-top: 20px;
+    padding: 5px;
+    width: 300px;
+    border: solid 1px black;
+    border-radius: 10px;
+    transition: all 0.3s ease-out;
+}
+
+.clickable:hover {
+    transform: scale(1.04);
+    cursor: pointer;
+}
+
+.hoverable {
+    margin-top: 20px;
+    padding: 5px;
+    width: 300px;
+    border: solid 2px black;
+    border-radius: 10px;
+    transition: all 0.3s ease-out;
+}
+
+.hoverable:hover {
+    transform: scale(1.04);
+}
+
+
+/* ---------------- Information Section ---------------- */
+.infos .list {
+    display: flex;
+    gap: 10px;
+}
+
+.infos .list span {
+    padding: 5px;
+    background-color: white;
+    border: solid black 1px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgb(173, 173, 173);
+}
+
+/* ---------------- Offers ---------------- */
+.offers {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.offer {
+    width: 500px;
+    box-shadow: 2px 2px 4px rgb(173, 173, 173);
+}
+
+.postuler {
+    background-color: orangered;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 2px 2px 4px rgb(173, 173, 173);
+}
+
+.file-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ---------------- Error and Success Messages ---------------- */
+.error,
+.mail-error,
+.file-error,
+.success {
+    padding: 5px;
+    border-radius: 5px;
+    margin: 0;
+    justify-content: center;
+}
+
+.error,
+.mail-error,
+.file-error {
+    color: red;
+    background-color: #ffebeb;
+    border: 1px solid red;
+}
+
+.file-success {
+    margin: 0px;
+    margin-top: 2px;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: normal;
+    color: rgb(80, 80, 80);
+}
+
+.success {
+    color: green;
+    background-color: #f6ffeb;
+    border: 1px solid green;
+    font-weight: bold;
+    padding: 20px;
+}
+
+.error {
+    padding: 20px;
+}
+
+.mail-error,
+.file-error {
+    margin-top: 10px;
+}
+
+/* ---------------- Back to Top Button ---------------- */
+
+.top-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.top-button {
+    display: none;
+    position: fixed;
+    top: 1%;
+    background-color: #EA712E;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+
+.top-button:hover {
+    transform: scale(1.05);
+    background-color: #ff8442;
+}
+
+/* ---------------- Hidden Messages ---------------- */
+.mail-messages .file-messages {
+    display: none;
+}
+
+.alert-message{
+    display: none;
+}
