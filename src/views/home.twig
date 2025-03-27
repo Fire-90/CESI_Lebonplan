@@ -1,0 +1,52 @@
+{% extends "base.twig" %}
+
+{% block title %}Accueil - Lebonplan{% endblock %}
+
+{% block content %}
+    <h1 class="title">Le meilleur endroit pour trouver ou déposer votre annonce</h1>
+    
+    <article>
+        <h2>Catégories</h2>
+        <ul class="categorie">
+            <li>Immobilier</li>
+            <li>Véhicule</li>
+            <li>Vêtements</li>
+            <li>Multimédia</li>
+            <li>Maison</li>
+            <li>Loisir</li>
+            <li>Service</li>
+        </ul>
+
+        <h2>Derniers articles ajoutés</h2>
+        <table cellspacing="0" cellpadding="15" class="articles">
+            <thead>
+                <tr class="entete">
+                    <th>Intitulé</th>
+                    <th>Localisation</th>
+                    <th>Vendeur</th>
+                    <th>Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Maison 5 pièces 120m²</td>
+                    <td>Saint-Nazaire</td>
+                    <td>Jean Dupont</td>
+                    <td>305 000€</td>
+                </tr>
+                <tr>
+                    <td>Volkswagen Polo 1.0 TSI 95ch</td>
+                    <td>Nanterre</td>
+                    <td>Michael Schumacher</td>
+                    <td>16 990€</td>
+                </tr>
+                <tr>
+                    <td>Canapé 3 places IKEA</td>
+                    <td>Bordeaux</td>
+                    <td>Ingvar Kamprad</td>
+                    <td>149€</td>
+                </tr>
+            </tbody>
+        </table>
+    </article>
+{% endblock %}

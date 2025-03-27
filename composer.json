@@ -8,8 +8,9 @@
         "phpunit/phpunit": "^11.4"
     },
     "autoload": {
-        "psr-4": {
-            "App\\": "src/"
+    "psr-4": {
+        "Controllers\\": "src/controllers/",
+        "Core\\": "src/core/"
         }
     },
     "authors": [

@@ -1,9 +1,12 @@
 <?php
 
 require_once 'src/controllers/HomeController.php';
+use Controllers\HomeController;
+use Controllers\EntrepriseController;
 
 $controller = new HomeController();
 
+// Récupérer la page demandée dans l'URL
 $page = $_GET['page'] ?? 'home';
 
 switch ($page) {

@@ -13,9 +13,9 @@
     <nav class="navbar">
         <hr>
         <div class="menu">
-            <a href="{{ path('home') }}" class="{% if current_page == 'home' %}actif{% endif %}">Accueil</a>
+            <a href="/index.php?page=home">Accueil</a>
             &nbsp;|&nbsp;
-            <a href="{{ path('entreprises') }}" class="{% if current_page == 'entreprises' %}actif{% endif %}">Entreprises</a>
+            <a href="/index.php?page=entreprises">Entreprises</a>
             &nbsp;|&nbsp;
             <a href="{{ path('offres') }}" class="{% if current_page == 'offres' %}actif{% endif %}">Offres</a>
             &nbsp;|&nbsp;
