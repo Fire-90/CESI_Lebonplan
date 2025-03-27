@@ -7,31 +7,50 @@
     <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-    <div class="title">
+
+    <!-- Logo et titre -->
+    <div class="title center">
         <img src="/assets/logo-lbp-header.png" alt="Lebonplan - Le meilleur site d'annonces en ligne">
     </div>
+
+    <!-- Navigation pour écrans larges -->
     <nav class="navbar">
-        <hr>
-        <div class="menu">
-            <a href="{{ path('home') }}" class="{% if current_page == 'home' %}actif{% endif %}">Accueil</a>
-            &nbsp;|&nbsp;
-            <a href="{{ path('entreprises') }}" class="{% if current_page == 'entreprises' %}actif{% endif %}">Entreprises</a>
-            &nbsp;|&nbsp;
-            <a href="{{ path('offres') }}" class="{% if current_page == 'offres' %}actif{% endif %}">Offres</a>
-            &nbsp;|&nbsp;
-            <a href="{{ path('whishlist') }}" class="{% if current_page == 'whishlist' %}actif{% endif %}">Whishlist</a>
-            &nbsp;|&nbsp;
-            <a href="{{ path('contact') }}" class="{% if current_page == 'contact' %}actif{% endif %}">Contact</a>
+        <div class="bar">
+            <a href="{{ path('home') }}" class="{% if current_page == 'home' %}selected{% endif %}">Accueil</a>
+            <a href="{{ path('entreprises') }}" class="{% if current_page == 'entreprises' %}selected{% endif %}">Entreprises</a>
+            <a href="{{ path('offres') }}" class="{% if current_page == 'offres' %}selected{% endif %}">Offres</a>
+            <a href="{{ path('whishlist') }}" class="{% if current_page == 'whishlist' %}selected{% endif %}">Whishlist</a>
+            <a href="{{ path('contact') }}" class="{% if current_page == 'contact' %}selected{% endif %}">Contact</a>
         </div>
-        <div class="user-actions">
+        <div class="account">
             <a href="{{ path('connexion') }}">Connexion</a>
-            <button class="signup">S'inscrire</button>
+            <a href="{{ path('inscription') }}" class="inscription">S'inscrire</a>
         </div>
-        <hr>
     </nav>
 
+    <!-- Menu burger pour mobile -->
+    <div class="burger">
+        <div class="burger-icon">
+            <img src="/assets/burger-icon.png" alt="Menu">
+        </div>
+        <div class="bar">
+            <a href="{{ path('home') }}">Accueil</a>
+            <a href="{{ path('entreprises') }}">Entreprises</a>
+            <a href="{{ path('offres') }}">Offres</a>
+            <a href="{{ path('whishlist') }}">Whishlist</a>
+            <a href="{{ path('contact') }}">Contact</a>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
     <main>
         {% block content %}{% endblock %}
     </main>
+
+    <!-- Pied de page -->
+    <footer class="footer center">
+        &copy; {{ "now"|date("Y") }} Lebonplan - Tous droits réservés
+    </footer>
+
 </body>
 </html>
