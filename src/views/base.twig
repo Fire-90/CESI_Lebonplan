@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Lebonplan{% endblock %}</title>
+    <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+    <div class="title">
+        <img src="/assets/logo-lbp-header.png" alt="Lebonplan - Le meilleur site d'annonces en ligne">
+    </div>
+    <nav class="navbar">
+        <hr>
+        <div class="menu">
+            <a href="{{ path('home') }}" class="{% if current_page == 'home' %}actif{% endif %}">Accueil</a>
+            &nbsp;|&nbsp;
+            <a href="{{ path('entreprises') }}" class="{% if current_page == 'entreprises' %}actif{% endif %}">Entreprises</a>
+            &nbsp;|&nbsp;
+            <a href="{{ path('offres') }}" class="{% if current_page == 'offres' %}actif{% endif %}">Offres</a>
+            &nbsp;|&nbsp;
+            <a href="{{ path('whishlist') }}" class="{% if current_page == 'whishlist' %}actif{% endif %}">Whishlist</a>
+            &nbsp;|&nbsp;
+            <a href="{{ path('contact') }}" class="{% if current_page == 'contact' %}actif{% endif %}">Contact</a>
+        </div>
+        <div class="user-actions">
+            <a href="{{ path('connexion') }}">Connexion</a>
+            <button class="signup">S'inscrire</button>
+        </div>
+        <hr>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
