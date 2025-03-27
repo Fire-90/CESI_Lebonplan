@@ -16,7 +16,7 @@ class HomeController {
     }
 
     public function whishlist() {
-        echo TemplateEngine::render('whishlist.tiwg', ['current_page' => 'whishlist']);
+        echo TemplateEngine::render('whishlist.twig', ['current_page' => 'whishlist']);
     }
 
     public function contact() {
