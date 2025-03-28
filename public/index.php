@@ -9,10 +9,10 @@ use Controllers\EntrepriseController;
 $page = $_GET['page'] ?? 'home';
 
 switch ($page) {
-    // case 'entreprises':
-        // $controller = new EntrepriseController();
-        // $controller->index(); // Assurez-vous que la méthode index() existe dans EntrepriseController
-        // break;
+    case 'entreprises':
+        $controller = new HomeController();
+        $controller->entreprises();
+        break;
     case 'offres':
         $controller = new HomeController();
         $controller->offres();

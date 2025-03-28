@@ -26,6 +26,11 @@ class HomeController {
         ]);
     }
 
+    public function entreprises() {
+        // Logique pour afficher les entreprises
+        echo $this->twig->render('entreprise.twig');
+    }
+
     public function offres() {
         // Logique pour afficher les offres
         echo $this->twig->render('offres.twig');

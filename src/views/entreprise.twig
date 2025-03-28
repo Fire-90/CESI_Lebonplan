@@ -1,38 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entreprises - Lebonplan</title>
-    <link rel="stylesheet" href="assets/style.css">
-</head>
-<body>
+{% extends "base.twig" %}
 
-<header>
-    <div class="center">
-        <img src="./images/logo-lbp-header.png" alt="Lebonplan - Le meilleur site d'annonces en ligne">
-    </div>
-    <nav class="navbar">
-        <div class="bar">
-            <div><a href="index.twig">Accueil</a></div>
-            <span>|</span>
-            <div><a class="selected" href="entreprise.twig">Entreprise</a></div>
-            <span>|</span>
-            <div><a href="offres.html">Offres</a></div>
-            <span>|</span>
-            <div><a href="wishlist.html">Wishlist</a></div>
-            <span>|</span>
-            <div><a href="contact.html">Contact</a></div>
-        </div>
-        <div class="account">
-            <div><a href="connexion.html">Connexion</a></div>
-            <span>|</span>
-            <div><a href="inscription.html" class="inscription">S'inscrire</a></div>
-        </div>
-    </nav>
-</header>
+{% block title %}Accueil - Lebonplan{% endblock %}
 
-<main>
+{% block content %}
     <section>
         <h1 class="center">Liste des Entreprises</h1>
 
@@ -56,11 +26,4 @@
             {% endfor %}
         </div>
     </section>
-</main>
-
-<footer class="footer">
-    <em>2024 - Tous droits réservés</em>
-</footer>
-
-</body>
-</html>
+{% endblock %}
