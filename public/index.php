@@ -13,6 +13,10 @@ switch ($page) {
         $controller = new HomeController();
         $controller->entreprises();
         break;
+    case 'ajout-entreprise':  // Ajout du cas pour la page d'ajout d'entreprise
+        $controller = new EntrepriseController();
+        $controller->add();  // Appel à la méthode add() du EntrepriseController
+        break;
     case 'offres':
         $controller = new HomeController();
         $controller->offres();
