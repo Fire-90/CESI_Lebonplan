@@ -1,40 +1,9 @@
-<!doctype html> 
-<html lang="fr"> 
-	<head> 
-		<meta charset="utf-8">
-		<meta name="description" content="Inscrivez-vous pour obtenir une meilleure expérience utilisateur.">
-		<link rel="shortcut icon" href="images/logo.png" />
-		<link rel="stylesheet" href="assets/style_base.css">
-		<link rel="stylesheet" href="assets/style_formulaire.css">
-		<title>Inscription - Lebonplan</title> 
-	</head> 
-	<body>
-		<header>
-			<div class="center"><img src="./images/logo-lbp-header.png" alt="Lebonplan - Le meilleur site d'annonces en ligne"></div>
-			<nav class="navbar">
-				<div class="bar">
-					<div><a href="index.html">Accueil</a></div>
-					<span>|</span>
-					<div><a href="entreprise.html">Entreprise</a></div>
-					<span>|</span>
-					<div><a href="offres.html">Offres</a></div>
-					<span>|</span>
-					<div><a href="wishlist.html">Wishlist</a></div>
-					<span>|</span>
-					<div><a href="contact.html">Contact</a></div>
-				</div>
-				<div class="account">
-					<div><a href="connexion.html">Connexion</a></div>
-					<span>|</span>
-					<div><a class="selected" href="inscription.html" class="inscription">S'inscrire</a></div>
-				</div>
-			</nav>
-		
-		</header>
- 
-		<main>
- 
-			<section>
+{% extends "base.twig" %}
+
+{% block title %}Accueil - Lebonplan{% endblock %}
+
+{% block content %}
+    <section>
 	   
 				<h1 class="center">Créez un compte</h1>
 				
@@ -67,12 +36,4 @@
 			
 				</article>
 			</section>
-	   
-		</main>
-	 
-		<footer class="footer">
-			<em>2024 - Tous droits réservés</em>
-		 </footer>
-	 
-	</body> 
-</html> 
+{% endblock %}
