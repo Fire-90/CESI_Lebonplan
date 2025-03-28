@@ -29,6 +29,10 @@ switch ($page) {
         $controller = new HomeController();
         $controller->contact();
         break;
+    case 'postuler':
+        $controller = new HomeController();
+        $controller->postuler();
+        break;   
     default:
         $controller = new HomeController();
         $controller->home();
