@@ -28,25 +28,27 @@ class EntrepriseController {
     }
 
     // Ajouter une entreprise
-    public function add() {
-        // Vérifier si la requête est de type POST
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Récupérer les données du formulaire
-            $nom = $_POST['nom'];
-            $secteur = $_POST['secteur'];
-            $ville = $_POST['ville'];
+    public function add()
+{
+    // Vérifier si la requête est de type POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Récupérer les données du formulaire
+        $nom = $_POST['nom'];
+        $secteur = $_POST['secteur'];
+        $ville = $_POST['ville'];
 
-            // Ajouter l'entreprise dans la base de données
-            $this->entrepriseModel->addEntreprise($nom, $secteur, $ville);
+        // Ajouter l'entreprise dans la base de données via le modèle
+        $this->entrepriseModel->addEntreprise($nom, $secteur, $ville);
 
-            // Rediriger vers la page d'accueil des entreprises
-            header('Location: /entreprises');
-            exit;
-        }
-
-        // Si ce n'est pas une requête POST, afficher le formulaire d'ajout
-        echo $this->twig->render('ajout-entreprise.twig');
+        // Rediriger vers la page d'accueil des entreprises après l'ajout
+        header('Location: /entreprises');
+        exit;
     }
+    
+    // Afficher la vue d'ajout si la méthode est GET
+    $this->render('ajouter-entreprise.twig');
+}
+
 
     // Modifier une entreprise
     public function edit($id) {
