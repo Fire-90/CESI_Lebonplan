@@ -1,5 +1,5 @@
 <?php
-/*
+
 namespace Models;
 
 use PDO;
@@ -32,5 +32,5 @@ class Entreprise {
         return $stmt->execute([$nom, $secteur, $ville, $id]);
     }
 }
-*/
+
 ?>

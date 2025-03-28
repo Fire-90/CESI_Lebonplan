@@ -7,8 +7,8 @@
         <h1 class="center">Liste des Entreprises</h1>
 
         <div class="center">
-            <!-- Lien vers la page d'ajout d'une entreprise -->
-            <a href="{{ path('ajouter_entreprise') }}" class="btn-add">➕ Ajouter une entreprise</a>
+            <!-- Lien vers la page d'ajout d'entreprise -->
+            <a href="{{ path('ajouter-entreprise') }}" class="btn-add">➕ Ajouter une entreprise</a>
         </div>
 
         <div class="entreprises-container">
@@ -18,10 +18,10 @@
                     <p><strong>Secteur :</strong> {{ entreprise.secteur }}</p>
                     <p><strong>Ville :</strong> {{ entreprise.ville }}</p>
                     <div class="actions">
-                        <!-- Lien vers la page de modification d'une entreprise -->
-                        <a href="{{ path('modifier_entreprise', { 'id': entreprise.id }) }}" class="btn-edit">✏️ Modifier</a>
-                        <!-- Lien vers la page de suppression d'une entreprise -->
-                        <a href="{{ path('supprimer_entreprise', { 'id': entreprise.id }) }}" class="btn-delete">🗑️ Supprimer</a>
+                        <!-- Lien vers la page de modification d'entreprise -->
+                        <a href="{{ path('modifier-entreprise', { 'id': entreprise.id }) }}" class="btn-edit">✏️ Modifier</a>
+                        <!-- Lien vers la page de suppression d'entreprise -->
+                        <a href="{{ path('supprimer-entreprise', { 'id': entreprise.id }) }}" class="btn-delete">🗑️ Supprimer</a>
                     </div>
                 </div>
             {% else %}

@@ -32,6 +32,10 @@ class ComposerStaticInit5a360facea79a6ba3440ba7eaed9051a
         array (
             'PhpParser\\' => 10,
         ),
+        'M' => 
+        array (
+            'Models\\' => 7,
+        ),
         'D' => 
         array (
             'DeepCopy\\' => 9,
@@ -59,6 +63,10 @@ class ComposerStaticInit5a360facea79a6ba3440ba7eaed9051a
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
+        ),
+        'Models\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/models',
         ),
         'DeepCopy\\' => 
         array (
