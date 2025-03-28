@@ -19,9 +19,14 @@
                     <p><strong>Ville :</strong> {{ entreprise.ville }}</p>
                     <div class="actions">
                         <!-- Lien vers la page de modification d'entreprise -->
-                        <a href="{{ path('modifier-entreprise', { 'id': entreprise.id }) }}" class="btn-edit">✏️ Modifier</a>
-                        <!-- Lien vers la page de suppression d'entreprise -->
-                        <a href="{{ path('supprimer-entreprise', { 'id': entreprise.id }) }}" class="btn-delete">🗑️ Supprimer</a>
+                        <a href="{{ path('modifier-entreprise') ~ '?id=' ~ entreprise.id }}" class="btn-edit">✏️ Modifier</a>
+
+                        <!-- Lien vers la page de suppression d'entreprise avec confirmation -->
+                        <a href="{{ path('supprimer-entreprise') ~ '?id=' ~ entreprise.id }}" 
+                           class="btn-delete" 
+                           onclick="return confirm('Voulez-vous vraiment supprimer cette entreprise ?');">
+                            🗑️ Supprimer
+                        </a>
                     </div>
                 </div>
             {% else %}
