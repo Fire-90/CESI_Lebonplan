@@ -1,0 +1,27 @@
+{% extends "base.twig" %}
+
+{% block title %}Ajouter une Entreprise - Lebonplan{% endblock %}
+
+{% block content %}
+    <section>
+        <h1>Ajouter une Entreprise</h1>
+        
+        <form method="POST" action="{{ path('ajouter_entreprise') }}">
+            <div>
+                <label for="nom">Nom de l'entreprise</label>
+                <input type="text" name="nom" id="nom" required>
+            </div>
+            <div>
+                <label for="secteur">Secteur d'activité</label>
+                <input type="text" name="secteur" id="secteur" required>
+            </div>
+            <div>
+                <label for="ville">Ville</label>
+                <input type="text" name="ville" id="ville" required>
+            </div>
+            <div>
+                <button type="submit">Ajouter l'entreprise</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}

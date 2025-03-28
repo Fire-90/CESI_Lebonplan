@@ -1,13 +1,14 @@
 {% extends "base.twig" %}
 
-{% block title %}Accueil - Lebonplan{% endblock %}
+{% block title %}Liste des Entreprises - Lebonplan{% endblock %}
 
 {% block content %}
     <section>
         <h1 class="center">Liste des Entreprises</h1>
 
         <div class="center">
-            <a href="ajout-entreprise.html" class="btn-add">➕ Ajouter une entreprise</a>
+            <!-- Lien vers la page d'ajout d'une entreprise -->
+            <a href="{{ path('ajouter_entreprise') }}" class="btn-add">➕ Ajouter une entreprise</a>
         </div>
 
         <div class="entreprises-container">
@@ -17,8 +18,10 @@
                     <p><strong>Secteur :</strong> {{ entreprise.secteur }}</p>
                     <p><strong>Ville :</strong> {{ entreprise.ville }}</p>
                     <div class="actions">
-                        <a href="modifier-entreprise.html?id={{ loop.index }}" class="btn-edit">✏️ Modifier</a>
-                        <a href="supprimer-entreprise.html?id={{ loop.index }}" class="btn-delete">🗑️ Supprimer</a>
+                        <!-- Lien vers la page de modification d'une entreprise -->
+                        <a href="{{ path('modifier_entreprise', { 'id': entreprise.id }) }}" class="btn-edit">✏️ Modifier</a>
+                        <!-- Lien vers la page de suppression d'une entreprise -->
+                        <a href="{{ path('supprimer_entreprise', { 'id': entreprise.id }) }}" class="btn-delete">🗑️ Supprimer</a>
                     </div>
                 </div>
             {% else %}
