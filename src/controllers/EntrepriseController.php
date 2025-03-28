@@ -3,21 +3,52 @@
 namespace Controllers;
 
 use Core\Twig;
+use Models\EntrepriseModel;
 
 class EntrepriseController
 {
+    private $entrepriseModel;
+
+    public function __construct()
+    {
+        $this->entrepriseModel = new EntrepriseModel();
+    }
+
     public function index()
     {
-        $entreprises = [
-            ['nom' => 'TechCorp', 'secteur' => 'Technologie', 'ville' => 'Paris'],
-            ['nom' => 'FinSoft', 'secteur' => 'Finance', 'ville' => 'Londres'],
-            ['nom' => 'MediHealth', 'secteur' => 'Santé', 'ville' => 'Berlin']
-        ];
+        $entreprises = $this->entrepriseModel->getEntreprises();
 
         $twig = Twig::getTwig();
         echo $twig->render('entreprises.twig', [
-            'title' => 'Entreprises',
+            'title' => 'Liste des Entreprises',
             'entreprises' => $entreprises
         ]);
+    }
+
+    public function add()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->entrepriseModel->addEntreprise($_POST['nom'], $_POST['secteur'], $_POST['ville']);
+            header('Location: /entreprises');
+            exit;
+        }
+    }
+
+    public function delete()
+    {
+        if (isset($_POST['id'])) {
+            $this->entrepriseModel->deleteEntreprise($_POST['id']);
+            header('Location: /entreprises');
+            exit;
+        }
+    }
+
+    public function update()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->entrepriseModel->updateEntreprise($_POST['id'], $_POST['nom'], $_POST['secteur'], $_POST['ville']);
+            header('Location: /entreprises');
+            exit;
+        }
     }
 }
