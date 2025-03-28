@@ -36,9 +36,10 @@ class ComposerStaticInit5a360facea79a6ba3440ba7eaed9051a
         array (
             'DeepCopy\\' => 9,
         ),
-        'A' => 
+        'C' => 
         array (
-            'App\\' => 4,
+            'Core\\' => 5,
+            'Controllers\\' => 12,
         ),
     );
 
@@ -63,9 +64,13 @@ class ComposerStaticInit5a360facea79a6ba3440ba7eaed9051a
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
-        'App\\' => 
+        'Core\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src',
+            0 => __DIR__ . '/../..' . '/src/core',
+        ),
+        'Controllers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/controllers',
         ),
     );
 
