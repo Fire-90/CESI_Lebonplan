@@ -4,18 +4,19 @@ namespace Core;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use Twig\TwigFunction;
 
 class TemplateEngine {
-    private static $twig = null;
-
     public static function getTwig() {
-        if (self::$twig === null) {
-            $loader = new FilesystemLoader(__DIR__ . '/../views');
-            self::$twig = new Environment($loader, [
-                'cache' => __DIR__ . '/../../cache', // Cache des templates (peut être désactivé en dev)
-                'debug' => true
-            ]);
-        }
-        return self::$twig;
+        $loader = new FilesystemLoader(__DIR__ . '/../views');
+        $twig = new Environment($loader);
+
+        // Ajouter la fonction "path"
+        $twig->addFunction(new TwigFunction('path', function ($route) {
+            return "/public/index.php?page=" . $route;
+        }));
+
+        return $twig;
     }
 }
+

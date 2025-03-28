@@ -1,6 +1,7 @@
 <?php
 
-require_once 'src/controllers/HomeController.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
 use Controllers\HomeController;
 use Controllers\EntrepriseController;
 
