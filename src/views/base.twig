@@ -23,8 +23,8 @@
             <a href="{{ path('contact') }}" class="{% if current_page == 'contact' %}selected{% endif %}">Contact</a>
         </div>
         <div class="account">
-            <a href="{{ path('connexion') }}">Connexion</a>
-            <a href="{{ path('inscription') }}" class="inscription">S'inscrire</a>
+            <a href="{{ path('connexion') }}" class="{% if current_page == 'connexion' %}selected{% endif %}>Connexion</a>
+            <a href="{{ path('inscription') }}" class="{% if current_page == 'inscription' %}selected{% endif %}>S'inscrire</a>
         </div>
     </nav>
 

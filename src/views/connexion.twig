@@ -1,42 +1,9 @@
-<!doctype html>
-<html lang="fr">
+{% extends "base.twig" %}
 
-<head>
-	<meta charset="utf-8">
-	<meta name="description" content="Connectez-vous à votre espace.">
-	<link rel="stylesheet" href="assets/style_base.css">
-	<link rel="stylesheet" href="assets/style_formulaire.css">
-	<link rel="shortcut icon" href="images/logo.png" />
-	<title>Connexion - Lebonplan</title>
-</head>
+{% block title %}Accueil - Lebonplan{% endblock %}
 
-<body>
-	<header>
-		<div class="center"><img src="./images/logo-lbp-header.png" alt="Lebonplan - Le meilleur site d'annonces en ligne"></div>
-		<nav class="navbar">
-			<div class="bar">
-				<div><a href="index.html">Accueil</a></div>
-				<span>|</span>
-				<div><a href="entreprise.html">Entreprise</a></div>
-				<span>|</span>
-				<div><a href="offres.html">Offres</a></div>
-				<span>|</span>
-				<div><a href="wishlist.html">Wishlist</a></div>
-				<span>|</span>
-				<div><a href="contact.html">Contact</a></div>
-			</div>
-			<div class="account">
-				<div><a class="selected" href="connexion.html">Connexion</a></div>
-				<span>|</span>
-				<div><a href="inscription.html" class="inscription">S'inscrire</a></div>
-			</div>
-		</nav>
-
-	</header>
-
-	<main>
-
-		<section>
+{% block content %}
+    <section>
 
 			<h1 class="center">Bonjour !</h1>
 
@@ -62,13 +29,4 @@
 			</article>
 
 		</section>
-
-	</main>
-
-	<footer class="footer">
-		<em>2024 - Tous droits réservés</em>
-	</footer>
-
-</body>
-
-</html>
+{% endblock %}
