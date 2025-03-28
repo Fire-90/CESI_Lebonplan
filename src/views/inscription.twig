@@ -1,39 +1,33 @@
-{% extends "base.twig" %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Slide Navbar</title>
+	<link rel="stylesheet" type="text/css" href="slide navbar style.css">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+	<div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true">
 
-{% block title %}Accueil - Lebonplan{% endblock %}
+			<div class="signup">
+				<form>
+					<label for="chk" aria-hidden="true">Sign up</label>
+					<input type="text" name="txt" placeholder="User name" required="">
+					<input type="email" name="email" placeholder="Email" required="">
+          <input type="number" name="broj" placeholder="BrojTelefona" required="">
+					<input type="password" name="pswd" placeholder="Password" required="">
+					<button>Sign up</button>
+				</form>
+			</div>
 
-{% block content %}
-    <section>
-	   
-				<h1 class="center">Créez un compte</h1>
-				
-				<p  class="center">Pour déposer une annonce ou bénéficier d'une expérience personnalisée avec du contenu en lien avec vos recherches inscrivez-vous, c'est rapide et gratuit !</p>
-				
-				<article>
-					
-					
-					<form class="formulaire">
-						<h2>Formulaire d'inscription</h2>
-
-						<label>Civilité
-						<select name="title">
-							<option value="ms">Madame</option>
-							<option value="mr">Monsieur</option>	 
-							<option value="he">Helicoptère de combat apache Antonov-1789</option>
-							<option value="  ">Non binaire</option> 
-						</select>
-						</label>
-						<label>Nom<input name="lastname" type="text" value="" size="50" required ></label>
-						<label>Prénom<input name="surname" type="text" size="50" value="" required ></label>
-						<label>Courriel<input name="email" type="email" size="30" value="" required ></label>
-						<label>Mot de passe<input name="password" type="password" size="30" value="" required ></label>
-						<label>Confirmation<input name="password_confirm" type="password" size="30" minlength="8" value="" required ></label>
-						<div class="buttons">
-							<button type="submit">ENVOYER</button>
-							<input type="reset" value="Réinitialiser" >
-						</div>
-					</form>
-			
-				</article>
-			</section>
-{% endblock %}
+			<div class="login">
+				<form>
+					<label for="chk" aria-hidden="true">Login</label>
+					<input type="email" name="email" placeholder="Email" required="">
+					<input type="password" name="pswd" placeholder="Password" required="">
+					<button>Login</button>
+				</form>
+			</div>
+	</div>
+</body>
+</html>

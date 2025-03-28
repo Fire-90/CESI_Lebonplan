@@ -1,32 +1,33 @@
-{% extends "base.twig" %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Slide Navbar</title>
+	<link rel="stylesheet" type="text/css" href="slide navbar style.css">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+	<div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true">
 
-{% block title %}Accueil - Lebonplan{% endblock %}
-
-{% block content %}
-    <section>
-
-			<h1 class="center">Bonjour !</h1>
-
-			<p class="center">Connectez-vous pour retrouver vos annonces sauvegardées et déposées.</p>
-
-			<article>
-
-
-
-				<form class="formulaire">
-					<h2>Formulaire de connexion</h2>
-
-					<label>Courriel<input name="email" type="email" size="30" value="" required></label>
-
-					<label>Mot de passe<input name="password" type="password" size="30" value="" required></label>
-
-					<div class="buttons">
-						<button type="submit">Connexion</button>
-						<input type="reset" value="Effacer">
-					</div>
+			<div class="signup">
+				<form>
+					<label for="chk" aria-hidden="true">Sign up</label>
+					<input type="text" name="txt" placeholder="User name" required="">
+					<input type="email" name="email" placeholder="Email" required="">
+          <input type="number" name="broj" placeholder="BrojTelefona" required="">
+					<input type="password" name="pswd" placeholder="Password" required="">
+					<button>Sign up</button>
 				</form>
+			</div>
 
-			</article>
-
-		</section>
-{% endblock %}
+			<div class="login">
+				<form>
+					<label for="chk" aria-hidden="true">Login</label>
+					<input type="email" name="email" placeholder="Email" required="">
+					<input type="password" name="pswd" placeholder="Password" required="">
+					<button>Login</button>
+				</form>
+			</div>
+	</div>
+</body>
+</html>
