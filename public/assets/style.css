@@ -482,3 +482,69 @@ a {
 .alert-message{
     display: none;
 }
+
+/* ----------------- Gestion des entreprises ----------------- */
+
+.entreprises-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.entreprise-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.entreprise-card h2 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.entreprise-card p {
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.actions {
+    margin-top: 15px;
+}
+
+.btn-edit, .btn-delete, .btn-add {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    display: inline-block;
+    margin: 5px;
+}
+
+.btn-edit {
+    background: #f39c12;
+    color: white;
+}
+
+.btn-delete {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-add {
+    background: #2ecc71;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+}
+
+.no-data {
+    text-align: center;
+    font-size: 18px;
+    color: #7f8c8d;
+    margin-top: 20px;
+}
