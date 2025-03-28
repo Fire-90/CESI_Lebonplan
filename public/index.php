@@ -5,25 +5,29 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Controllers\HomeController;
 use Controllers\EntrepriseController;
 
-$controller = new HomeController();
-
 // Récupérer la page demandée dans l'URL
 $page = $_GET['page'] ?? 'home';
 
 switch ($page) {
-    case 'entreprises':
-        $controller->entreprises();
-        break;
+    // case 'entreprises':
+        // $controller = new EntrepriseController();
+        // $controller->index(); // Assurez-vous que la méthode index() existe dans EntrepriseController
+        // break;
     case 'offres':
+        $controller = new HomeController();
         $controller->offres();
         break;
     case 'whishlist':
+        $controller = new HomeController();
         $controller->whishlist();
         break;
     case 'contact':
+        $controller = new HomeController();
         $controller->contact();
         break;
     default:
+        $controller = new HomeController();
         $controller->home();
         break;
 }
+?>

@@ -1,21 +1,19 @@
-<?php
 
+<?php
+/*
 namespace Controllers;
 
 use Core\Twig;
-use Models\EntrepriseModel;
+use Models\Entreprise;
 
-class EntrepriseController
-{
+class EntrepriseController {
     private $entrepriseModel;
 
-    public function __construct()
-    {
-        $this->entrepriseModel = new EntrepriseModel();
+    public function __construct() {
+        $this->entrepriseModel = new Entreprise();
     }
 
-    public function index()
-    {
+    public function index() {
         $entreprises = $this->entrepriseModel->getEntreprises();
 
         $twig = Twig::getTwig();
@@ -25,8 +23,7 @@ class EntrepriseController
         ]);
     }
 
-    public function add()
-    {
+    public function add() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->entrepriseModel->addEntreprise($_POST['nom'], $_POST['secteur'], $_POST['ville']);
             header('Location: /entreprises');
@@ -34,8 +31,7 @@ class EntrepriseController
         }
     }
 
-    public function delete()
-    {
+    public function delete() {
         if (isset($_POST['id'])) {
             $this->entrepriseModel->deleteEntreprise($_POST['id']);
             header('Location: /entreprises');
@@ -43,8 +39,7 @@ class EntrepriseController
         }
     }
 
-    public function update()
-    {
+    public function update() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->entrepriseModel->updateEntreprise($_POST['id'], $_POST['nom'], $_POST['secteur'], $_POST['ville']);
             header('Location: /entreprises');
@@ -52,3 +47,5 @@ class EntrepriseController
         }
     }
 }
+*/
+?>

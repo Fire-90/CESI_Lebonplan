@@ -5,9 +5,13 @@ namespace Controllers;
 use Core\TemplateEngine;
 
 class HomeController {
+    private $twig;
+
+    public function __construct() {
+        $this->twig = TemplateEngine::getTwig();
+    }
+
     public function home() {
-        $twig = TemplateEngine::getTwig();
-        
         // Données simulées (en pratique, elles viendraient d'une base de données)
         $categories = ["Immobilier", "Véhicule", "Vêtements", "Multimédia", "Maison", "Loisir", "Service"];
         $articles = [
@@ -16,9 +20,25 @@ class HomeController {
             ["titre" => "Canapé 3 places IKEA", "localisation" => "Bordeaux", "vendeur" => "Ingvar Kamprad", "prix" => "149€"],
         ];
 
-        echo $twig->render('home.twig', [
+        echo $this->twig->render('home.twig', [
             'categories' => $categories,
             'articles' => $articles
         ]);
     }
+
+    public function offres() {
+        // Logique pour afficher les offres
+        echo $this->twig->render('offres.twig');
+    }
+
+    public function whishlist() {
+        // Logique pour afficher la whishlist
+        echo $this->twig->render('wishlist.twig');
+    }
+
+    public function contact() {
+        // Logique pour afficher la page de contact
+        echo $this->twig->render('contact.twig');
+    }
 }
+?>

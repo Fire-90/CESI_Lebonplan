@@ -1,10 +1,11 @@
 <?php
+/*
 namespace Models;
 
 use PDO;
 use Core\Database;
 
-class EntrepriseModel {
+class Entreprise {
     private $pdo;
 
     public function __construct() {
@@ -31,4 +32,5 @@ class EntrepriseModel {
         return $stmt->execute([$nom, $secteur, $ville, $id]);
     }
 }
+*/
 ?>
