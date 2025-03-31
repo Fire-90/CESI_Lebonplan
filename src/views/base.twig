@@ -33,10 +33,10 @@
                 <a href="{{ path('contact') }}" class="{% if current_page == 'contact' %}selected{% endif %}">Contact</a>
             </div>
             <div class="account">
-                {% if app.session.get('user') %}
+                {% if user %}
                     <!-- Si utilisateur connecté -->
                     <div class="user-dropdown">
-                        <span class="username">{{ app.session.get('user').name }}</span>
+                        <span class="username">{{ user.name }}</span>
                         <div class="dropdown-content">
                             <a href="{{ path('profile') }}">Mon profil</a>
                             <a href="{{ path('logout') }}">Déconnexion</a>
@@ -60,8 +60,8 @@
                 <a href="{{ path('offres') }}">Offres</a>
                 <a href="{{ path('whishlist') }}">Whishlist</a>
                 <a href="{{ path('contact') }}">Contact</a>
-                {% if app.session.get('user') %}
-                    <a href="{{ path('profile') }}">Mon profil ({{ app.session.get('user').name }})</a>
+                {% if user %}
+                    <a href="{{ path('profile') }}">Mon profil ({{ user.name }})</a>
                     <a href="{{ path('logout') }}">Déconnexion</a>
                 {% else %}
                     <a href="{{ path('login') }}">Connexion / Inscription</a>

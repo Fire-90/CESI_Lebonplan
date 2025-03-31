@@ -5,10 +5,11 @@
 {% block content %}
     <div class="main">
         <div class="auth-container">
-            {% if errorMessage is not null %}
+            {% if app.request.cookies.get('errorMessage') is not null %}
                 <div class="alert">
-                    {{ errorMessage }}
+                    {{ app.request.cookies.get('errorMessage') }}
                 </div>
+                {% do app.response.deleteCookie('errorMessage') %}
             {% endif %}
 
             <!-- Formulaire d'inscription -->
@@ -17,7 +18,7 @@
                     <h2>Inscription</h2>
                     <input type="text" name="txt" placeholder="Nom d'Utilisateur" required="">
                     <input type="email" name="email" placeholder="Adresse Email" required="">
-                    <input type="text" name="broj" placeholder="Numéro de Téléphone" required="">
+                    <input type="number" name="broj" placeholder="Numéro de Téléphone" required="">
                     <input type="password" name="pswd" placeholder="Mot de Passe" required="">
                     <button type="submit" class="btn-submit">S'inscrire</button>
                 </form>

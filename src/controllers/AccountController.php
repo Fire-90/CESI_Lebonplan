@@ -1,155 +1,135 @@
 <?php
+
 namespace Controllers;
 
 use Core\database;
-use Core\TemplateEngine;
+use Core\baseController;
 use PDO;
 
-class AccountController
-{
-    private $twig;
+class AccountController extends baseController {
     private $pdo;
 
-    public function __construct()
-    {
-        $this->twig = TemplateEngine::getTwig();
+    public function __construct() {
+        parent::__construct();
         $this->pdo = Database::getConnection();
-        session_start();
     }
 
-    public function login()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'] ?? '';
-            $password = $_POST['pswd'] ?? '';
+    public function login() {
+        $errorMessage = null;
 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
-                // Vérification Admin
-                $stmt = $this->pdo->prepare("SELECT * FROM Admin WHERE EmailAdmin = ?");
-                $stmt->execute([$email]);
-                $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+                $email = $_POST['email'];
+                $password = $_POST['pswd'];
+
+                // Vérification admin
+                $adminQuery = "SELECT * FROM Admin WHERE EmailAdmin = :email";
+                $adminStmt = $this->pdo->prepare($adminQuery);
+                $adminStmt->bindParam(':email', $email);
+                $adminStmt->execute();
+                $admin = $adminStmt->fetch(PDO::FETCH_ASSOC);
 
                 if ($admin && password_verify($password, $admin['PassWordAdmin'])) {
-                    $_SESSION['user'] = [
+                    setcookie('user', json_encode([
                         'id' => $admin['idAdmin'],
                         'name' => $admin['NameAdmin'],
                         'email' => $admin['EmailAdmin'],
                         'role' => 'admin'
-                    ];
-                    header('Location: /?page=home');
+                    ]), time() + (86400 * 30), "/");
+                    header('Location: /admin/dashboard');
                     exit;
                 }
 
-                // Vérification User
-                $stmt = $this->pdo->prepare("SELECT * FROM User WHERE EmailUser = ?");
-                $stmt->execute([$email]);
-                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                // Vérification user
+                $userQuery = "SELECT * FROM User WHERE EmailUser = :email";
+                $userStmt = $this->pdo->prepare($userQuery);
+                $userStmt->bindParam(':email', $email);
+                $userStmt->execute();
+                $user = $userStmt->fetch(PDO::FETCH_ASSOC);
 
                 if ($user && password_verify($password, $user['PassWordUser'])) {
-                    $_SESSION['user'] = [
+                    setcookie('user', json_encode([
                         'id' => $user['idUser'],
                         'name' => $user['NameUser'],
                         'email' => $user['EmailUser'],
                         'role' => 'user'
-                    ];
-                    header('Location: /?page=profile');
+                    ]), time() + (86400 * 30), "/");
+                    header('Location: /user/profile');
                     exit;
                 }
 
-                throw new \Exception("Identifiants incorrects");
-                
+                setcookie('errorMessage', 'Email ou mot de passe incorrect', time() + 3600, "/");
+
+            } catch (\PDOException $e) {
+                setcookie('errorMessage', 'Une erreur est survenue lors de la connexion', time() + 3600, "/");
             } catch (\Exception $e) {
-                echo $this->twig->render('login.twig', [
-                    'error' => $e->getMessage()
-                ]);
-                return;
+                setcookie('errorMessage', 'Une erreur inattendue est survenue', time() + 3600, "/");
             }
         }
 
-        echo $this->twig->render('login.twig');
+        $this->renderTemplate('login.twig', ['errorMessage' => $errorMessage]);
     }
 
-    public function signup()
-    {
+    public function signup() {
+        $errorMessage = null;
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
-                $data = [
-                    'name' => trim($_POST['txt'] ?? ''),
-                    'email' => filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL),
-                    'phone' => $_POST['broj'] ?? null,
-                    'password' => $_POST['pswd'] ?? ''
-                ];
+                // Ajoutez un log pour voir les données reçues
+                error_log(print_r($_POST, true));
 
-                // Validation
-                if (empty($data['name']) || empty($data['email']) || empty($data['password'])) {
-                    throw new \Exception("Tous les champs obligatoires doivent être remplis");
+                $name = $_POST['txt'] ?? null;
+                $email = $_POST['email'] ?? null;
+                $phone = $_POST['broj'] ?? null; // Note: 'broj' et non 'broj' dans votre HTML
+                $password = $_POST['pswd'] ?? null;
+
+                // Validation basique
+                if (!$name || !$email || !$password) {
+                    throw new \Exception('Tous les champs obligatoires ne sont pas remplis');
                 }
 
-                if (strlen($data['password']) < 8) {
-                    throw new \Exception("Le mot de passe doit contenir au moins 8 caractères");
-                }
+                // Vérification email
+                $checkStmt = $this->pdo->prepare("SELECT EmailUser FROM User WHERE EmailUser = ?");
+                $checkStmt->execute([$email]);
 
-                // Vérification email unique
-                $stmt = $this->pdo->prepare("SELECT idUser FROM User WHERE EmailUser = ?");
-                $stmt->execute([$data['email']]);
-                if ($stmt->fetch()) {
+                if ($checkStmt->fetch()) {
                     throw new \Exception("Cet email est déjà utilisé");
                 }
 
-                // Création du compte
-                $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
+                // Hash du mot de passe
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                // Insertion
                 $stmt = $this->pdo->prepare(
-                    "INSERT INTO User (NameUser, EmailUser, PhoneUser, PassWordUser) 
+                    "INSERT INTO User (NameUser, EmailUser, PhoneUser, PassWordUser)
                      VALUES (?, ?, ?, ?)"
                 );
 
-                $stmt->execute([
-                    $data['name'],
-                    $data['email'],
-                    $data['phone'],
-                    $hashedPassword
-                ]);
+                $success = $stmt->execute([$name, $email, $phone, $hashedPassword]);
 
-                // Connexion automatique
-                $_SESSION['user'] = [
-                    'id' => $this->pdo->lastInsertId(),
-                    'name' => $data['name'],
-                    'email' => $data['email'],
-                    'role' => 'user'
-                ];
-
-                header('Location: /?page=profile');
-                exit;
+                if ($success) {
+                    // Redirection après succès
+                    header("Location: ?page=login&success=1");
+                    exit;
+                } else {
+                    throw new \Exception("Erreur lors de l'insertion en base");
+                }
 
             } catch (\Exception $e) {
-                echo $this->twig->render('login.twig', [
-                    'signup_error' => $e->getMessage(),
-                    'form_data' => $_POST
-                ]);
-                return;
+                // Log l'erreur complète
+                error_log("Erreur inscription: " . $e->getMessage());
+
+                // Message utilisateur plus clair
+                setcookie('errorMessage', 'Erreur: ' . $e->getMessage(), time() + 3600, "/");
             }
         }
 
-        echo $this->twig->render('login.twig');
+        $this->renderTemplate('login.twig', ['errorMessage' => $errorMessage]);
     }
 
-    public function logout()
-    {
-        session_unset();
-        session_destroy();
-        header('Location: /?page=home');
+    public function logout() {
+        setcookie('user', '', time() - 3600, "/");
+        header('Location: /login');
         exit;
-    }
-
-    public function profile()
-    {
-        if (!isset($_SESSION['user'])) {
-            header('Location: /?page=login');
-            exit;
-        }
-
-        echo $this->twig->render('profile.twig', [
-            'user' => $_SESSION['user']
-        ]);
     }
 }
