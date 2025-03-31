@@ -32,12 +32,12 @@ class EntrepriseController {
             $start = ($page - 1) * $perPage;
     
             // Nombre total d'entreprises
-            $stmtTotal = $this->pdo->query("SELECT COUNT(*) as total FROM entreprises");
+            $stmtTotal = $this->pdo->query("SELECT COUNT(*) as total FROM Company");
             $totalEntreprises = $stmtTotal->fetch(PDO::FETCH_ASSOC)['total'];
             $totalPages = ceil($totalEntreprises / $perPage);
     
             // Récupération des entreprises paginées
-            $stmt = $this->pdo->prepare("SELECT * FROM entreprises LIMIT :start, :perPage");
+            $stmt = $this->pdo->prepare("SELECT * FROM Company LIMIT :start, :perPage");
             $stmt->bindValue(':start', $start, PDO::PARAM_INT);
             $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
             $stmt->execute();
@@ -55,8 +55,6 @@ class EntrepriseController {
         }
     }
     
-    
-
     /**
      * Ajout d'une entreprise
      */
@@ -70,7 +68,7 @@ class EntrepriseController {
             if (!empty($nom) && !empty($secteur) && !empty($ville)) {
                 try {
                     // Préparer la requête SQL avec des paramètres sécurisés
-                    $stmt = $this->pdo->prepare("INSERT INTO entreprises (NameCompany, Sector, City) VALUES (:nom, :secteur, :ville)");
+                    $stmt = $this->pdo->prepare("INSERT INTO Company (NameCompany, Sector, City) VALUES (:nom, :secteur, :ville)");
                     
                     // Exécuter la requête
                     $stmt->execute([
@@ -87,7 +85,6 @@ class EntrepriseController {
                 echo "Tous les champs sont requis.";
             }
         }
-
         echo $this->twig->render('ajout-entreprise.twig');
     }
 
@@ -96,13 +93,13 @@ class EntrepriseController {
      */
     public function edit($id) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING);
-            $secteur = filter_input(INPUT_POST, 'secteur', FILTER_SANITIZE_STRING);
-            $ville = filter_input(INPUT_POST, 'ville', FILTER_SANITIZE_STRING);
+            $nom = filter_input(INPUT_POST, 'NameCompany', FILTER_SANITIZE_STRING);
+            $secteur = filter_input(INPUT_POST, 'Sector', FILTER_SANITIZE_STRING);
+            $ville = filter_input(INPUT_POST, 'City', FILTER_SANITIZE_STRING);
 
             if (!empty($nom) && !empty($secteur) && !empty($ville)) {
                 try {
-                    $stmt = $this->pdo->prepare("UPDATE entreprises SET nom = :nom, secteur = :secteur, ville = :ville WHERE id = :id");
+                    $stmt = $this->pdo->prepare("UPDATE Company SET nom = :nom, secteur = :secteur, ville = :ville WHERE id = :id");
                     $stmt->execute([
                         ':nom' => $nom,
                         ':secteur' => $secteur,
@@ -119,7 +116,7 @@ class EntrepriseController {
             }
         } else {
             // Récupération des infos de l'entreprise à modifier
-            $stmt = $this->pdo->prepare("SELECT * FROM entreprises WHERE id = :id");
+            $stmt = $this->pdo->prepare("SELECT * FROM Company WHERE id = :id");
             $stmt->execute([':id' => $id]);
             $entreprise = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -132,7 +129,7 @@ class EntrepriseController {
      */
     public function delete($id) {
         try {
-            $stmt = $this->pdo->prepare("DELETE FROM entreprises WHERE id = :id");
+            $stmt = $this->pdo->prepare("DELETE FROM Company WHERE id = :id");
             $stmt->execute([':id' => $id]);
             header('Location: /entreprises');
             exit;
