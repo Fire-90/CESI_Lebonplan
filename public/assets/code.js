@@ -216,3 +216,42 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    const loginForm = document.querySelector(".login");
+    const signupForm = document.querySelector(".signup");
+    const showSignupBtn = document.querySelector("#showSignup");
+    const showLoginBtn = document.querySelector("#showLogin");
+
+    // Fonction pour afficher l'inscription et cacher la connexion
+    function showSignup() {
+        loginForm.style.opacity = "0";
+        setTimeout(() => {
+            loginForm.style.display = "none";
+            signupForm.style.display = "block";
+            setTimeout(() => {
+                signupForm.style.opacity = "1";
+            }, 50);
+        }, 300);
+    }
+
+    // Fonction pour afficher la connexion et cacher l'inscription
+    function showLogin() {
+        signupForm.style.opacity = "0";
+        setTimeout(() => {
+            signupForm.style.display = "none";
+            loginForm.style.display = "block";
+            setTimeout(() => {
+                loginForm.style.opacity = "1";
+            }, 50);
+        }, 300);
+    }
+
+    // Ajout des événements sur les boutons
+    if (showSignupBtn && showLoginBtn) {
+        showSignupBtn.addEventListener("click", showSignup);
+        showLoginBtn.addEventListener("click", showLogin);
+    }
+});
+
+
+

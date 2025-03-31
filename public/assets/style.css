@@ -18,7 +18,7 @@
 }
 
 ::selection{
-    color: orange;
+    background-color: orange;
 }
 
 /* ---------------- Global Styles ---------------- */
@@ -642,19 +642,20 @@ a {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Formulaire d'inscription */
+/* Bloc Signup */
 .signup {
-    background-color: #fffbf1;
-    margin-right: 3px;
-    box-shadow: 0 16px 32px rgba(52, 27, 0, 0.121);
+    background-color: #4a91e249;
+    margin-right: 5px;
+    box-shadow: 0 16px 32px rgba(52, 27, 0, 0.448);
 }
 
-/* Formulaire de connexion */
+/* Bloc Login */
 .login {
-    background-color: #f6f4ee;
-    margin-left: 3px;
-    box-shadow: 0 16px 32px rgba(52, 27, 0, 0.121);
+    background-color: #e2a84a49;
+    margin-left: 5px;
+    box-shadow: 0 16px 32px rgba(52, 27, 0, 0.448);
 }
+
 
 /* Titre des formulaires */
 h2 {
@@ -874,6 +875,16 @@ input[type="password"]:focus {
     margin: 0 auto;
 }
 
+.wishlist-formulaire{
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
 /* Titre principal */
 .wishlist-section h1 {
     color: #333;
@@ -923,6 +934,13 @@ input[type="password"]:focus {
     font-size: 1rem;
 }
 
+.wishlist-form .buttons {
+    display: flex;
+    justify-content: space-between; /* Positionne les boutons aux extrémités */
+    align-items: flex-end; /* Aligne les boutons au bas du formulaire */
+    width: 100%; /* Assure que le conteneur prend toute la largeur disponible */
+}
+
 .wishlist-form button,
 .wishlist-form input[type="reset"] {
     background-color: #ffa200;
@@ -932,7 +950,9 @@ input[type="password"]:focus {
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
-    margin-right: 5px;
+    width: auto; /* Laisse les boutons avoir une taille naturelle en fonction de leur contenu */
+    height: 50px; /* Hauteur fixe pour que les boutons soient de la même taille */
+    margin: 0; /* Enlève la marge entre les boutons */
 }
 
 .wishlist-form button:hover,
