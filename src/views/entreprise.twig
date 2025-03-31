@@ -3,35 +3,39 @@
 {% block title %}Liste des Entreprises - Lebonplan{% endblock %}
 
 {% block content %}
-    <section>
-        <h1 class="center">Liste des Entreprises</h1>
+    <h1>Liste des Entreprises</h1>
 
-        <div class="center">
-            <!-- Lien vers la page d'ajout d'entreprise -->
-            <a href="{{ path('ajout-entreprise') }}" class="btn-add">➕ Ajouter une entreprise</a>
-        </div>
+    <a href="{{ path('ajout-entreprise') }}" class="btn-add">➕ Ajouter une entreprise</a>
 
-        <div class="entreprises-container">
-            {% for entreprise in entreprises %}
-                <div class="entreprise-card">
-                    <h2>{{ entreprise.nom }}</h2>
-                    <p><strong>Secteur :</strong> {{ entreprise.secteur }}</p>
-                    <p><strong>Ville :</strong> {{ entreprise.ville }}</p>
-                    <div class="actions">
-                        <!-- Lien vers la page de modification d'entreprise -->
-                        <a href="{{ path('modifier-entreprise') ~ '?id=' ~ entreprise.id }}" class="btn-edit">✏️ Modifier</a>
-
-                        <!-- Lien vers la page de suppression d'entreprise avec confirmation -->
-                        <a href="{{ path('supprimer-entreprise') ~ '?id=' ~ entreprise.id }}" 
-                           class="btn-delete" 
-                           onclick="return confirm('Voulez-vous vraiment supprimer cette entreprise ?');">
-                            🗑️ Supprimer
-                        </a>
-                    </div>
-                </div>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Secteur</th>
+                <th>Ville</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if entreprises is empty %}
+                <tr>
+                    <td colspan="5">Aucune entreprise enregistrée.</td>
+                </tr>
             {% else %}
-                <p class="no-data">Aucune entreprise enregistrée.</p>
-            {% endfor %}
-        </div>
-    </section>
+                {% for entreprise in entreprises %}
+                    <tr>
+                        <td>{{ entreprise.id }}</td>
+                        <td>{{ entreprise.nom }}</td>
+                        <td>{{ entreprise.secteur }}</td>
+                        <td>{{ entreprise.ville }}</td>
+                        <td>
+                            <a href="{{ path('modifier-entreprise') ~ '?id=' ~ entreprise.id }}">✏️ Modifier</a>
+                            <a href="{{ path('supprimer-entreprise') ~ '?id=' ~ entreprise.id }}" onclick="return confirm('Voulez-vous supprimer cette entreprise ?');">🗑️ Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
 {% endblock %}

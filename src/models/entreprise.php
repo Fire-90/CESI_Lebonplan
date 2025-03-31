@@ -21,8 +21,12 @@ class Entreprise {
 
     // Ajouter une entreprise
     public function addEntreprise($nom, $secteur, $ville) {
-        $stmt = $this->pdo->prepare("INSERT INTO entreprises (nom, secteur, ville) VALUES (?, ?, ?)");
-        return $stmt->execute([$nom, $secteur, $ville]);
+        $stmt = $this->pdo->prepare("INSERT INTO entreprises (nom, secteur, ville) VALUES (:nom, :secteur, :ville)");
+        return $stmt->execute([
+            ':nom' => $nom,
+            ':secteur' => $secteur,
+            ':ville' => $ville
+        ]);
     }
 
     // Supprimer une entreprise
