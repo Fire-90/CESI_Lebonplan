@@ -20,19 +20,19 @@
                 </tr>
             </thead>
             <tbody>
-                {% if Company is empty %}
+                {% if entreprises is empty %}
                     <tr>
                         <td colspan="5" class="no-data">Aucune entreprise enregistrée.</td>
                     </tr>
                 {% else %}
-                    {% for entreprise in Company %}
+                    {% for entreprises in entreprises %}
                         <tr>
-                            <td>{{ Company.NameCompany }}</td>
-                            <td>{{ Company.Sector }}</td>
-                            <td>{{ Company.City }}</td>
+                            <td>{{ entreprises.NameCompany }}</td>
+                            <td>{{ entreprises.Sector }}</td>
+                            <td>{{ entreprises.City }}</td>
                             <td class="action-links">
-                                <a href="{{ path('modifier-entreprise') ~ '?id=' ~ Company.id }}" class="btn-edit">✏️ Modifier</a>
-                                <a href="{{ path('supprimer-entreprise') ~ '?id=' ~ Company.id }}" class="btn-delete" onclick="return confirm('Voulez-vous supprimer cette entreprise ?');">🗑️ Supprimer</a>
+                                <a href="{{ path('modifier-entreprise') ~ '?id=' ~ entreprises.idCompany }}" class="btn-edit">✏️ Modifier</a>
+                                <a href="{{ path('supprimer-entreprise') ~ '?id=' ~ entreprises.idCompany }}" class="btn-delete" onclick="return confirm('Voulez-vous supprimer cette entreprise ?');">🗑️ Supprimer</a>
                             </td>
                         </tr>
                     {% endfor %}
