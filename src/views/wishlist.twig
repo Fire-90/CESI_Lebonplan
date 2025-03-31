@@ -1,7 +1,45 @@
 {% extends "base.twig" %}
 
-{% block title %}Accueil - Lebonplan{% endblock %}
+{% block title %}Wishlist - Suggestions et Questions - Lebonplan{% endblock %}
 
 {% block content %}
-    <h1 class="center">Le meilleur endroit pour trouver ou déposer votre annonce !</h1>
+    <section class="wishlist-section">
+        <h1 class="center">Votre Wishlist - Suggestions et Questions</h1>
+        
+        <p class="center">
+            Vous avez des idées d'ajouts pour le site ou des questions à poser ? Partagez-les avec nous !
+            Remplissez le formulaire ci-dessous pour nous faire part de vos suggestions ou poser vos questions.
+        </p>
+
+        <!-- Formulaire de suggestions et questions -->
+        <article>
+            <form class="wishlist-form">
+                <h2>Soumettez votre suggestion ou question</h2>
+                
+                <label for="fullname">Nom complet
+                    <input id="fullname" name="fullname" type="text" value="" size="100" required>
+                </label>
+
+                <label for="email">Adresse e-mail
+                    <input id="email" name="email" type="email" value="" size="100" required>
+                </label>
+
+                <label for="type">Type de demande
+                    <select id="type" name="type">
+                        <option value="suggestion">Suggestion d'ajout</option>
+                        <option value="question">Question</option>
+                    </select>
+                </label>
+
+                <label for="message">Votre message
+                    <textarea id="message" name="message" rows="5" cols="100" required></textarea>
+                </label>
+
+                <div class="buttons">
+                    <button type="submit">Envoyer</button>
+                    <input type="reset" value="Effacer">
+                </div>
+            </form>
+        </article>					
+    </section>
 {% endblock %}

@@ -206,9 +206,10 @@ a {
     }
 
     .burger .bar div {
-        display: fixed;
+        position: fixed;
         transition: all 0.2s ease-out;
     }
+    
 
     .burger .bar div:hover {
         text-decoration: underline;
@@ -549,5 +550,373 @@ a {
     font-size: 18px;
     color: #7f8c8d;
     margin-top: 20px;
+}
+
+/* ---------------- Menu ---------------- */
+.menu-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px 0;
+    background-color: #f3f3f3;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.menu-item {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: black;
+    background-color: #E8ECEF;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease-out;
+}
+
+.menu-item:hover {
+    background-color: orangered;
+    color: white;
+    transform: scale(1.05);
+}
+
+.menu-item.active {
+    color: orangered;
+    border: 2px solid orangered;
+}
+
+@media screen and (max-width: 700px) {
+    .menu-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu-item {
+        font-size: 16px;
+        padding: 8px 15px;
+    }
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Conteneur d'authentification */
+.auth-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 70%;
+    max-width: 900px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Conteneur du formulaire (inscription / connexion) */
+.form-container {
+    width: 48%;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Formulaire d'inscription */
+.signup {
+    background-color: #fffbf1;
+}
+
+/* Formulaire de connexion */
+.login {
+    background-color: #f6f4ee;
+}
+
+/* Titre des formulaires */
+h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Champs de formulaire */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus {
+    border-color: #ffa600;
+    outline: none;
+}
+
+/* Bouton de soumission */
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: rgb(255, 149, 0);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: rgb(178, 95, 0);
+}
+
+/* Responsive - Ajuster les formulaires sur mobile */
+@media (max-width: 768px) {
+    .auth-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-container {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+
+    .auth-container .form-container:last-child {
+        margin-bottom: 0;
+    }
+}
+
+
+/* Section principale du formulaire de contact */
+.contact-section {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-top: 50px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Titre principal centré */
+.center.title {
+    text-align: center;
+    font-size: 2em;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+/* Description textuelle centrée */
+.center.description,
+.center.response-time {
+    text-align: center;
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* Lien email stylisé */
+.email-link {
+    color: #ff9100;
+    text-decoration: none;
+}
+
+.email-link:hover {
+    text-decoration: underline;
+    color: #cc7400;
+}
+
+/* Conteneur du formulaire de feedback */
+.feedback-form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre du formulaire */
+.form-title {
+    font-size: 1.6em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Style des labels de formulaire */
+.form-label {
+    display: block;
+    font-size: 1.1em;
+    color: #444444;
+    margin-bottom: 8px;
+}
+
+/* Style des champs de saisie (input) */
+.form-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+/* Style de la zone de texte (textarea) */
+.form-textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+/* Conteneur des boutons (envoyer et réinitialiser) */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Bouton d'envoi */
+.submit-button {
+    background-color: #ffa200;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #cc8100;
+}
+
+/* Bouton de réinitialisation */
+.reset-button {
+    background-color: #f1f1f1;
+    color: #333;
+    border: 1px solid #cccccc;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.reset-button:hover {
+    background-color: #e1e1e1;
+}
+
+/* Style pour les éléments lorsque l'écran est plus petit (mobile) */
+@media (max-width: 600px) {
+    .form-input,
+    .form-textarea {
+        width: 100%;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .submit-button,
+    .reset-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Section de la wishlist */
+.wishlist-section {
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-top: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Titre principal */
+.wishlist-section h1 {
+    color: #333;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Description */
+.wishlist-section p {
+    font-size: 1rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Formulaire */
+.wishlist-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wishlist-form h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.wishlist-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #444;
+}
+
+.wishlist-form input,
+.wishlist-form select,
+.wishlist-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.wishlist-form button,
+.wishlist-form input[type="reset"] {
+    background-color: #ffa200;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+.wishlist-form button:hover,
+.wishlist-form input[type="reset"]:hover {
+    background-color: #b98f47;
 }
 
