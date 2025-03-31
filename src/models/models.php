@@ -162,11 +162,38 @@ function searchPilot($pdo, $firstName, $lastName) {
     return $stmt->fetchAll();
 }
 
-function createPilot($pdo, $firstName, $lastName, $email, $password, $idUser) {
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO Pilot (NamePilot, FNamePilot, EmailPilot, PassWordPilot, idUser) VALUES (:lastName, :firstName, :email, :password, :idUser)";
-    $stmt = $pdo->prepare($sql);
-    return $stmt->execute(['lastName' => $lastName, 'firstName' => $firstName, 'email' => $email, 'password' => $hashed_password, 'idUser' => $idUser]);
+function addPilot($pdo, $firstName, $lastName, $email, $password, $idUser) {
+    // Vérifier si l'utilisateur existe déjà
+    $sql_check = "SELECT COUNT(*) FROM User WHERE idUser = :idUser";
+    $stmt_check = $pdo->prepare($sql_check);
+    $stmt_check->execute(['idUser' => $idUser]);
+
+    if ($stmt_check->fetchColumn() == 0) {
+        // Si l'utilisateur n'existe pas, l'insérer dans la table User
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $sql_insert_user = "INSERT INTO User (NameUser, FNameUser, EmailUser, PassWordUser) VALUES (:lastName, :firstName, :email, :password)";
+        $stmt_insert_user = $pdo->prepare($sql_insert_user);
+        $stmt_insert_user->execute([
+            'lastName' => $lastName,
+            'firstName' => $firstName,
+            'email' => $email,
+            'password' => $hashed_password
+        ]);
+
+        // Récupérer l'ID de l'utilisateur nouvellement inséré
+        $idUser = $pdo->lastInsertId();
+    }
+
+    // Insérer le pilote dans la table Pilot
+    $sql_insert_pilot = "INSERT INTO Pilot (NamePilot, FNamePilot, EmailPilot, PassWordPilot, idUser) VALUES (:lastName, :firstName, :email, :password, :idUser)";
+    $stmt_insert_pilot = $pdo->prepare($sql_insert_pilot);
+    return $stmt_insert_pilot->execute([
+        'lastName' => $lastName,
+        'firstName' => $firstName,
+        'email' => $email,
+        'password' => $hashed_password,
+        'idUser' => $idUser
+    ]);
 }
 
 function updatePilot($pdo, $id, $firstName, $lastName) {
