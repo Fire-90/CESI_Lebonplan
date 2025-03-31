@@ -17,6 +17,10 @@
     font-weight: normal;
 }
 
+::selection{
+    color: orange;
+}
+
 /* ---------------- Global Styles ---------------- */
 html {
     scroll-behavior: smooth;    
@@ -29,6 +33,7 @@ body {
     margin: 0;
     display: flex;
     flex-direction: column;
+    
 }
 
 main {
@@ -540,7 +545,7 @@ a {
 }
 
 .action-links .btn-edit {
-    background: #f39c12;
+    background: #3af411;
     color: white;
 }
 
