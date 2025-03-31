@@ -641,14 +641,14 @@ a {
 .signup {
     background-color: #fffbf1;
     margin-right: 3px;
-    box-shadow: 0 16px 32px rgba(52, 27, 0, 0.353);
+    box-shadow: 0 16px 32px rgba(52, 27, 0, 0.121);
 }
 
 /* Formulaire de connexion */
 .login {
     background-color: #f6f4ee;
     margin-left: 3px;
-    box-shadow: 0 16px 32px rgba(52, 27, 0, 0.353);
+    box-shadow: 0 16px 32px rgba(52, 27, 0, 0.121);
 }
 
 /* Titre des formulaires */
