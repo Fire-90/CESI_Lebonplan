@@ -22,7 +22,7 @@ class EntrepriseController {
     
     public function index() {
         try {
-            $stmt = $this->pdo->query("SELECT * FROM entreprises");
+            $stmt = $this->pdo->query("SELECT * FROM Company");
             $entreprises = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
             echo $this->twig->render('entreprise.twig', [
@@ -38,15 +38,15 @@ class EntrepriseController {
     public function add() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Récupérer et sécuriser les données du formulaire
-            $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING);
-            $secteur = filter_input(INPUT_POST, 'secteur', FILTER_SANITIZE_STRING);
-            $ville = filter_input(INPUT_POST, 'ville', FILTER_SANITIZE_STRING);
+            $nom = filter_input(INPUT_POST, 'NameCompany', FILTER_SANITIZE_STRING);
+            $secteur = filter_input(INPUT_POST, 'Sector', FILTER_SANITIZE_STRING);
+            $ville = filter_input(INPUT_POST, 'City', FILTER_SANITIZE_STRING);
 
             // Vérifier que tous les champs sont remplis
             if (!empty($nom) && !empty($secteur) && !empty($ville)) {
                 try {
                     // Préparer la requête SQL avec des paramètres sécurisés
-                    $stmt = $this->pdo->prepare("INSERT INTO entreprises (nom, secteur, ville) VALUES (:nom, :secteur, :ville)");
+                    $stmt = $this->pdo->prepare("INSERT INTO entreprises (NameCompany, Sector, City) VALUES (:nom, :secteur, :ville)");
                     
                     // Exécuter la requête
                     $stmt->execute([
