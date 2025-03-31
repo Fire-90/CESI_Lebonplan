@@ -3,7 +3,7 @@
         'name' => 'cesi/myt_todoo',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '8d6801f27d48a43ad8612415a30b6a9cb56539c7',
+        'reference' => '8e35c43cfba9885d19a5775b71234e99ca694488',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'cesi/myt_todoo' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '8d6801f27d48a43ad8612415a30b6a9cb56539c7',
+            'reference' => '8e35c43cfba9885d19a5775b71234e99ca694488',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
