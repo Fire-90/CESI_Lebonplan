@@ -912,7 +912,7 @@ input[type="password"]:focus {
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .wishlist-form button:hover,
