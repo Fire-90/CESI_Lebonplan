@@ -200,16 +200,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// Function to toggle the navigation menu
-function toggleBurger() {
-	document.getElementById('burger').classList.toggle('expanded');
-  }
-  
-  // Close the menu when the user scrolls
-  window.addEventListener('scroll', function() {
-	// If the menu is expanded and the user scrolls, collapse it
-	if (document.getElementById('burger').classList.contains('expanded')) {
-	  document.getElementById('burger').classList.remove('expanded');
-	}
-  });
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to toggle the navigation menu
+    function toggleBurger() {
+        document.getElementById('burger').classList.toggle('expanded');
+    }
+
+    // Close the menu when the user scrolls
+    window.addEventListener('scroll', function() {
+        // If the menu is expanded and the user scrolls, collapse it
+        if (document.getElementById('burger').classList.contains('expanded')) {
+            document.getElementById('burger').classList.remove('expanded');
+        }
+    });
+});
+
 

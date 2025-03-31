@@ -62,13 +62,17 @@ class EntrepriseController {
      */
     public function add() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING);
-            $secteur = filter_input(INPUT_POST, 'secteur', FILTER_SANITIZE_STRING);
-            $ville = filter_input(INPUT_POST, 'ville', FILTER_SANITIZE_STRING);
+            // Récupérer et sécuriser les données du formulaire
+            $nom = filter_input(INPUT_POST, 'NameCopany', FILTER_SANITIZE_STRING);
+            $secteur = filter_input(INPUT_POST, 'Sector', FILTER_SANITIZE_STRING);
+            $ville = filter_input(INPUT_POST, 'City', FILTER_SANITIZE_STRING);
 
             if (!empty($nom) && !empty($secteur) && !empty($ville)) {
                 try {
-                    $stmt = $this->pdo->prepare("INSERT INTO entreprises (nom, secteur, ville) VALUES (:nom, :secteur, :ville)");
+                    // Préparer la requête SQL avec des paramètres sécurisés
+                    $stmt = $this->pdo->prepare("INSERT INTO entreprises (NameCompany, Sector, City) VALUES (:nom, :secteur, :ville)");
+                    
+                    // Exécuter la requête
                     $stmt->execute([
                         ':nom' => $nom,
                         ':secteur' => $secteur,

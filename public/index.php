@@ -36,7 +36,11 @@ switch ($page) {
     case 'postuler':
         $controller = new HomeController();
         $controller->postuler();
-        break;
+        break;   
+        case 'login':
+            $controller = new HomeController();
+            $controller->login();
+            break;
     default:
         $controller = new HomeController();
         $controller->home();

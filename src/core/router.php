@@ -59,6 +59,12 @@ switch ($page) {
         $controller->whishlist();
         break;
 
+    case 'login':
+        // Assurez-vous que la méthode login() existe dans le bon contrôleur
+        $controller = new HomeController();
+        $controller->login();
+        break;
+
     case 'contact':
         // Assurez-vous que la méthode contact() existe dans le bon contrôleur
         $controller = new HomeController();

@@ -11,10 +11,10 @@ class Database {
     public static function getConnection() {
         if (self::$pdo === null) {
             try {
-                $host = 'localhost';
-                $dbname = 'lbp'; // Vérifie bien que c'est le bon nom de la base
-                $username = 'root';
-                $password = '';
+                $host = '20.123.200.116';
+                $dbname = 'lebonplan_data'; // Vérifie bien que c'est le bon nom de la base
+                $username = 'user';
+                $password = 'Furry_is_better666';
 
                 self::$pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
                 self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

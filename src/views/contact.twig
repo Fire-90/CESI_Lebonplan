@@ -3,31 +3,34 @@
 {% block title %}Accueil - Lebonplan{% endblock %}
 
 {% block content %}
-    <section>
-	   
-			<h1 class="center">Nous sommes à votre écoute</h1>
-			
-			<p class="center">Vous pouvez nous contacter directement via <a href="mailto:info@lebonplan.fr">notre adresse de courriel</a> ou utilisez le formulaire ci-dessous.</p>
-			<p class="center">Nous vous répondrons dans tous les cas dans les délais les plus bref.</p>
-			
-			<article>
-			
-				
-				
-				<form class="formulaire">
-					<h2>Vous avez la parole</h2>
-					
-					<label>Nom complet<input name="fullname" type="text" value="" size="100" required ></label>
-					
-					<label>Votre message<textarea name="feedbacks" rows="5" cols="100" ></textarea></label>
-					
-					<div class="buttons">
-						<button type="submit">Envoyer</button>
-						<input type="reset" value="Effacer" >
-					</div>
-				</form>
-				
-			</article>					
-			
-	   </section>
+    <section class="contact-section">
+        <h1 class="center title">Nous sommes à votre écoute</h1>
+        
+        <p class="center description">
+            Vous pouvez nous contacter directement via 
+            <a href="mailto:info@lebonplan.fr" class="email-link">notre adresse de courriel</a> ou utiliser le formulaire ci-dessous.
+        </p>
+        <p class="center response-time">
+            Nous vous répondrons dans tous les cas dans les délais les plus brefs.
+        </p>
+        
+        <article class="feedback-form-container">
+            <form class="feedback-form">
+                <h2 class="form-title">Vous avez la parole</h2>
+                
+                <label for="fullname" class="form-label">Nom complet
+                    <input id="fullname" name="fullname" type="text" class="form-input" value="" size="100" required>
+                </label>
+                
+                <label for="feedbacks" class="form-label">Votre message
+                    <textarea id="feedbacks" name="feedbacks" class="form-textarea" rows="5" cols="100"></textarea>
+                </label>
+                
+                <div class="buttons">
+                    <button type="submit" class="submit-button">Envoyer</button>
+                    <input type="reset" value="Effacer" class="reset-button">
+                </div>
+            </form>
+        </article>					
+    </section>
 {% endblock %}
