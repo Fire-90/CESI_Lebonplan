@@ -13,44 +13,55 @@
         <img src="/assets/images/logo-lbp-header.png" alt="Lebonplan - Le meilleur site d'annonces en ligne">
     </div>
 
-    <!-- Navigation pour écrans larges -->
-    <nav class="navbar">
-        <div class="bar">
-            <a href="{{ path('home') }}" class="{% if current_page == 'home' %}selected{% endif %}">Accueil</a> <span>|</span>
-            <a href="{{ path('entreprises') }}" class="{% if current_page == 'entreprises' %}selected{% endif %}">Entreprises</a> <span>|</span>
-            <a href="{{ path('offres') }}" class="{% if current_page == 'offres' %}selected{% endif %}">Offres</a> <span>|</span>
-            <a href="{{ path('whishlist') }}" class="{% if current_page == 'whishlist' %}selected{% endif %}">Whishlist</a> <span>|</span>
-            <a href="{{ path('contact') }}" class="{% if current_page == 'contact' %}selected{% endif %}">Contact</a>
-        </div>
-        <div class="account">
-            <a href="{{ path('connexion') }}">Connexion</a>
-            <a href="{{ path('inscription') }}" class="inscription">S'inscrire</a>
-        </div>
-    </nav>
+    <!-- Vérifier si on est sur la page de login -->
+    {% if app.request.attributes.get('_route') == 'login' %}
+        <!-- Si c'est la page de connexion, afficher une navbar simple -->
+        <nav class="navbar-login">
+            <div class="bar">
+                <a href="{{ path('home') }}" class="selected">Accueil</a>
+                <a href="{{ path('inscription') }}">S'inscrire</a>
+            </div>
+        </nav>
+    {% else %}
+        <!-- Navigation pour écrans larges (navbar standard) -->
+        <nav class="navbar">
+            <div class="bar">
+                <a href="{{ path('home') }}" class="{% if current_page == 'home' %}selected{% endif %}">Accueil</a> <span>|</span>
+                <a href="{{ path('entreprises') }}" class="{% if current_page == 'entreprises' %}selected{% endif %}">Entreprises</a> <span>|</span>
+                <a href="{{ path('offres') }}" class="{% if current_page == 'offres' %}selected{% endif %}">Offres</a> <span>|</span>
+                <a href="{{ path('whishlist') }}" class="{% if current_page == 'whishlist' %}selected{% endif %}">Whishlist</a> <span>|</span>
+                <a href="{{ path('contact') }}" class="{% if current_page == 'contact' %}selected{% endif %}">Contact</a>
+            </div>
+            <div class="account">
+                <a href="{{ path('login') }}" class="connexion-inscription-btn">Connexion/Inscription</a>
+            </div>
+        </nav>
 
-    <!-- Menu burger pour mobile -->
-    <div class="burger">
-        <div class="burger-icon">
-            <img src="/assets/images/burger.png" alt="Menu">
+        <!-- Menu burger pour mobile -->
+        <div class="burger">
+            <div class="burger-icon">
+                <img src="/assets/images/burger.png" alt="Menu">
+            </div>
+            <div class="bar">
+                <a href="{{ path('home') }}">Accueil</a>
+                <a href="{{ path('entreprises') }}">Entreprises</a>
+                <a href="{{ path('offres') }}">Offres</a>
+                <a href="{{ path('whishlist') }}">Whishlist</a>
+                <a href="{{ path('contact') }}">Contact</a>
+            </div>
         </div>
-        <div class="bar">
-            <a href="{{ path('home') }}">Accueil</a>
-            <a href="{{ path('entreprises') }}">Entreprises</a>
-            <a href="{{ path('offres') }}">Offres</a>
-            <a href="{{ path('whishlist') }}">Whishlist</a>
-            <a href="{{ path('contact') }}">Contact</a>
-        </div>
-    </div>
+    {% endif %}
 
-    <!-- Contenu principal -->   
+    <!-- Contenu principal -->
     <main>
         {% block content %}{% endblock %}
     </main>
-    
+
     <!-- Pied de page -->
     <footer class="footer center">
         &copy; {{ "now"|date("Y") }} Lebonplan - Tous droits réservés
     </footer>
+
     <script src="/assets/code.js"></script>
 </body>
 </html>
