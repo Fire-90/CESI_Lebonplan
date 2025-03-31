@@ -2,20 +2,22 @@
 
 namespace Controllers;
 
-use Core\database;
-use Core\baseController;
+use Core\Database;
+use Core\TemplateEngine;
 use PDO;
 
-class AccountController extends baseController {
+class AccountController {
+    private $twig;
     private $pdo;
 
     public function __construct() {
-        parent::__construct();
+        $this->twig = TemplateEngine::getTwig();
         $this->pdo = Database::getConnection();
     }
 
     public function login() {
         $errorMessage = null;
+        $user = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
@@ -67,11 +69,16 @@ class AccountController extends baseController {
             }
         }
 
-        $this->renderTemplate('login.twig', ['errorMessage' => $errorMessage]);
+        if (isset($_COOKIE['user'])) {
+            $user = json_decode($_COOKIE['user'], true);
+        }
+
+        echo $this->twig->render('login.twig', ['errorMessage' => $errorMessage, 'user' => $user]);
     }
 
     public function signup() {
         $errorMessage = null;
+        $user = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
@@ -124,7 +131,11 @@ class AccountController extends baseController {
             }
         }
 
-        $this->renderTemplate('login.twig', ['errorMessage' => $errorMessage]);
+        if (isset($_COOKIE['user'])) {
+            $user = json_decode($_COOKIE['user'], true);
+        }
+
+        echo $this->twig->render('login.twig', ['errorMessage' => $errorMessage, 'user' => $user]);
     }
 
     public function logout() {
