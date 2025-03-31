@@ -10,8 +10,8 @@ $page = $_GET['page'] ?? 'home';
 
 switch ($page) {
     case 'entreprises':
-        $controller = new HomeController();
-        $controller->entreprises();
+        $controller = new EntrepriseController();
+        $controller->index();
         break;
     case 'ajout-entreprise':  // Ajout du cas pour la page d'ajout d'entreprise
         $controller = new EntrepriseController();
@@ -29,6 +29,10 @@ switch ($page) {
         $controller = new HomeController();
         $controller->contact();
         break;
+    case 'postuler':
+        $controller = new HomeController();
+        $controller->postuler();
+        break;   
     default:
         $controller = new HomeController();
         $controller->home();

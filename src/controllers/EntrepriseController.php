@@ -3,85 +3,70 @@
 namespace Controllers;
 
 use Models\Entreprise;
+use Core\Database;
 use Core\TemplateEngine;
+use PDO;
+use PDOException;
 
 class EntrepriseController {
     private $twig;
-    private $entrepriseModel;
+    private $pdo;
 
     public function __construct() {
         // Initialiser Twig
         $this->twig = TemplateEngine::getTwig();
-        // Initialiser le modèle Entreprise
-        $this->entrepriseModel = new Entreprise();
-    }
 
-    // Afficher la liste des entreprises
-    public function index() {
-        // Récupérer toutes les entreprises depuis la base de données
-        $entreprises = $this->entrepriseModel->getEntreprises();
-
-        // Passer les données à la vue
-        echo $this->twig->render('entreprise.twig', [
-            'entreprises' => $entreprises
-        ]);
-    }
-
-    // Ajouter une entreprise
-    public function add()
-{
-    // Vérifier si la requête est de type POST
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Récupérer les données du formulaire
-        $nom = $_POST['nom'];
-        $secteur = $_POST['secteur'];
-        $ville = $_POST['ville'];
-
-        // Ajouter l'entreprise dans la base de données via le modèle
-        $this->entrepriseModel->addEntreprise($nom, $secteur, $ville);
-
-        // Rediriger vers la page d'accueil des entreprises après l'ajout
-        header('Location: /entreprises');
-        exit;
+        // Récupérer la connexion à la base de données
+        $this->pdo = Database::getConnection();
     }
     
-    // Afficher la vue d'ajout si la méthode est GET
-    $this->render('ajouter-entreprise.twig');
-}
-
-
-    // Modifier une entreprise
-    public function edit($id) {
-        // Vérifier si la requête est de type POST
+    public function index() {
+        try {
+            $stmt = $this->pdo->query("SELECT * FROM entreprises");
+            $entreprises = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            echo $this->twig->render('entreprise.twig', [
+                'entreprises' => $entreprises
+            ]);
+        } catch (PDOException $e) {
+            echo "Erreur lors de la récupération des entreprises : " . $e->getMessage();
+        }
+    }
+    
+    
+    // Ajouter une entreprise
+    public function add() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Récupérer les données du formulaire
-            $nom = $_POST['nom'];
-            $secteur = $_POST['secteur'];
-            $ville = $_POST['ville'];
+            // Récupérer et sécuriser les données du formulaire
+            $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING);
+            $secteur = filter_input(INPUT_POST, 'secteur', FILTER_SANITIZE_STRING);
+            $ville = filter_input(INPUT_POST, 'ville', FILTER_SANITIZE_STRING);
 
-            // Mettre à jour l'entreprise dans la base de données
-            $this->entrepriseModel->updateEntreprise($id, $nom, $secteur, $ville);
+            // Vérifier que tous les champs sont remplis
+            if (!empty($nom) && !empty($secteur) && !empty($ville)) {
+                try {
+                    // Préparer la requête SQL avec des paramètres sécurisés
+                    $stmt = $this->pdo->prepare("INSERT INTO entreprises (nom, secteur, ville) VALUES (:nom, :secteur, :ville)");
+                    
+                    // Exécuter la requête
+                    $stmt->execute([
+                        ':nom' => $nom,
+                        ':secteur' => $secteur,
+                        ':ville' => $ville
+                    ]);
 
-            // Rediriger vers la page des entreprises
-            header('Location: /entreprises');
-            exit;
+                    // Redirection après ajout
+                    header('Location: /entreprises');
+                    exit;
+                } catch (PDOException $e) {
+                    echo "Erreur lors de l'ajout de l'entreprise : " . $e->getMessage();
+                }
+            } else {
+                echo "Tous les champs doivent être remplis.";
+            }
         }
 
-        // Si ce n'est pas une requête POST, afficher le formulaire de modification
-        $entreprise = $this->entrepriseModel->getEntrepriseById($id);
-        echo $this->twig->render('modifier-entreprise.twig', [
-            'entreprise' => $entreprise
-        ]);
-    }
-
-    // Supprimer une entreprise
-    public function delete($id) {
-        // Supprimer l'entreprise de la base de données
-        $this->entrepriseModel->deleteEntreprise($id);
-
-        // Rediriger vers la page des entreprises
-        header('Location: /entreprises');
-        exit;
+        // Afficher le formulaire d'ajout
+        echo $this->twig->render('ajout-entreprise.twig');
     }
 }
-?>
