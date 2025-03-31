@@ -61,12 +61,21 @@ class AccountController {
                 }
 
                 setcookie('errorMessage', 'Email ou mot de passe incorrect', time() + 3600, "/");
+                error_log("Erreur de connexion: Email ou mot de passe incorrect");
 
             } catch (\PDOException $e) {
                 setcookie('errorMessage', 'Une erreur est survenue lors de la connexion', time() + 3600, "/");
+                error_log("Erreur PDO: " . $e->getMessage());
             } catch (\Exception $e) {
                 setcookie('errorMessage', 'Une erreur inattendue est survenue', time() + 3600, "/");
+                error_log("Erreur inattendue: " . $e->getMessage());
             }
+        }
+
+        // Vérifiez si le cookie 'errorMessage' est défini
+        if (isset($_COOKIE['errorMessage'])) {
+            $errorMessage = $_COOKIE['errorMessage'];
+            setcookie('errorMessage', '', time() - 3600, "/"); // Supprimez le cookie après l'avoir lu
         }
 
         if (isset($_COOKIE['user'])) {
@@ -129,6 +138,12 @@ class AccountController {
                 // Message utilisateur plus clair
                 setcookie('errorMessage', 'Erreur: ' . $e->getMessage(), time() + 3600, "/");
             }
+        }
+
+        // Vérifiez si le cookie 'errorMessage' est défini
+        if (isset($_COOKIE['errorMessage'])) {
+            $errorMessage = $_COOKIE['errorMessage'];
+            setcookie('errorMessage', '', time() - 3600, "/"); // Supprimez le cookie après l'avoir lu
         }
 
         if (isset($_COOKIE['user'])) {
