@@ -5,6 +5,12 @@
 {% block content %}
     <div class="main">
         <div class="auth-container">
+            {% if errorMessage is not null %}
+                <div class="alert">
+                    {{ errorMessage }}
+                </div>
+            {% endif %}
+
             <!-- Formulaire d'inscription -->
             <div class="form-container signup">
                 <form action="{{ path('signup') }}" method="post">
