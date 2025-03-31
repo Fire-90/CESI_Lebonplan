@@ -6,18 +6,18 @@
     <section>
         <h1 class="center">Ajouter une entreprise</h1>
 
-        <form action="{{ path('ajout-entreprise') }}" method="POST">
+        <form action="?page=ajout-entreprise" method="POST">
             <div class="form-group">
-                <label for="nom">Nom de l'entreprise</label>
-                <input type="text" id="nom" name="nom" required>
+                <label for="NameCompany">Nom de l'entreprise</label>
+                <input type="text" id="NameCompany" name="NameCompany" required>
             </div>
             <div class="form-group">
-                <label for="secteur">Secteur</label>
-                <input type="text" id="secteur" name="secteur" required>
+                <label for="Sector">Secteur</label>
+                <input type="text" id="Sector" name="Sector" required>
             </div>
             <div class="form-group">
-                <label for="ville">Ville</label>
-                <input type="text" id="ville" name="ville" required>
+                <label for="City">Ville</label>
+                <input type="text" id="City" name="City" required>
             </div>
             <button type="submit" class="btn-submit">Ajouter</button>
         </form>

@@ -24,11 +24,7 @@ class EntrepriseController {
     public function index($page = 1) {
         try {
             $perPage = 10;
-    
-            // Vérification de la validité de la page
             $page = max(1, (int)$page);
-    
-            // Calcul du point de départ SQL
             $start = ($page - 1) * $perPage;
     
             // Nombre total d'entreprises
@@ -99,14 +95,14 @@ class EntrepriseController {
 
             if (!empty($nom) && !empty($secteur) && !empty($ville)) {
                 try {
-                    $stmt = $this->pdo->prepare("UPDATE Company SET nom = :nom, secteur = :secteur, ville = :ville WHERE id = :id");
+                    $stmt = $this->pdo->prepare("UPDATE Company SET NameCompany = :nom, Sector = :secteur, City = :ville WHERE id = :id");
                     $stmt->execute([
                         ':nom' => $nom,
                         ':secteur' => $secteur,
                         ':ville' => $ville,
                         ':id' => $id
                     ]);
-                    header('Location: /entreprises');
+                    header('Location: /index.php?page=entreprises');
                     exit;
                 } catch (PDOException $e) {
                     echo "Erreur lors de la modification : " . $e->getMessage();
@@ -115,7 +111,6 @@ class EntrepriseController {
                 echo "Tous les champs doivent être remplis.";
             }
         } else {
-            // Récupération des infos de l'entreprise à modifier
             $stmt = $this->pdo->prepare("SELECT * FROM Company WHERE id = :id");
             $stmt->execute([':id' => $id]);
             $entreprise = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -131,7 +126,7 @@ class EntrepriseController {
         try {
             $stmt = $this->pdo->prepare("DELETE FROM Company WHERE id = :id");
             $stmt->execute([':id' => $id]);
-            header('Location: /entreprises');
+            header('Location: /index.php?page=entreprises');
             exit;
         } catch (PDOException $e) {
             echo "Erreur lors de la suppression : " . $e->getMessage();
