@@ -56,33 +56,48 @@ class EntrepriseController {
      */
     public function add() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Récupérer et sécuriser les données du formulaire
-            $nom = filter_input(INPUT_POST, 'NameCopany', FILTER_SANITIZE_STRING);
+            // 🔍 Vérifier ce qui est envoyé dans $_POST
+            var_dump($_POST);
+    
+            // Récupérer les valeurs et les sécuriser
+            $nom = filter_input(INPUT_POST, 'NameCompany', FILTER_SANITIZE_STRING);
             $secteur = filter_input(INPUT_POST, 'Sector', FILTER_SANITIZE_STRING);
             $ville = filter_input(INPUT_POST, 'City', FILTER_SANITIZE_STRING);
-
+    
+            // 🔍 Vérifier si les valeurs sont bien récupérées
+            var_dump($nom, $secteur, $ville);
+    
+            // Vérifier que tous les champs sont remplis
             if (!empty($nom) && !empty($secteur) && !empty($ville)) {
                 try {
-                    // Préparer la requête SQL avec des paramètres sécurisés
+                    // Préparer la requête SQL
                     $stmt = $this->pdo->prepare("INSERT INTO Company (NameCompany, Sector, City) VALUES (:nom, :secteur, :ville)");
-                    
+    
                     // Exécuter la requête
                     $stmt->execute([
                         ':nom' => $nom,
                         ':secteur' => $secteur,
                         ':ville' => $ville
                     ]);
-                    header('Location: /entreprises');
+    
+                    // 🔍 Vérifier si l'insertion a fonctionné
+                    var_dump("Insertion réussie !");
+    
+                    // Redirection après ajout
+                    header('Location: ?page=entreprises');
                     exit;
                 } catch (PDOException $e) {
-                    echo "Erreur lors de l'ajout : " . $e->getMessage();
+                    echo "Erreur lors de l'ajout de l'entreprise : " . $e->getMessage();
                 }
             } else {
-                echo "Tous les champs sont requis.";
+                echo "⚠️ Tous les champs doivent être remplis.";
             }
         }
+    
+        // Afficher le formulaire d'ajout
         echo $this->twig->render('ajout-entreprise.twig');
     }
+    
 
     /**
      * Modification d'une entreprise
