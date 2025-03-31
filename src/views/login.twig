@@ -5,15 +5,24 @@
 {% block content %}
     <div class="main">
         <div class="auth-container">
+            {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            
+            {% if success %}
+                <div class="alert alert-success">{{ success }}</div>
+            {% endif %}
+
             <!-- Formulaire d'inscription -->
             <div class="form-container signup">
                 <form action="{{ path('signup') }}" method="post">
                     <h2>Inscription</h2>
-                    <input type="text" name="txt" placeholder="Nom d'Utilisateur" required="">
-                    <input type="email" name="email" placeholder="Adresse Email" required="">
-                    <input type="number" name="broj" placeholder="Numéro de Téléphone" required="">
-                    <input type="password" name="pswd" placeholder="Mot de Passe" required="">
-                    <button type="submit" class="btn-submit">S'inscrire</button>
+                    <input type="text" name="txt" placeholder="Nom d'Utilisateur" required>
+                    <input type="email" name="email" placeholder="Adresse Email" required>
+                    <input type="tel" name="broj" placeholder="Numéro de Téléphone" required>
+                    <input type="password" name="pswd" placeholder="Mot de Passe (8 caractères min)" required minlength="8">
+                    <input type="password" name="confirm_pswd" placeholder="Confirmer le Mot de Passe" required minlength="8">
+                    <button type="submit" name="signup" class="btn-submit">S'inscrire</button>
                 </form>
             </div>
 
@@ -21,9 +30,9 @@
             <div class="form-container login">
                 <form action="{{ path('login') }}" method="post">
                     <h2>Connexion</h2>
-                    <input type="email" name="email" placeholder="Email" required="">
-                    <input type="password" name="pswd" placeholder="Mot de Passe" required="">
-                    <button type="submit" class="btn-submit">Se Connecter</button>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="pswd" placeholder="Mot de Passe" required>
+                    <button type="submit" name="login" class="btn-submit">Se Connecter</button>
                 </form>
             </div>
         </div>
