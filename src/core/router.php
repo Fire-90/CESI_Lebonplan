@@ -21,17 +21,9 @@ switch ($page) {
         $controller->add();
         break;
 
-    case 'modifier-entreprise':
-        // Afficher le formulaire de modification d'entreprise
-        // Récupérer l'ID de l'entreprise à modifier
-        $id = $_GET['id'] ?? null;
-        if ($id) {
-            $controller = new EntrepriseController();
-            $controller->edit($id);
-        } else {
-            // Gestion d'erreur si l'ID n'est pas fourni
-            echo "ID de l'entreprise manquant.";
-        }
+    case 'edit-entreprise':
+        $controller = new EntrepriseController();
+        $controller->edit($id);
         break;
 
     case 'supprimer-entreprise':
