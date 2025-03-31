@@ -52,9 +52,9 @@ class HomeController {
     }
 
     public function postuler()
-{
-    echo $this->twig->render('postuler.twig', []);
-}
+    {
+        echo $this->twig->render('postuler.twig', []);
+    }
 
 }
 ?>
