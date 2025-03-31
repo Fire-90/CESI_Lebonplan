@@ -104,20 +104,24 @@ class EntrepriseController {
      */
     public function edit($id) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nom = filter_input(INPUT_POST, 'NameCompany', FILTER_SANITIZE_STRING);
-            $secteur = filter_input(INPUT_POST, 'Sector', FILTER_SANITIZE_STRING);
-            $ville = filter_input(INPUT_POST, 'City', FILTER_SANITIZE_STRING);
-
+            // Récupérer et sécuriser les données du formulaire
+            $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING);
+            $secteur = filter_input(INPUT_POST, 'secteur', FILTER_SANITIZE_STRING);
+            $ville = filter_input(INPUT_POST, 'ville', FILTER_SANITIZE_STRING);
+    
             if (!empty($nom) && !empty($secteur) && !empty($ville)) {
                 try {
-                    $stmt = $this->pdo->prepare("UPDATE Company SET NameCompany = :nom, Sector = :secteur, City = :ville WHERE id = :id");
+                    // Exécuter la mise à jour
+                    $stmt = $this->pdo->prepare("UPDATE Company SET NameCompany = :nom, Sector = :secteur, City = :ville WHERE idCompany = :id");
                     $stmt->execute([
                         ':nom' => $nom,
                         ':secteur' => $secteur,
                         ':ville' => $ville,
                         ':id' => $id
                     ]);
-                    header('Location: /index.php?page=entreprises');
+    
+                    // Redirection après modification
+                    header('Location: index.php?page=entreprises');
                     exit;
                 } catch (PDOException $e) {
                     echo "Erreur lors de la modification : " . $e->getMessage();
@@ -126,13 +130,22 @@ class EntrepriseController {
                 echo "Tous les champs doivent être remplis.";
             }
         } else {
-            $stmt = $this->pdo->prepare("SELECT * FROM Company WHERE id = :id");
+            // Récupération des infos de l'entreprise à modifier
+            $stmt = $this->pdo->prepare("SELECT * FROM Company WHERE idCompany = :id");
             $stmt->execute([':id' => $id]);
             $entreprise = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
+            // Vérifier si l'entreprise existe
+            if (!$entreprise) {
+                header('Location: index.php?page=entreprises');
+                exit;
+            }
+    
+            // Passer l'entreprise à la vue Twig
             echo $this->twig->render('edit-entreprise.twig', ['entreprise' => $entreprise]);
         }
     }
+    
 
     /**
      * Suppression d'une entreprise
