@@ -486,65 +486,74 @@ a {
     display: none;
 }
 
-/* ----------------- Gestion des entreprises ----------------- */
+.table-container {
+    width: 90%;
+    margin: 30px auto; /* Centrer le tableau */
+    overflow-x: auto; /* Gérer les débordements sur mobile */
+}
 
-.entreprises-container {
+.table-entreprises {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table-entreprises th, .table-entreprises td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd; /* Ajout de vraies bordures */
+}
+
+.table-entreprises thead {
+    background-color: #2c3e50;
+    color: white;
+    font-size: 16px;
+    text-align: left;
+}
+
+.table-entreprises tbody tr:nth-child(even) {
+    background-color: #f8f9fa; /* Alternance des couleurs */
+}
+
+.table-entreprises tbody tr:hover {
+    background-color: #e1e1e1;
+}
+
+/* Style des actions */
+.action-links {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 20px;
+    gap: 10px;
 }
 
-.entreprise-card {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
-}
-
-.entreprise-card h2 {
-    margin: 0;
-    color: #2c3e50;
-}
-
-.entreprise-card p {
-    margin: 10px 0;
-    font-size: 14px;
-}
-
-.actions {
-    margin-top: 15px;
-}
-
-.btn-edit, .btn-delete, .btn-add {
+.action-links a {
     text-decoration: none;
-    padding: 8px 12px;
+    padding: 6px 12px;
     border-radius: 5px;
     font-size: 14px;
-    display: inline-block;
-    margin: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
 }
 
-.btn-edit {
+.action-links .btn-edit {
     background: #f39c12;
     color: white;
 }
 
-.btn-delete {
+.action-links .btn-delete {
     background: #e74c3c;
     color: white;
 }
 
-.btn-add {
-    background: #2ecc71;
-    color: white;
-    padding: 10px 15px;
-    font-size: 16px;
+.action-links a:hover {
+    opacity: 0.8;
 }
 
+/* Message si aucune donnée */
 .no-data {
     text-align: center;
     font-size: 18px;

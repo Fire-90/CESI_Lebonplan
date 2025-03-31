@@ -5,17 +5,21 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Controllers\HomeController;
 use Controllers\EntrepriseController;
 
+// Définir d'abord la pagination avant d'utiliser $page
+$pagination = isset($_GET['pagination']) ? (int) $_GET['pagination'] : 1;
+$pagination = max(1, $pagination); // Assurer que la page ne soit pas < 1
+
 // Récupérer la page demandée dans l'URL
 $page = $_GET['page'] ?? 'home';
 
 switch ($page) {
     case 'entreprises':
         $controller = new EntrepriseController();
-        $controller->index();
+        $controller->index($pagination);  // On passe bien la pagination
         break;
-    case 'ajout-entreprise':  // Ajout du cas pour la page d'ajout d'entreprise
+    case 'ajout-entreprise':
         $controller = new EntrepriseController();
-        $controller->add();  // Appel à la méthode add() du EntrepriseController
+        $controller->add();
         break;
     case 'offres':
         $controller = new HomeController();
@@ -32,14 +36,15 @@ switch ($page) {
     case 'postuler':
         $controller = new HomeController();
         $controller->postuler();
-        break;
-    case 'login':
-        $controller = new HomeController();
-        $controller->login();
-        break;     
+        break;   
+        case 'login':
+            $controller = new HomeController();
+            $controller->login();
+            break;
     default:
         $controller = new HomeController();
         $controller->home();
         break;
 }
+
 ?>
