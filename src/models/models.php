@@ -1,9 +1,6 @@
 <?php
 
 
-$compteurRegister = 0;
-$compteurCompany = 0;
-
 function login($pdo, $email, $password) {
     if (!empty($email) && !empty($password)) {
         // Requête préparée pour éviter les injections SQL
@@ -46,7 +43,7 @@ function register($pdo, $email, $password, $first_name, $last_name) {
 
             // Requête préparée pour insérer un nouvel utilisateur
             // Supposons que IdUser est auto-incrémenté
-            $sql_insert = "INSERT INTO User (IdUser, EmailUser, PassWordUser, NameUser, FNameUser) VALUES ($compteurRegister, :email, :password, :first_name, :last_name)";
+            $sql_insert = "INSERT INTO User (EmailUser, PassWordUser, NameUser, FNameUser) VALUES (:email, :password, :first_name, :last_name)";
             $stmt_insert = $pdo->prepare($sql_insert);
             $stmt_insert->execute([
                 'email' => $email,
@@ -56,7 +53,6 @@ function register($pdo, $email, $password, $first_name, $last_name) {
             ]);
 
             echo "<p style='color: green;'>Inscription réussie ! Vous pouvez maintenant vous connecter.</p>";
-            $compteurRegister++; // Incrémentation du compteur, bien que ce soit inutile ici
         }
     } else {
         echo "<p style='color: red;'>Veuillez remplir tous les champs.</p>";
@@ -88,9 +84,8 @@ function searchCompany($pdo, $name) {
 }
 
 function createCompany($pdo, $name, $email, $password) {
-    $compteurCompany++ ;
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO Company (IdCompany, NameCompany, EmailCompany, PassWordCompany) VALUES ($compteurCompany, :name, :email, :password)";
+    $sql = "INSERT INTO Company (NameCompany, EmailCompany, PassWordCompany) VALUES (:name, :email, :password)";
     $stmt = $pdo->prepare($sql);
     return $stmt->execute(['name' => $name, 'email' => $email, 'password' => $hashed_password]);
 }

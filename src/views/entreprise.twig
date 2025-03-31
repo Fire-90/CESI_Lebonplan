@@ -6,9 +6,7 @@
     <h1 class="center">Liste des Entreprises</h1>
 
     <a href="{{ path('ajout-entreprise') }}" class="btn-add">➕ Ajouter une entreprise</a>
-    <style>
-    
-</style>
+
     <div class="table-container">
         <table class="table-entreprises">
             <thead>
@@ -22,17 +20,17 @@
             <tbody>
                 {% if entreprises is empty %}
                     <tr>
-                        <td colspan="5" class="no-data">Aucune entreprise enregistrée.</td>
+                        <td colspan="4" class="no-data">Aucune entreprise enregistrée.</td>
                     </tr>
                 {% else %}
-                    {% for entreprises in entreprises %}
+                    {% for entreprise in entreprises %}
                         <tr>
-                            <td>{{ entreprises.NameCompany }}</td>
-                            <td>{{ entreprises.Sector }}</td>
-                            <td>{{ entreprises.City }}</td>
+                            <td>{{ entreprise.NameCompany }}</td>
+                            <td>{{ entreprise.Sector }}</td>
+                            <td>{{ entreprise.City }}</td>
                             <td class="action-links">
-                                <a href="{{ path('modifier-entreprise') ~ '?id=' ~ entreprises.idCompany }}" class="btn-edit">✏️ Modifier</a>
-                                <a href="{{ path('supprimer-entreprise') ~ '?id=' ~ entreprises.idCompany }}" class="btn-delete" onclick="return confirm('Voulez-vous supprimer cette entreprise ?');">🗑️ Supprimer</a>
+                                <a href="{{ path('modifier-entreprise') ~ '?id=' ~ entreprise.idCompany }}" class="btn-edit">✏️ Modifier</a>
+                                <a href="{{ path('supprimer-entreprise') ~ '?id=' ~ entreprise.idCompany }}" class="btn-delete" onclick="return confirm('Voulez-vous supprimer cette entreprise ?');">🗑️ Supprimer</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -40,16 +38,16 @@
             </tbody>
         </table>
     </div>
+
     <div class="pagination">
-    {% if currentPage > 1 %}
-        <a href="?page=entreprises&pagination={{ currentPage - 1 }}">Précédent</a>
-    {% endif %}
+        {% if currentPage > 1 %}
+            <a href="?page=entreprises&pagination={{ currentPage - 1 }}">Précédent</a>
+        {% endif %}
 
-    <span>Page {{ currentPage }} / {{ totalPages }}</span>
+        <span>Page {{ currentPage }} / {{ totalPages }}</span>
 
-    {% if currentPage < totalPages %}
-        <a href="?page=entreprises&pagination={{ currentPage + 1 }}">Suivant</a>
-    {% endif %}
-</div>
-
+        {% if currentPage < totalPages %}
+            <a href="?page=entreprises&pagination={{ currentPage + 1 }}">Suivant</a>
+        {% endif %}
+    </div>
 {% endblock %}
