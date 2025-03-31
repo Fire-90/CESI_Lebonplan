@@ -45,6 +45,12 @@ class HomeController {
         // Logique pour afficher la page de contact
         echo $this->twig->render('contact.twig');
     }
+
+    public function login() {
+        // Logique pour afficher les entreprises
+        echo $this->twig->render('login.twig');
+    }
+
     public function postuler()
 {
     echo $this->twig->render('postuler.twig', []);
