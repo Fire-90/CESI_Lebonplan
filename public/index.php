@@ -4,6 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Controllers\HomeController;
 use Controllers\EntrepriseController;
+use Controllers\AccountController;
 
 // Définir d'abord la pagination avant d'utiliser $page
 $pagination = isset($_GET['pagination']) ? (int) $_GET['pagination'] : 1;
@@ -47,9 +48,25 @@ switch ($page) {
         $controller = new HomeController();
         $controller->postuler();
         break;   
-        case 'login':
-            $controller = new HomeController();
+    case 'login':
+        $controller = new AccountController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->login();
+        } else {
+            echo $controller->login();
+        }
+        break;
+    case 'signup':
+        $controller = new AccountController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller->signup();
+        } else {
+            echo $controller->signup();
+        }
+        break;
+    case 'logout':
+        $controller = new AccountController();
+        $controller->logout();
             break;
     default:
         $controller = new HomeController();

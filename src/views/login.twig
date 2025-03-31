@@ -5,6 +5,13 @@
 {% block content %}
     <div class="main">
         <div class="auth-container">
+            {% if app.request.cookies.get('errorMessage') is not null %}
+                <div class="alert">
+                    {{ app.request.cookies.get('errorMessage') }}
+                </div>
+                {% do app.response.deleteCookie('errorMessage') %}
+            {% endif %}
+
             <!-- Formulaire d'inscription -->
             <div class="form-container signup">
                 <form action="{{ path('signup') }}" method="post">
