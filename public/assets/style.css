@@ -197,7 +197,7 @@ a {
     .burger.expanded .bar {
         opacity: 1;
         display: block;
-        transform: translateX(0);
+        transform: translateX(10%);
         gap: 5px;
     }
 
