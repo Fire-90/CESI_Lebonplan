@@ -649,22 +649,26 @@ a {
     width: 100%;
     height: 100%;
 }
-
 /* Conteneur d'authentification */
 .auth-container {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center; /* Centre les éléments horizontalement */
     width: 70%;
-    max-width: 900px;
-    margin: 20px;
-    padding: 20px;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 70px; /* Ajustez le padding pour éviter les marges indésirables */
     background-color: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
 }
 
-/* Conteneur du formulaire (inscription / connexion) */
+.forms-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
 .form-container {
     width: 48%;
     padding: 20px;
@@ -674,27 +678,26 @@ a {
 
 /* Message d'alerte */
 .alert {
-    width: 100%;
+    width: 70%;
     padding: 12px;
     background-color: #ff4d4d;
     color: white;
     font-weight: bold;
     text-align: center;
     border-radius: 5px;
-    margin-bottom: 15px;
+    margin-top: 15px; /* Ajoutez une marge en haut pour séparer des formulaires */
 }
 
 /* Bloc Signup */
 .signup {
     background-color: #4a91e249;
-    margin-right: 5px;
+    margin-right: 15px;
     box-shadow: 0 16px 32px rgba(52, 27, 0, 0.448);
 }
 
-/* Bloc Login */
 .login {
     background-color: #e2a84a49;
-    margin-left: 5px;
+    margin-left: 15px;
     box-shadow: 0 16px 32px rgba(52, 27, 0, 0.448);
 }
 
