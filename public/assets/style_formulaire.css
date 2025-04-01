@@ -42,7 +42,6 @@ main {
     padding: 40px;
     background-color: #ffffff00;
     border-radius: 12px;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -127,22 +126,23 @@ button,
 input[type="reset"],
 #upload-btn {
     padding: 12px 24px;
-    background: linear-gradient(145deg, #FF7F50 0%, #FF6347 100%);
+    background: linear-gradient(145deg, #5fa3e1 0%, #3a80c3 100%); /* Bleu plus intense et vif */
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre plus nette */
     transition: all 0.3s ease;
 }
 
 button:hover,
 input[type="reset"]:hover,
 #upload-btn:hover {
-    background: linear-gradient(145deg, #FF6347 0%, #FF7F50 100%);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(145deg, #3a80c3 0%, #5fa3e1 100%); /* Effet de survol plus vif avec un bleu plus fort */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Ombre plus nette au survol */
 }
+
 
 button:active,
 input[type="reset"]:active {
@@ -155,6 +155,7 @@ input[type="reset"]:active {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-top: 15px;
 }
 
 .checkbox2 {
@@ -263,6 +264,7 @@ h1, h2, h3 {
 
 h1.center {
     margin-bottom: 20px;
+    margin-top: -100px;
 }
 
 /* Animation d'apparition douce */

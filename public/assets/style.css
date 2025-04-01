@@ -808,9 +808,9 @@ a {
     max-width: 1000px;
     margin: 20px auto;
     padding: 60px 20px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     border-radius: 12px;
     animation: fadeIn 0.5s ease-in-out;
 }
@@ -840,9 +840,9 @@ a {
     max-width: 400px;
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center; /* Centrer les éléments dans le bloc */
+    text-align: center;
 }
 
 /* Effet au survol */
@@ -855,7 +855,7 @@ a {
 .alert {
     width: 70%;
     padding: 12px;
-    background-color: #ff4d4d;
+    background-color: #FF4D4D;
     color: white;
     font-weight: bold;
     text-align: center;
@@ -878,15 +878,15 @@ a {
 
 /* Bloc Signup */
 .signup {
-    background: linear-gradient(135deg, rgba(74, 145, 226, 0.6), rgba(74, 145, 226, 0.3));
-    box-shadow: 0 8px 24px rgba(52, 27, 0, 0.3);
+    background: linear-gradient(135deg, rgba(74, 145, 226, 0.7), rgba(74, 145, 226, 0.5));
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     margin-bottom: 15px;
 }
 
 /* Bloc Login */
 .login {
-    background: linear-gradient(135deg, rgba(226, 168, 74, 0.6), rgba(226, 168, 74, 0.3));
-    box-shadow: 0 8px 24px rgba(52, 27, 0, 0.3);
+    background: linear-gradient(135deg, rgba(226, 168, 74, 0.7), rgba(226, 168, 74, 0.5));
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     margin-bottom: 15px;
 }
 
@@ -900,9 +900,10 @@ input[type="password"] {
     margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #f9f9f992; /* Couleur plus claire pour les champs */
+    background-color: #f9f9f9b3;
     font-size: 1rem;
     box-sizing: border-box;
+    transition: all 0.3s ease;
 }
 
 /* Champs de formulaire au focus */
@@ -912,26 +913,31 @@ input[type="number"]:focus,
 input[type="password"]:focus {
     border-color: #ffa600;
     outline: none;
-    background-color: #f9f9f9aa; /* Changer la couleur de fond quand le champ est au focus */
+    background-color: #ffffffd1; /* Changer la couleur de fond quand le champ est au focus */
 }
 
 /* Bouton de soumission */
 .btn-submit {
     width: 100%;
     padding: 12px;
-    background-color: rgb(255, 149, 0);
+    background: linear-gradient(145deg, #FF6F00 0%, #FF8C00 100%);
     color: white;
     font-size: 1rem;
     font-weight: bold;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
 /* Effet de survol du bouton */
 .btn-submit:hover {
-    background-color: rgb(178, 95, 0);
+    background: linear-gradient(145deg, #FF8C00 0%, #FF6F00 100%);
+}
+
+/* Effet de clic */
+.btn-submit:active {
+    transform: translateY(2px);
 }
 
 /* Responsive - Passage en colonne sur mobile */
@@ -946,6 +952,7 @@ input[type="password"]:focus {
         width: 90%;
     }
 }
+
 
 
 
@@ -1188,3 +1195,8 @@ input[type="password"]:focus {
     background-color: #b98f47;
 }
 
+/* Mention Légale */
+.mention-title{
+    color: orangered;
+    font-weight: bold;
+}
