@@ -80,7 +80,7 @@
             $controller = new AccountController();
             $controller->logout();
             break;
-        case 'legal-notice':
+        case 'legal-notice':    
             $controller = new HomeController();
             $controller->legal(); 
             break;

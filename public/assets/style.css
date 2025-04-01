@@ -346,6 +346,10 @@ a {
     font-size: 20px;
 }
 
+.title img {
+    max-height: 200px;
+}
+
 .specifications {
     margin: 0px;
     margin-top: 3px;
