@@ -54,13 +54,15 @@ class EntrepriseController extends BaseController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $nom = filter_input(INPUT_POST, 'NameCompany', FILTER_SANITIZE_STRING);
+                $email = filter_input(INPUT_POST, 'EmailCompany', FILTER_SANITIZE_STRING);
                 $secteur = filter_input(INPUT_POST, 'Sector', FILTER_SANITIZE_STRING);
                 $ville = filter_input(INPUT_POST, 'City', FILTER_SANITIZE_STRING);
     
-                if (!empty($nom) && !empty($secteur) && !empty($ville)) {
-                    $stmt = $this->pdo->prepare("INSERT INTO Company (NameCompany, Sector, City) VALUES (:nom, :secteur, :ville)");
+                if (!empty($nom) && !empty($email) && !empty($secteur) && !empty($ville)) {
+                    $stmt = $this->pdo->prepare("INSERT INTO Company (NameCompany, EmailCompany, Sector, City) VALUES (:nom, :email, :secteur, :ville)");
                     $stmt->execute([
                         ':nom' => $nom,
+                        ':email'=>$email,
                         ':secteur' => $secteur,
                         ':ville' => $ville
                     ]);

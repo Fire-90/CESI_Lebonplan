@@ -7,103 +7,63 @@
 
     <a href="{{ path('ajout-entreprise') }}" class="btn-add">➕ Ajouter une entreprise</a>
 
-    {% if permLVL == 2 %}
-    <div class="table-container">
-        <table class="table-entreprises">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Secteur</th>
-                    <th>Ville</th>
-                    <th>Evaluation</th>
-                    <th>Actions</th>     
-                </tr>
-            </thead>
-            <tbody>
-                {% if entreprises is empty %}
+    {% if permLVL in [0, 2] %}
+        <div class="table-container">
+            <table class="table-entreprises">
+                <thead>
                     <tr>
-                        <td colspan="4" class="no-data">Aucune entreprise enregistrée.</td>
+                        <th>Nom</th>
+                        {% if permLVL == 2 %}<th>Email</th>{% endif %}
+                        <th>Secteur</th>
+                        <th>Ville</th>
+                        <th>Evaluation</th>
+                        {% if permLVL == 2 %}<th>Actions</th>{% endif %}
                     </tr>
-                {% else %}
-                    {% for entreprise in entreprises %}
+                </thead>
+                <tbody>
+                    {% if entreprises is empty %}
                         <tr>
-                            <td>{{ entreprise.NameCompany }}</td>
-                            <td>{{ entreprise.Sector }}</td>
-                            <td>{{ entreprise.City }}</td>
-                                                        <td>
-                                {% for i in 1..5 %}
-                                    {% if i <= entreprise.Evaluation %}
-                                        ⭐
-                                    {% else %}
-                                        ☆
-                                    {% endif %}
-                                {% endfor %}
-                                ({{ entreprise.Evaluation }}/5)
-                            </td>
-                            <td class="action-links">
-                                <a href="{{ path('edit-entreprise') }}&id={{ entreprise.idCompany }}" class="btn-edit">✏️ Modifier</a>
-                                <a href="{{ path('delete-entreprise') }}&id={{ entreprise.idCompany }}" class="btn-delete">🗑️ Supprimer</a>
-                            </td>
+                            <td colspan="{{ permLVL == 2 ? 5 : 4 }}" class="no-data">Aucune entreprise enregistrée.</td>
                         </tr>
-                    {% endfor %}
-                {% endif %}
-            </tbody>
-        </table>
-    </div>
-    {% endif %}
-
-    {% if permLVL == 0 %}
-    <div class="table-container">
-        <table class="table-entreprises">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Secteur</th>
-                    <th>Ville</th>
-                    <th>Evaluation</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if entreprises is empty %}
-                    <tr>
-                        <td colspan="4" class="no-data">Aucune entreprise enregistrée.</td>
-                    </tr>
-                {% else %}
-                    {% for entreprise in entreprises %}
-                        <tr>
-                            <td>{{ entreprise.NameCompany }}</td>
-                            <td>{{ entreprise.Sector }}</td>
-                            <td>{{ entreprise.City }}</td>
-                            <td>
-                                {% for i in 1..5 %}
-                                    {% if i <= entreprise.Evaluation %}
-                                        ⭐
-                                    {% else %}
-                                        ☆
-                                    {% endif %}
-                                {% endfor %}
-                                ({{ entreprise.Evaluation }}/5)
-                            </td>
-                        </tr>
-                    {% endfor %}
-                {% endif %}
-            </tbody>
-        </table>
-    </div>
+                    {% else %}
+                        {% for entreprise in entreprises %}
+                            <tr>
+                                <td>{{ entreprise.NameCompany }}</td>
+                                {% if permLVL == 2 %}<th>{{entreprise.EmailCompany}}</th>{% endif %}
+                                <td>{{ entreprise.Sector }}</td>
+                                <td>{{ entreprise.City }}</td>
+                                <td>
+                                    {% for i in 1..5 %}
+                                        {{ i <= entreprise.Evaluation ? '⭐' : '☆' }}
+                                    {% endfor %}
+                                    ({{ entreprise.Evaluation }}/5)
+                                </td>
+                                {% if permLVL == 2 %}
+                                    <td class="action-links">
+                                        <a href="{{ path('edit-entreprise', { 'id': entreprise.idCompany }) }}" class="btn-edit">✏️ Modifier</a>
+                                        <a href="{{ path('delete-entreprise', { 'id': entreprise.idCompany }) }}" class="btn-delete">🗑️ Supprimer</a>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
     {% endif %}
 
     <div class="pagination">
-    {% if currentPage > 1 %}
-        <a href="?page=entreprises&pagination=1" class="btn-first">Début</a> <!-- Bouton début -->
-        <a href="?page=entreprises&pagination={{ currentPage - 1 }}">Précédent</a>
-    {% endif %}
+        {% if currentPage > 1 %}
+            <a href="?page=entreprises&pagination=1" class="btn-first">Début</a>
+            <a href="?page=entreprises&pagination={{ currentPage - 1 }}">Précédent</a>
+        {% endif %}
 
-    <span>Page {{ currentPage }} / {{ totalPages }}</span>
+        <span>Page {{ currentPage }} / {{ totalPages }}</span>
 
-    {% if currentPage < totalPages %}
-        <a href="?page=entreprises&pagination={{ currentPage + 1 }}">Suivant</a>
-        <a href="?page=entreprises&pagination={{ totalPages }}" class="btn-last">Fin</a> <!-- Bouton fin -->
-    {% endif %}
+        {% if currentPage < totalPages %}
+            <a href="?page=entreprises&pagination={{ currentPage + 1 }}">Suivant</a>
+            <a href="?page=entreprises&pagination={{ totalPages }}" class="btn-last">Fin</a>
+        {% endif %}
     </div>
 
 {% endblock %}
