@@ -9,20 +9,23 @@ class BaseController {
     protected $user;
 
     public function __construct() {
+        $this->startSession();
         $this->twig = TemplateEngine::getTwig();
-        $this->user = $this->getUserFromCookie();
-        $this->twig->addGlobal('user', $this->user); // Ajout global
+        $this->user = $this->getUserFromSession();
+        $this->twig->addGlobal('user', $this->user);
     }
 
-    protected function getUserFromCookie() {
-        if (isset($_COOKIE['user'])) {
-            return json_decode($_COOKIE['user'], true);
+    protected function startSession() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
         }
-        return null;
+    }
+
+    protected function getUserFromSession() {
+        return $_SESSION['user'] ?? null;
     }
 
     protected function render(string $template, array $data = []) {
-        // Fusionne les données spécifiques avec les données globales
         $mergedData = array_merge(['user' => $this->user], $data);
         echo $this->twig->render($template, $mergedData);
     }
