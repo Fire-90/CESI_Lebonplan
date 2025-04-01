@@ -215,7 +215,7 @@ a {
     .navbar .bar a:hover,
     .navbar .account a:hover {
         color: #FFFFFF; /* Blanc éclatant */
-        transform: scale(1.02); /* Effet de zoom subtil */
+        transform: scale(1.03); /* Effet de zoom subtil */
         transition: color 0.3s ease, transform 0.2s ease; /* Transition fluide */
     }
 
@@ -451,8 +451,19 @@ a {
 }
 
 .title img {
-    max-height: 200px;
+    max-height: 150px;
+    width: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    object-fit: contain;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
+
+.title img:hover {
+    transform: scale(1.05); /* Effet de zoom au survol */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Ombre plus marquée au survol */
+}
+
 
 .specifications {
     margin: 0px;
