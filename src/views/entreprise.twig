@@ -42,14 +42,17 @@
     </div>
 
     <div class="pagination">
-        {% if currentPage > 1 %}
-            <a href="?page=entreprises&pagination={{ currentPage - 1 }}">Précédent</a>
-        {% endif %}
+    {% if currentPage > 1 %}
+        <a href="?page=entreprises&pagination=1" class="btn-first">Début</a> <!-- Bouton début -->
+        <a href="?page=entreprises&pagination={{ currentPage - 1 }}">Précédent</a>
+    {% endif %}
 
-        <span>Page {{ currentPage }} / {{ totalPages }}</span>
+    <span>Page {{ currentPage }} / {{ totalPages }}</span>
 
-        {% if currentPage < totalPages %}
-            <a href="?page=entreprises&pagination={{ currentPage + 1 }}">Suivant</a>
-        {% endif %}
+    {% if currentPage < totalPages %}
+        <a href="?page=entreprises&pagination={{ currentPage + 1 }}">Suivant</a>
+        <a href="?page=entreprises&pagination={{ totalPages }}" class="btn-last">Fin</a> <!-- Bouton fin -->
+    {% endif %}
     </div>
+
 {% endblock %}
