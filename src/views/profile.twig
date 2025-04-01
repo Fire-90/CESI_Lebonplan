@@ -3,6 +3,35 @@
 {% block title %}Mon Profil - Lebonplan{% endblock %}
 
 {% block content %}
-    <h1> Mon Profil</h1>
+    <h1 class="center title">Mon Profil</h1>
+    <div class="offers">
+        <div class="offer hoverable">
+            {% if user %}
+                <h2 class="title">Informations du compte</h2>
+                <p><strong>Nom :</strong> {{ user.name }}</p>
+                <p><strong>Rôle :</strong> 
+                    {% if permLVL == 0 %}
+                        Utilisateur standard
+                    {% elseif permLVL == 1 %}
+                        Pilote Élève
+                    {% else %}
+                        Administrateur
+                    {% endif %}
+                </p>
 
+                <h2 class="title" style="margin-top: 20px;">Coordonnées</h2>
+                <p><strong>Email :</strong> {{ user.email }}</p>
+                <p><strong>Téléphone :</strong> 
+                    {% if user.phone %}
+                        {{ user.phone }}
+                    {% else %}
+                        Non renseigné
+                    {% endif %}
+                </p>
+            {% else %}
+                <p>Vous n'êtes pas connecté.</p>
+                <a href="{{ path('login') }}">Se connecter</a>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

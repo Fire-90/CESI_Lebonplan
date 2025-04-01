@@ -7,21 +7,22 @@
 			<h1 class="center">Postuler à nos offres disponibles</h1>
 		</div>
 
-		<div class="search-container">
-			<form action="{{path('recherche')}}" method="GET" class="search-form">
-				<div class="search-wrapper">
-					<input 
-						type="text" 
-						name="q" 
-						placeholder="Rechercher une offre par mot-clé, entreprise ou lieu..." 
-						class="search-input"
-					>
-					<button type="submit" class="search-button">
-						<p>🔎</p>
-					</button>
-				</div>
-			</form>
-		</div>
+	<div class="search-container">
+		<form action="{{ path('offres') }}" method="GET" class="search-form">
+			<div class="search-wrapper">
+				<input 
+					type="text" 
+					name="recherche" 
+					placeholder="Rechercher une offre par mot-clé, entreprise ou lieu..." 
+					class="search-input"
+					value="{{ app.request.query.get('recherche') }}"
+				>
+				<button type="submit" class="search-button">
+					<p>🔎</p>
+				</button>
+			</div>
+		</form>
+	</div>
 
 
 		<div class="offers">

@@ -107,4 +107,38 @@ class AccountController extends BaseController {
         header('Location: /login');
         exit;
     }
+
+    public function profile() {
+        // Vérifier si l'utilisateur est connecté
+        if (!isset($_SESSION['user'])) {
+            header('Location: /login');
+            exit;
+        }
+    
+        // Récupérer les informations complètes de l'utilisateur depuis la base de données
+        try {
+            $userId = $_SESSION['user']['id'];
+            $stmt = $this->pdo->prepare("SELECT * FROM User WHERE idUser = ?");
+            $stmt->execute([$userId]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            if ($user) {
+                // Mettre à jour les informations de session
+                $_SESSION['user'] = [
+                    'id' => $user['idUser'],
+                    'name' => $user['NameUser'],
+                    'email' => $user['EmailUser'],
+                    'phone' => $user['PhoneUser'] ?? null
+                ];
+                $_SESSION['permLVL'] = $user['PermLVL'];
+            }
+    
+            $this->render('profile.twig');
+    
+        } catch (\PDOException $e) {
+            $_SESSION['errorMessage'] = 'Une erreur est survenue lors de la récupération des informations du profil';
+            header('Location: /');
+            exit;
+        }
+    }
 }
