@@ -1195,3 +1195,8 @@ input[type="password"]:focus {
     background-color: #b98f47;
 }
 
+/* Mention Légale */
+.mention-title{
+    color: orangered;
+    font-weight: bold;
+}
