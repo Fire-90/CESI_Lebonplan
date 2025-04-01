@@ -6,8 +6,7 @@ use Core\database;
 use Core\TemplateEngine;
 use PDO;
 
-class AccountController {
-    private $twig;
+class AccountController extends BaseController {
     private $pdo;
 
     public function __construct() {

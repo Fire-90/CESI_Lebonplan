@@ -6,48 +6,50 @@ use Controllers\HomeController;
 use Controllers\EntrepriseController;
 use Controllers\AccountController;
 
-// Définir d'abord la pagination avant d'utiliser $page
-$pagination = isset($_GET['pagination']) ? (int) $_GET['pagination'] : 1;
-$pagination = max(1, $pagination); // Assurer que la page ne soit pas < 1
+// Récupérer l'utilisateur depuis le cookie (si existant)
+$user = isset($_COOKIE['user']) ? json_decode($_COOKIE['user'], true) : null;
 
-// Récupérer la page demandée dans l'URL
+// Définir la pagination
+$pagination = isset($_GET['pagination']) ? (int) $_GET['pagination'] : 1;
+$pagination = max(1, $pagination);
+
+// Récupérer la page demandée
 $page = $_GET['page'] ?? 'home';
 
 switch ($page) {
     case 'entreprises':
         $controller = new EntrepriseController();
-        $controller->index($pagination);  // On passe bien la pagination
+        $controller->index($pagination, $user); // Passer $user
         break;
     case 'ajout-entreprise':
         $controller = new EntrepriseController();
-        $controller->add();
+        $controller->add($user); // Passer $user
         break;
-        case 'edit-entreprise':
-            $controller = new EntrepriseController();
-            if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-                $controller->edit((int) $_GET['id']);
-            } else {
-                header('Location: index.php?page=entreprises'); // Redirection si pas d'ID valide
-                exit;
-            }
-            break;
-        
+    case 'edit-entreprise':
+        $controller = new EntrepriseController();
+        if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+            $controller->edit((int) $_GET['id'], $user); // Passer $user
+        } else {
+            header('Location: index.php?page=entreprises');
+            exit;
+        }
+        break;
     case 'offres':
         $controller = new HomeController();
-        $controller->offres();
+        $controller->offres($user); // Passer $user
         break;
     case 'whishlist':
         $controller = new HomeController();
-        $controller->whishlist();
+        $controller->whishlist($user); // Passer $user
         break;
     case 'contact':
         $controller = new HomeController();
-        $controller->contact();
+        $controller->contact($user); // Passer $user
         break;
     case 'postuler':
         $controller = new HomeController();
-        $controller->postuler();
-        break;   
+        $controller->postuler($user); // Passer $user
+        break;
     case 'login':
         $controller = new AccountController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -67,11 +69,9 @@ switch ($page) {
     case 'logout':
         $controller = new AccountController();
         $controller->logout();
-            break;
+        break;
     default:
         $controller = new HomeController();
-        $controller->home();
+        $controller->home($user); // Passer $user
         break;
 }
-
-?>
