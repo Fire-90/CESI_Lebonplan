@@ -1,9 +1,9 @@
 {% extends "base.twig" %}
 
-{% block title %}Liste des Entreprises - Lebonplan{% endblock %}
+{% block title %}Entreprises - Lebonplan{% endblock %}
 
 {% block content %}
-    <h1 class="center">Entreprises</h1>
+    <h1 class="center">Liste des Entreprises</h1>
 
     {% if permLVL == 2 %}<a href="{{ path('ajout-entreprise') }}" class="btn-add">➕ Ajouter une entreprise</a>{% endif %}
 
