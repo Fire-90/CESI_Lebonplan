@@ -1,35 +1,47 @@
 {% extends "base.twig" %}
 
-{% block title %}Offres - Lebonplan{% endblock %}
+{% block title %}Catalogue des offres - Lebonplan{% endblock %}
 
 {% block content %}
+    {% if permLVL == 2 %}
+        <a href="{{ path('add-offer') }}" class="btn-add">➕ Ajouter une offre</a>
+    {% endif %}
+
     <div>
-			<h1 class="center">Postuler à nos offres disponibles</h1>
-		</div>
-		<div class="offers">
-			<div class="offer hoverable ">
-				<h1 class="title center">Stage - Administrateur Système et Réseau H/F</h1>
-				<h2 class="small center">IBM | Pornichet - 44 | Publiée le 13/01/2025</h2>
-				<h1 class="center"> <a href="{{path('postuler')}}" class="postuler clickable" > POSTULER </a> </h1>
-			</div>
-			<div class="offer hoverable">
-				<h1 class="title center">Stage - Ingénieur Qualité H/F</h1>
-				<h2 class="small center"> | Pornichet - 44 | Publiée le 20/01/2025</h2>
-				<h1 class="center"> <a href="{{path('postuler')}}" class="postuler clickable" > POSTULER </a> </h1>
-			</div>
-			<div class="offer hoverable">
-				<h1 class="title center">Stage - Devéloppement WEB H/F</h1>
-				<h2 class="small center">IBM | Nantes - 44 | Publiée le 23/02/2025</h2>
-				<h1 class="center"> <a href="{{path('postuler')}}" class="postuler clickable" > POSTULER </a> </h1>
-			</div>
-			<div class="offer hoverable">
-				<h1 class="title center">Stage - Systèmes Embarqués H/F</h1>
-				<h2 class="small center">IBM | Pornichet - 44 | Publiée le 10/02/2025</h2>
-				<h1 class="center"> <a href="{{path('postuler')}}" class="postuler clickable" > POSTULER </a> </h1>
-			</div>
-			<div class="offer hoverable">
-				<h1 class="title center">Créer votre annonce !</h1>
-				<h1 class="center"> <a href="{{path('')}}" class="postuler clickable" > CREER </a> </h1>
-			</div>
-		</div>
+        <h1 class="center">Postuler à nos offres disponibles</h1>
+    </div>
+
+    <div class="offers">
+        {% for offre in Offer %}
+            <div class="offer hoverable">
+                <h1 class="title center">{{ offre.NameOffer }}</h1>
+                <h2 class="small center">{{ offre.DescOffer }} | {{ offre.RemunOffer }} </h2>
+				<h2 class="small center">{{ offre.idCompany}} | Publiée le {{ offre.DateOffer|date("d/m/Y") }}</h2>
+                <h1 class="center">
+                    <a href="{{ path('postuler', {'id': offre.idOffer}) }}" class="postuler clickable"> POSTULER </a>
+                </h1>
+
+                {% if permLVL == 2 %}
+                    <a href="{{ path('edit-offres', {'id': offre.idOffer}) }}" class="btn-edit">✏️ Modifier</a>
+                    <a href="{{ path('delete-offres', {'id': offre.idOffer}) }}" class="btn-delete">🗑️ Supprimer</a>
+                {% endif %}
+            </div>
+        {% else %}
+            <p class="center">Aucune offre disponible pour le moment.</p>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        {% if currentPage > 1 %}
+            <a href="?page=entreprises&pagination=1" class="btn-first">Début</a>
+            <a href="?page=offres&pagination={{ currentPage - 1 }}">Précédent</a>
+        {% endif %}
+
+        <span>Page {{ currentPage }} / {{ totalPages }}</span>
+
+        {% if currentPage < totalPages %}
+            <a href="?page=offres&pagination={{ currentPage + 1 }}">Suivant</a>
+            <a href="?page=offres&pagination={{ totalPages }}" class="btn-last">Fin</a>
+        {% endif %}
+    </div>
 {% endblock %}

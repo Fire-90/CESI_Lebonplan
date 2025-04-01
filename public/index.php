@@ -5,6 +5,7 @@
     use Controllers\HomeController;
     use Controllers\EntrepriseController;
     use Controllers\AccountController;
+    use Controllers\PostController;
 
     // Récupérer l'utilisateur depuis le cookie (si existant)
     $user = isset($_COOKIE['user']) ? json_decode($_COOKIE['user'], true) : null;
@@ -43,11 +44,36 @@
                 header('Location: index.php?page=entreprises'); // Redirection si pas d'ID
                 exit;
             }
-            break;    
-        case 'offres':
-            $controller = new HomeController();
-            $controller->offres(); 
             break;
+
+        case 'offres':
+            $controller = new PostController();
+            $controller->index($pagination); 
+            break;
+        case 'add-offer':
+            $controller = new PostController();
+            $controller->add(); 
+            break;
+        case 'edit-offer':
+            $controller = new PostController();
+            if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+                $controller->edit((int) $_GET['id']);
+            } else {
+                header('Location: index.php?page=offer'); // Redirection si pas d'ID valide
+                exit;
+            }
+            break;
+        case 'delete-offer':
+            $controller = new PostController();
+            $id = $_GET['id'] ?? null;
+            if ($id) {
+                $controller->delete();
+            } else {
+                header('Location: index.php?page=offer'); // Redirection si pas d'ID
+                exit;
+            }
+            break;
+
         case 'whishlist':
             $controller = new HomeController();
             $controller->whishlist(); 

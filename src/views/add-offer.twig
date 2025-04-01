@@ -1,0 +1,29 @@
+{% extends "base.twig" %}
+
+{% block title %}Ajouter une offre - Lebonplan{% endblock %}
+
+{% block content %}
+    <section>
+        <h1 class="center">Ajouter une offre</h1>
+
+        <form action="?page=ajout-offer" method="POST">
+            <div class="form-group">
+                <label for="NameOffer">Nom du poste</label>
+                <input type="text" id="NameOffer" name="NameOffer" required>
+            </div>
+            <div class="form-group">
+                <label for="EmailCompany">Nom de l'entreprise</label>
+                <input type="text" id="EmailCompany" name="EmailCompany" required>
+            </div>
+            <div class="form-group">
+                <label for="Sector">Ville</label>
+                <input type="text" id="Sector" name="Sector" required>
+            </div>
+            <div class="form-group">
+                <label for="City">Compétences</label>
+                <input type="text" id="City" name="City" required>
+            </div>
+            <button type="submit" class="btn-submit">Ajouter</button>
+        </form>
+    </section>
+{% endblock %}
