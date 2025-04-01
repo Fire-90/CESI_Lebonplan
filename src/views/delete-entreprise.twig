@@ -1,0 +1,30 @@
+{% extends "base.twig" %}
+
+{% block title %}Supprimer une entreprise - Lebonplan{% endblock %}
+
+{% block content %}
+    <section>
+        <h1 class="center">Suppression de l'entreprise</h1>
+        
+        <div class="company-details">
+            <p><strong>Nom :</strong> {{ entreprise.NameCompany }}</p>
+            <p><strong>Secteur :</strong> {{ entreprise.Sector }}</p>
+            <p><strong>Ville :</strong> {{ entreprise.City }}</p>
+        </div>
+
+        <p class="warning">⚠️ Êtes-vous sûr de vouloir supprimer cette entreprise ? Cette action est irréversible.</p>
+
+        <div class="actions">
+            <a href="{{ path('entreprises') }}" class="btn-cancel">❌ Annuler</a>
+            <form action="index.php?page=delete-entreprise&id= {{'entreprise.idCompany'}}" method="POST">
+    <input type="hidden" name="id" value="{{ entreprise.idCompany }}">
+    <button type="submit" class="btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette entreprise ?')">
+        🗑️ Confirmer la suppression
+    </button>
+</form>
+
+<p>URL de suppression : {{ path('delete-entreprise', {'id': entreprise.idCompany}) }}</p>
+
+        </div>
+    </section>
+{% endblock %}

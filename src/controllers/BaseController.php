@@ -7,23 +7,35 @@ use Core\TemplateEngine;
 class BaseController {
     protected $twig;
     protected $user;
+    protected $permLVL;
 
     public function __construct() {
+        $this->startSession();
         $this->twig = TemplateEngine::getTwig();
-        $this->user = $this->getUserFromCookie();
-        $this->twig->addGlobal('user', $this->user); // Ajout global
+        $this->user = $this->getUserFromSession();
+        $this->permLVL = $this->getPermLVLFromSession();
+        
+        // Ajout des variables globales pour Twig
+        $this->twig->addGlobal('user', $this->user);
+        $this->twig->addGlobal('permLVL', $this->permLVL);
     }
 
-    protected function getUserFromCookie() {
-        if (isset($_COOKIE['user'])) {
-            return json_decode($_COOKIE['user'], true);
+    protected function startSession() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
         }
-        return null;
+    }
+
+    protected function getUserFromSession() {
+        return $_SESSION['user'] ?? null;
+    }
+
+    protected function getPermLVLFromSession() {
+        return $_SESSION['permLVL'] ?? 0; // 0 = guest par défaut
     }
 
     protected function render(string $template, array $data = []) {
-        // Fusionne les données spécifiques avec les données globales
-        $mergedData = array_merge(['user' => $this->user], $data);
-        echo $this->twig->render($template, $mergedData);
+        // Les variables user et permLVL sont déjà disponibles globalement
+        echo $this->twig->render($template, $data);
     }
 }
