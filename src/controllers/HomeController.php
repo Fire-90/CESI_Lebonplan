@@ -2,17 +2,9 @@
 
 namespace Controllers;
 
-use Core\TemplateEngine;
-
-class HomeController {
-    private $twig;
-
-    public function __construct() {
-        $this->twig = TemplateEngine::getTwig();
-    }
+class HomeController extends BaseController {
 
     public function home() {
-        // Données simulées (en pratique, elles viendraient d'une base de données)
         $categories = ["Immobilier", "Véhicule", "Vêtements", "Multimédia", "Maison", "Loisir", "Service"];
         $articles = [
             ["titre" => "Maison 5 pièces 120m²", "localisation" => "Saint-Nazaire", "vendeur" => "Stéphane Plaza", "prix" => "305 000€"],
@@ -20,41 +12,33 @@ class HomeController {
             ["titre" => "Canapé 3 places IKEA", "localisation" => "Bordeaux", "vendeur" => "Ingvar Kamprad", "prix" => "149€"],
         ];
 
-        echo $this->twig->render('home.twig', [
+        $this->render('home.twig', [
             'categories' => $categories,
             'articles' => $articles
         ]);
     }
 
     public function entreprises() {
-        // Logique pour afficher les entreprises
-        echo $this->twig->render('entreprise.twig');
+        $this->render('entreprise.twig');
     }
 
     public function offres() {
-        // Logique pour afficher les offres
-        echo $this->twig->render('offres.twig');
+        $this->render('offres.twig');
     }
 
     public function whishlist() {
-        // Logique pour afficher la whishlist
-        echo $this->twig->render('wishlist.twig');
+        $this->render('wishlist.twig');
     }
 
     public function contact() {
-        // Logique pour afficher la page de contact
-        echo $this->twig->render('contact.twig');
+        $this->render('contact.twig');
     }
 
     public function login() {
-        // Logique pour afficher les entreprises
-        echo $this->twig->render('login.twig');
+        $this->render('login.twig');
     }
 
-    public function postuler()
-    {
-        echo $this->twig->render('postuler.twig', []);
+    public function postuler() {
+        $this->render('postuler.twig');
     }
-
 }
-?>

@@ -5,34 +5,35 @@
 {% block content %}
     <div class="main">
         <div class="auth-container">
-            {% if app.request.cookies.get('errorMessage') is not null %}
-                <div class="alert">
-                    {{ app.request.cookies.get('errorMessage') }}
+            <div class="forms-container">
+                <!-- Formulaire d'inscription -->
+                <div class="form-container signup">
+                    <form action="{{ path('signup') }}" method="post">
+                        <h2>Inscription</h2>
+                        <input type="text" name="txt" placeholder="Nom d'Utilisateur" required="">
+                        <input type="email" name="email" placeholder="Adresse Email" required="">
+                        <input type="number" name="broj" placeholder="Numéro de Téléphone" required="">
+                        <input type="password" name="pswd" placeholder="Mot de Passe" required="">
+                        <button type="submit" class="btn-submit">S'inscrire</button>
+                    </form>
                 </div>
-                {% do app.response.deleteCookie('errorMessage') %}
+
+                <!-- Formulaire de connexion -->
+                <div class="form-container login">
+                    <form action="{{ path('login') }}" method="post">
+                        <h2>Connexion</h2>
+                        <input type="email" name="email" placeholder="Email" required="">
+                        <input type="password" name="pswd" placeholder="Mot de Passe" required="">
+                        <button type="submit" class="btn-submit">Se Connecter</button>
+                    </form>
+                </div>
+            </div>
+
+            {% if errorMessage is not null %}
+                <div class="alert">
+                    {{ errorMessage }}
+                </div>
             {% endif %}
-
-            <!-- Formulaire d'inscription -->
-            <div class="form-container signup">
-                <form action="{{ path('signup') }}" method="post">
-                    <h2>Inscription</h2>
-                    <input type="text" name="txt" placeholder="Nom d'Utilisateur" required="">
-                    <input type="email" name="email" placeholder="Adresse Email" required="">
-                    <input type="number" name="broj" placeholder="Numéro de Téléphone" required="">
-                    <input type="password" name="pswd" placeholder="Mot de Passe" required="">
-                    <button type="submit" class="btn-submit">S'inscrire</button>
-                </form>
-            </div>
-
-            <!-- Formulaire de connexion -->
-            <div class="form-container login">
-                <form action="{{ path('login') }}" method="post">
-                    <h2>Connexion</h2>
-                    <input type="email" name="email" placeholder="Email" required="">
-                    <input type="password" name="pswd" placeholder="Mot de Passe" required="">
-                    <button type="submit" class="btn-submit">Se Connecter</button>
-                </form>
-            </div>
         </div>
     </div>
 {% endblock %}
