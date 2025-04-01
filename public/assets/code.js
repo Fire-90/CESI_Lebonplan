@@ -257,24 +257,31 @@ document.addEventListener("DOMContentLoaded", function () {
 // Sélectionner les éléments nécessaires
 const userDropdown = document.querySelector('.user-dropdown');
 const dropdownContent = document.querySelector('.dropdown-content');
-const username = document.querySelector('.username');
 
-// Ajouter un événement de clic sur le nom d'utilisateur pour ouvrir/fermer le menu
-username.addEventListener('click', function(event) {
-    // Empêcher la propagation du clic pour éviter de fermer immédiatement le menu
-    event.stopPropagation();
+// Fonction pour afficher le menu
+function showDropdown() {
+    dropdownContent.style.display = 'block';
+    dropdownContent.style.opacity = '1';
+}
 
-    // Basculer la visibilité du menu déroulant
-    dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
-    dropdownContent.style.opacity = (dropdownContent.style.display === 'block') ? '1' : '0';
-});
+// Fonction pour cacher le menu après un court délai
+function hideDropdown() {
+    setTimeout(() => {
+        if (!userDropdown.matches(':hover') && !dropdownContent.matches(':hover')) {
+            dropdownContent.style.opacity = '0';
+            setTimeout(() => {
+                dropdownContent.style.display = 'none';
+            }, 300); // Délai pour laisser la transition s'appliquer
+        }
+    }, 200); // Petit délai pour éviter que le menu disparaisse trop vite
+}
 
-// Ajouter un événement de clic à l'ensemble du document pour fermer le menu
-document.addEventListener('click', function(event) {
-    // Vérifier si le clic n'est pas sur l'élément de la dropdown ou son contenu
-    if (!userDropdown.contains(event.target)) {
-        dropdownContent.style.display = 'none';
-        dropdownContent.style.opacity = '0';
-    }
-});
+// Toujours afficher le menu si la souris est sur la zone utilisateur
+userDropdown.addEventListener('mouseenter', showDropdown);
+dropdownContent.addEventListener('mouseenter', showDropdown);
+
+// Cacher le menu uniquement si la souris quitte toute la zone
+userDropdown.addEventListener('mouseleave', hideDropdown);
+dropdownContent.addEventListener('mouseleave', hideDropdown);
+
 
