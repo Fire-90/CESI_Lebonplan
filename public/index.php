@@ -28,12 +28,22 @@ switch ($page) {
     case 'edit-entreprise':
         $controller = new EntrepriseController();
         if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-            $controller->edit((int) $_GET['id'], $user); // Passer $user
+            $controller->edit((int) $_GET['id'], $user);
         } else {
-            header('Location: index.php?page=entreprises');
+            header('Location: index.php?page=entreprises'); // Redirection si pas d'ID valide
             exit;
         }
         break;
+    case 'delete-entreprise':
+        $controller = new EntrepriseController();
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            $controller->delete($user);
+        } else {
+            header('Location: index.php?page=entreprises'); // Redirection si pas d'ID
+            exit;
+        }
+        break;    
     case 'offres':
         $controller = new HomeController();
         $controller->offres($user); // Passer $user
@@ -75,3 +85,5 @@ switch ($page) {
         $controller->home($user); // Passer $user
         break;
 }
+
+?>
