@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-use Core\Database;
+use Core\database;
 use PDO;
 use PDOException;
 
