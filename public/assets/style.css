@@ -98,7 +98,7 @@ a {
         font-size: 20px;
         justify-content: space-between;
         padding: 13px 15px;
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgb(0, 0, 0) 80%, rgba(255, 132, 0, 0.603)); /* Dégradé noir vers orange subtile */
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgb(0, 0, 0) 70%, rgba(255, 132, 0, 0.603)); /* Dégradé noir vers orange subtile */
         color: white;
         box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.1); /* Ombre légère pour effet de profondeur */
         border-radius: 8px; /* Bordure arrondie */
@@ -537,6 +537,36 @@ a {
     background-color: #e1e1e1;
 }
 
+
+/* Style pour le bouton Ajouter une entreprise */
+.btn-add {
+    display: inline-block;
+    text-decoration: none;
+    background: linear-gradient(135deg, #ff8c00, #ff6a00); /* Gradient orange */
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin: 20px 0;
+}
+
+.btn-add:hover {
+    background: linear-gradient(135deg, #ff6a00, #e55c00); /* Gradient légèrement plus foncé au survol */
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+}
+
+.btn-add:active {
+    background: linear-gradient(135deg, #e55c00, #ff6a00); /* Changement de couleur au clic */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(1px); /* Effet d'enfoncement au clic */
+}
+
+
 /* Pagination */
 .pagination {
     display: flex;
@@ -544,27 +574,70 @@ a {
     align-items: center;
     margin-top: 20px;
     font-size: 1rem;
+    font-family: 'Arial', sans-serif;
 }
 
+/* Liens de pagination standard (Précédent, Suivant) */
 .pagination a {
     text-decoration: none;
     color: #fff;
-    background-color: #ffc400;
-    padding: 10px 15px;
-    margin: 0 5px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    background: linear-gradient(135deg, #ffa500, #ff8c00); /* Gradient doré pour les boutons */
+    padding: 10px 20px;
+    margin: 0 8px;
+    border-radius: 50px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
 }
 
+/* Hover effet pour les liens standards */
 .pagination a:hover {
-    background-color: #b37700;
+    background: linear-gradient(135deg, #ff8c00, #b37700);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
-.pagination span {
-    margin: 0 10px;
+/* Spécifique aux boutons "Début" et "Fin" */
+.pagination .btn-first, .pagination .btn-last {
+    background: linear-gradient(135deg, #d32f2f, #b71c1c); /* Gradient rouge pour les boutons "Début" et "Fin" */
+    color: #fff;
     font-weight: bold;
-    color: #333;
+    padding: 10px 20px;
+    margin: 0 8px;
+    border-radius: 50px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
 }
+
+/* Hover effet pour les boutons "Début" et "Fin" */
+.pagination .btn-first:hover, .pagination .btn-last:hover {
+    background: linear-gradient(135deg, #b71c1c, #9a1c1c);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Texte entre les pages */
+.pagination span {
+    margin: 0 12px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #555;
+}
+
+/* Mobile - Pagination compacte */
+@media (max-width: 768px) {
+    .pagination a {
+        padding: 8px 14px;
+        font-size: 0.9rem;
+    }
+
+    .pagination span {
+        font-size: 14px;
+    }
+}
+
+
+
 
 
 /* Style des actions */
@@ -584,15 +657,60 @@ a {
     font-weight: bold;
 }
 
+/* Bouton Modifier (btn-edit) */
 .action-links .btn-edit {
-    background: #3af411;
+    display: inline-block;
+    background: linear-gradient(135deg, #3af411, #29b300); /* Dégradé vert */
     color: white;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.action-links .btn-delete {
-    background: #e74c3c;
-    color: white;
+.action-links .btn-edit:hover {
+    background: linear-gradient(135deg, #29b300, #1c9b00); /* Dégradé plus foncé au survol */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
 }
+
+.action-links .btn-edit:active {
+    background: linear-gradient(135deg, #1c9b00, #29b300); /* Couleur plus foncée au clic */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px); /* Effet d'enfoncement au clic */
+}
+
+/* Bouton Supprimer (btn-delete) */
+.action-links .btn-delete {
+    display: inline-block;
+    background: linear-gradient(135deg, #e74c3c, #c0392b); /* Dégradé rouge */
+    color: white;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.action-links .btn-delete:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226); /* Dégradé plus foncé au survol */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+}
+
+.action-links .btn-delete:active {
+    background: linear-gradient(135deg, #a93226, #c0392b); /* Couleur plus foncée au clic */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px); /* Effet d'enfoncement au clic */
+}
+
 
 .action-links a:hover {
     opacity: 0.8;
