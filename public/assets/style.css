@@ -180,7 +180,7 @@ a {
     }
 
     .dropdown-content a:hover {
-        background-color: #ff8c00;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 1) 0%, rgba(255, 140, 0, 1) 100%);
         color: #fff;
         transform: translateX(5px); /* Légère translation vers la droite */
     }
@@ -216,7 +216,7 @@ a {
     .navbar .bar a:hover,
 .navbar .account a:hover {
     color: #FFFFFF; /* Blanc éclatant */
-    transform: scale(1.05); /* Effet de zoom subtil */
+    transform: scale(1.02); /* Effet de zoom subtil */
     transition: color 0.3s ease, transform 0.2s ease; /* Transition fluide */
 }
 
