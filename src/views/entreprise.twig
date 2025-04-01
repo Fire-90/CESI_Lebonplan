@@ -15,6 +15,7 @@
                     <th>Secteur</th>
                     <th>Ville</th>
                     <th>Actions</th>
+                    <th>Evaluation</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,9 +29,10 @@
                             <td>{{ entreprise.NameCompany }}</td>
                             <td>{{ entreprise.Sector }}</td>
                             <td>{{ entreprise.City }}</td>
+                            <td>{{ entreprise.Evaluation }}</td>
                             <td class="action-links">
                                 <a href="{{ path('edit-entreprise') }}&id={{ entreprise.idCompany }}" class="btn-edit">✏️ Modifier</a>
-                                <a href="{{ path('supprimer-entreprise') ~ '?id=' ~ entreprise.idCompany }}" class="btn-delete" onclick="return confirm('Voulez-vous supprimer cette entreprise ?');">🗑️ Supprimer</a>
+                                <a href="{{ path('delete-entreprise') }}&id={{ entreprise.idCompany }}" class="btn-delete">🗑️ Supprimer</a>
                             </td>
                         </tr>
                     {% endfor %}

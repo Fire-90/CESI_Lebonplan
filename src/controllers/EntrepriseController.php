@@ -146,18 +146,52 @@ class EntrepriseController {
         }
     }
     
-
     /**
      * Suppression d'une entreprise
      */
-    public function delete($id) {
+    public function delete() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (!isset($_POST['id']) || empty($_POST['id'])) {
+            echo "ID manquant pour la suppression.";
+            return;
+        }
+
+        $id = (int) $_POST['id']; // Sécurisation de l'ID
+
         try {
-            $stmt = $this->pdo->prepare("DELETE FROM Company WHERE id = :id");
+            $stmt = $this->pdo->prepare("DELETE FROM Company WHERE idCompany = :id");
             $stmt->execute([':id' => $id]);
-            header('Location: /index.php?page=entreprises');
+
+            // Redirection après suppression
+            header('Location: index.php?page=entreprises');
             exit;
         } catch (PDOException $e) {
             echo "Erreur lors de la suppression : " . $e->getMessage();
         }
+    } else {
+        if (!isset($_GET['id']) || empty($_GET['id'])) {
+            echo "Aucune entreprise spécifiée.";
+            return;
+        }
+
+        $id = (int) $_GET['id'];
+
+        try {
+            $stmt = $this->pdo->prepare("SELECT * FROM Company WHERE idCompany = :id");
+            $stmt->execute([':id' => $id]);
+            $entreprise = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$entreprise) {
+                echo "Entreprise non trouvée.";
+                return;
+            }
+
+            // Afficher la page de confirmation
+            echo $this->twig->render('delete-entreprise.twig', ['entreprise' => $entreprise]);
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
     }
+}
+
 }
