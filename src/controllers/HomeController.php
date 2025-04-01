@@ -5,17 +5,7 @@ namespace Controllers;
 class HomeController extends BaseController {
 
     public function home() {
-        $categories = ["Immobilier", "Véhicule", "Vêtements", "Multimédia", "Maison", "Loisir", "Service"];
-        $articles = [
-            ["titre" => "Maison 5 pièces 120m²", "localisation" => "Saint-Nazaire", "vendeur" => "Stéphane Plaza", "prix" => "305 000€"],
-            ["titre" => "Volkswagen Polo 1.0 TSI 95ch", "localisation" => "Nanterre", "vendeur" => "Michael Schumacher", "prix" => "16 990€"],
-            ["titre" => "Canapé 3 places IKEA", "localisation" => "Bordeaux", "vendeur" => "Ingvar Kamprad", "prix" => "149€"],
-        ];
-
-        $this->render('home.twig', [
-            'categories' => $categories,
-            'articles' => $articles
-        ]);
+        $this->render('home.twig');
     }
 
     public function entreprises() {

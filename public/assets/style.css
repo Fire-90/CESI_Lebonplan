@@ -87,6 +87,103 @@ a {
     color: black;
 }
 
+/* ----------------Home.twig----------------------- */
+
+.hero {
+    background: url('/assets/images/hero-bg.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 50px 20px;
+    color: white;
+    text-align: center;
+    background-color: #f79c42; /* Dégradé léger dans les teintes orange */
+}
+
+.hero-content h2 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.cta-button {
+    padding: 10px 20px;
+    background-color: #f79c42; /* Orange principal */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #f57c00; /* Teinte d'orange plus foncé */
+}
+
+.services {
+    display: flex;
+    justify-content: space-around;
+    padding: 40px 20px;
+    background-color: #fff5e1; /* Légère teinte orangée de fond pour bien contraster */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.service {
+    text-align: center;
+    width: 30%;
+}
+
+.service i {
+    font-size: 3rem;
+    color: #4287f7; /* Orange pour les icônes */
+}
+
+.service h3 {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.service-link {
+    display: block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #427ef7; /* Orange pour les liens */
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.service-link:hover {
+    color: #222ce6; /* Teinte d'orange un peu plus foncé */
+    transform: scale(1.02);
+}
+
+.cta-footer {
+    background-color: #f9f3e5; /* Fond très léger en teinte orangée */
+    padding: 40px 20px;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.cta-footer h3 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.cta-footer .cta-button {
+    background-color: #ff6f00; /* Orange vif pour l'appel à l'action */
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.cta-footer .cta-button:hover {
+    background-color: #e65100; /* Orange foncé pour le hover */
+}
+
+
 /* ---------------- Navigation Bar ---------------- */
 @media screen and (min-width: 701px) {
     .burger {
