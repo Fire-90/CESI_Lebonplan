@@ -29,10 +29,11 @@
                 </div>
             </div>
 
-            {% if errorMessage is not null %}
-                <div class="alert">
-                    {{ errorMessage }}
-                </div>
+            {% if successMessage %}
+                <div class="alert alert-success">{{ successMessage }}</div>
+            {% endif %}
+            {% if errorMessage %}
+                <div class="alert alert-danger">{{ errorMessage }}</div>
             {% endif %}
         </div>
     </div>

@@ -1,6 +1,6 @@
 {% extends "base.twig" %}
 
-{% block title %}Liste des Entreprises - Lebonplan{% endblock %}
+{% block title %}Entreprises - Lebonplan{% endblock %}
 
 {% block content %}
     <h1 class="center">Liste des Entreprises</h1>
@@ -54,15 +54,15 @@
 
     <div class="pagination">
         {% if currentPage > 1 %}
-            <a href="?page=entreprises&pagination=1" class="btn-first">Début</a>
-            <a href="?page=entreprises&pagination={{ currentPage - 1 }}">Précédent</a>
+            <a href="?page=entreprises&pagination=1" class="btn-first"><<</a>
+            <a href="?page=entreprises&pagination={{ currentPage - 1 }}"><</a>
         {% endif %}
 
         <span>Page {{ currentPage }} / {{ totalPages }}</span>
 
         {% if currentPage < totalPages %}
-            <a href="?page=entreprises&pagination={{ currentPage + 1 }}">Suivant</a>
-            <a href="?page=entreprises&pagination={{ totalPages }}" class="btn-last">Fin</a>
+            <a href="?page=entreprises&pagination={{ currentPage + 1 }}">></a>
+            <a href="?page=entreprises&pagination={{ totalPages }}" class="btn-last">>></a>
         {% endif %}
     </div>
 
