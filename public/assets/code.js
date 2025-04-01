@@ -254,4 +254,27 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+// Sélectionner les éléments nécessaires
+const userDropdown = document.querySelector('.user-dropdown');
+const dropdownContent = document.querySelector('.dropdown-content');
+const username = document.querySelector('.username');
+
+// Ajouter un événement de clic sur le nom d'utilisateur pour ouvrir/fermer le menu
+username.addEventListener('click', function(event) {
+    // Empêcher la propagation du clic pour éviter de fermer immédiatement le menu
+    event.stopPropagation();
+
+    // Basculer la visibilité du menu déroulant
+    dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
+    dropdownContent.style.opacity = (dropdownContent.style.display === 'block') ? '1' : '0';
+});
+
+// Ajouter un événement de clic à l'ensemble du document pour fermer le menu
+document.addEventListener('click', function(event) {
+    // Vérifier si le clic n'est pas sur l'élément de la dropdown ou son contenu
+    if (!userDropdown.contains(event.target)) {
+        dropdownContent.style.display = 'none';
+        dropdownContent.style.opacity = '0';
+    }
+});
 

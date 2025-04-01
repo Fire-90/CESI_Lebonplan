@@ -98,22 +98,109 @@ a {
         font-size: 20px;
         justify-content: space-between;
         padding: 13px 15px;
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgb(0, 0, 0) 60%, rgba(255, 132, 0, 0.603)); /* Dégradé noir vers orange subtile */
+        background: linear-gradient(135deg, 
+            rgba(0, 0, 255, 0.8) 0%, 
+            rgba(0, 0, 255, 0.8) 20%, /* Le bleu occupe 35% à gauche */
+            rgba(0, 0, 0, 0.85) 55%, /* Transition progressive vers le noir */
+            rgba(0, 0, 0, 0.85) 65%, /* Le noir occupe 20% au centre */
+            rgba(255, 132, 0, 0.7) 95%, /* Transition progressive vers l'orange */
+            rgba(255, 132, 0, 0.7) 100% /* L'orange occupe 35% à droite */
+        );
         color: white;
-        box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.1); /* Ombre légère pour effet de profondeur */
-        border-radius: 8px; /* Bordure arrondie */
-        transition: all 0.3s ease; /* Transition douce pour les changements */
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); /* Ombre élégante et légère */
+        border-radius: 10px; /* Bordure arrondie pour un effet moderne */
+        transition: all 0.4s ease-in-out; /* Transition fluide */
     }
+    
     
     /* Effet au survol pour la navbar */
     .navbar:hover {
-        box-shadow: 5px 20px 60px rgba(0, 0, 0, 0.15); /* Ombre plus marquée au survol */
-        transform: scale(1.01); /* Légère augmentation de la taille au survol */
+        box-shadow: 0 12px 60px rgba(0, 0, 0, 0.499); /* Ombre plus marquée au survol */
     }
     
-    
-    
+    /* Styles de base pour le dropdown utilisateur */
+    .user-dropdown {
+        position: relative;
+        display: inline-block;
+        font-family: 'Arial', sans-serif;
+        transition: transform 0.3s ease-in-out;
+    }
 
+    .username {
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+        cursor: pointer;
+        padding: 5px 15px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .username:hover {
+        color: #000000; /* Changer la couleur au survol */
+        transform: scale(1.1); /* Effet de zoom au survol */
+        background: rgba(255, 132, 0, 0.2); /* Subtile surbrillance */
+    }
+
+    /* Contenu du menu déroulant */
+    .dropdown-content {
+        display: none; /* Cacher le menu par défaut */
+        position: absolute;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(255, 132, 0, 0.6)); /* Dégradé élégant */
+        min-width: 160px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        z-index: 1;
+        border-radius: 5px;
+        top: 100%;
+        right: 0;
+        margin-top: 10px;
+        opacity: 0;
+        transform: scaleY(0);
+        transform-origin: top; /* Animation d'ouverture du menu */
+        transition: opacity 0.3s ease, transform 0.3s ease-out;
+    }
+
+    /* Afficher le menu au survol */
+    .user-dropdown:hover .dropdown-content {
+        display: block;
+        opacity: 1;
+        transform: scaleY(1); /* Effet de déploiement fluide */
+    }
+
+    /* Styles des liens du menu déroulant */
+    .dropdown-content a {
+        color: #fff;
+        padding: 12px 20px;
+        text-decoration: none;
+        display: block;
+        font-size: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #ff8c00;
+        color: #fff;
+        transform: translateX(5px); /* Légère translation vers la droite */
+    }
+
+    .dropdown-content a:last-child {
+        border-bottom: none;
+    }
+
+    /* Pour rendre le tout responsive */
+    @media (max-width: 768px) {
+        .user-dropdown {
+            font-size: 16px;
+        }
+        .dropdown-content a {
+            font-size: 14px;
+            padding: 10px 15px;
+        }
+    }
+
+    /* Navbar et éléments associés */
     .navbar .bar,
     .navbar .account {
         display: flex;
@@ -123,26 +210,17 @@ a {
     .navbar .bar a,
     .navbar .account a {
         color: white;
-        transition: all 0.1s linear;
+        transition: color 0.3s ease, transform 0.3s ease;
     }
 
     .navbar .bar a:hover,
-    .navbar .account div:hover {
-        color: orangered;
-    }
+.navbar .account a:hover {
+    color: #FFFFFF; /* Blanc éclatant */
+    transform: scale(1.05); /* Effet de zoom subtil */
+    transition: color 0.3s ease, transform 0.2s ease; /* Transition fluide */
+}
 
-    .navbar .bar div,
-    .navbar .account div {
-        display: fixed;
-        transition: all 0.2s ease-out;
-    }
 
-    .navbar .bar div:hover,
-    .navbar .account div:hover {
-        text-decoration: underline;
-        color: orangered;
-        transform: scale(1.05);
-    }
 
     .navbar .account .inscription {
         background-color: white;
@@ -153,10 +231,11 @@ a {
     }
 
     .navbar .bar div .selected {
-        color: orangered;
+        color: #ff8c00;
         font-family: 'Raleway';
     }
 }
+
 
 @media screen and (max-width: 701px) { 
     /* Cacher la navbar standard sur mobile */
