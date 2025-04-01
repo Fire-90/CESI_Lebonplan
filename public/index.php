@@ -84,6 +84,10 @@
             $controller = new HomeController();
             $controller->legal(); 
             break;
+        case 'profil':    
+            $controller = new HomeController();
+            $controller->profil(); 
+            break;
         default:
             $controller = new HomeController();
             $controller->home(); 
