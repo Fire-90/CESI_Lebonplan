@@ -115,7 +115,7 @@ a {
     
     /* Effet au survol pour la navbar */
     .navbar:hover {
-        box-shadow: 0 12px 60px rgba(0, 0, 0, 0.499); /* Ombre plus marquée au survol */
+        box-shadow: 0 12px 60px rgba(0, 0, 0, 0.253); /* Ombre plus marquée au survol */
     }
     
     /* Styles de base pour le dropdown utilisateur */
