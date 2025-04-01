@@ -40,8 +40,8 @@
                                 </td>
                                 {% if permLVL == 2 %}
                                     <td class="action-links">
-                                        <a href="{{ path('edit-entreprise', { 'id': entreprise.idCompany }) }}" class="btn-edit">✏️ Modifier</a>
-                                        <a href="{{ path('delete-entreprise', { 'id': entreprise.idCompany }) }}" class="btn-delete">🗑️ Supprimer</a>
+                                        <a href="{{ path('edit-entreprise') }}&id={{ entreprise.idCompany }}" class="btn-edit">✏️ Modifier</a>
+                                        <a href="{{ path('delete-entreprise') }}&id={{ entreprise.idCompany }}" class="btn-delete">🗑️ Supprimer</a>
                                     </td>
                                 {% endif %}
                             </tr>

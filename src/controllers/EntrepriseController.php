@@ -115,7 +115,7 @@ class EntrepriseController extends BaseController {
             } catch (PDOException $e) {
                 $this->render('edit-entreprise.twig', [
                     'error' => "Erreur lors de la modification : " . $e->getMessage(),
-                    'entreprise' => ['idCompany' => $id]
+                    'entreprise' => ['idCompany' => $id]    
                 ]);
                 return;
             }
