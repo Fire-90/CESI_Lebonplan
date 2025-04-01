@@ -109,13 +109,11 @@ class AccountController extends BaseController {
     }
 
     public function profile() {
-        // Vérifier si l'utilisateur est connecté
         if (!isset($_SESSION['user'])) {
             header('Location: /login');
             exit;
         }
     
-        // Récupérer les informations complètes de l'utilisateur depuis la base de données
         try {
             $userId = $_SESSION['user']['id'];
             $stmt = $this->pdo->prepare("SELECT * FROM User WHERE idUser = ?");
@@ -123,7 +121,6 @@ class AccountController extends BaseController {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
             if ($user) {
-                // Mettre à jour les informations de session
                 $_SESSION['user'] = [
                     'id' => $user['idUser'],
                     'name' => $user['NameUser'],
@@ -133,12 +130,130 @@ class AccountController extends BaseController {
                 $_SESSION['permLVL'] = $user['PermLVL'];
             }
     
-            $this->render('profile.twig');
+            $isEditing = isset($_GET['edit']) && $_GET['edit'] === 'true';
+    
+            $this->render('profile.twig', [
+                'successMessage' => $_SESSION['successMessage'] ?? null,
+                'errorMessage' => $_SESSION['errorMessage'] ?? null,
+                'isEditing' => $isEditing
+            ]);
+            unset($_SESSION['successMessage'], $_SESSION['errorMessage']);
     
         } catch (\PDOException $e) {
             $_SESSION['errorMessage'] = 'Une erreur est survenue lors de la récupération des informations du profil';
             header('Location: /');
             exit;
+        }
+    }
+
+    public function updateProfile() {
+        if (!isset($_SESSION['user'])) {
+            header('Location: /login');
+            exit;
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $userId = $_SESSION['user']['id'];
+                $name = $_POST['name'] ?? null;
+                $email = $_POST['email'] ?? null;
+                $phone = $_POST['phone'] ?? null;
+                $currentPassword = $_POST['current_password'] ?? null;
+                $newPassword = $_POST['new_password'] ?? null;
+    
+                // Vérification obligatoire du mot de passe actuel
+                if (empty($currentPassword)) {
+                    throw new \Exception("Le mot de passe actuel est requis");
+                }
+    
+                // Vérifier si l'email est déjà utilisé par un autre utilisateur
+                if ($email !== $_SESSION['user']['email']) {
+                    $checkStmt = $this->pdo->prepare("SELECT idUser FROM User WHERE EmailUser = ? AND idUser != ?");
+                    $checkStmt->execute([$email, $userId]);
+                    if ($checkStmt->fetch()) {
+                        throw new \Exception("Cet email est déjà utilisé par un autre compte");
+                    }
+                }
+    
+                // Récupérer le mot de passe actuel pour vérification
+                $userStmt = $this->pdo->prepare("SELECT PassWordUser FROM User WHERE idUser = ?");
+                $userStmt->execute([$userId]);
+                $user = $userStmt->fetch(PDO::FETCH_ASSOC);
+    
+                if (!$user || !password_verify($currentPassword, $user['PassWordUser'])) {
+                    throw new \Exception("Le mot de passe actuel est incorrect");
+                }
+    
+                // Préparer la requête de mise à jour
+                $updateData = [
+                    'name' => $name,
+                    'email' => $email,
+                    'phone' => $phone,
+                    'id' => $userId
+                ];
+    
+                $query = "UPDATE User SET NameUser = :name, EmailUser = :email, PhoneUser = :phone";
+                if ($newPassword) {
+                    $query .= ", PassWordUser = :password";
+                    $updateData['password'] = password_hash($newPassword, PASSWORD_DEFAULT);
+                }
+                $query .= " WHERE idUser = :id";
+    
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute($updateData);
+    
+                // Mettre à jour la session
+                $_SESSION['user']['name'] = $name;
+                $_SESSION['user']['email'] = $email;
+                $_SESSION['user']['phone'] = $phone;
+                $_SESSION['successMessage'] = 'Profil mis à jour avec succès';
+    
+            } catch (\Exception $e) {
+                $_SESSION['errorMessage'] = 'Erreur: ' . $e->getMessage();
+            }
+    
+            header('Location: /profile');
+            exit;
+        }
+    }
+
+    public function deleteAccount() {
+        if (!isset($_SESSION['user'])) {
+            header('Location: /login');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $userId = $_SESSION['user']['id'];
+                $password = $_POST['password'] ?? null;
+
+                // Vérifier le mot de passe avant suppression
+                $userStmt = $this->pdo->prepare("SELECT PassWordUser FROM User WHERE idUser = ?");
+                $userStmt->execute([$userId]);
+                $user = $userStmt->fetch(PDO::FETCH_ASSOC);
+
+                if (!$user || !password_verify($password, $user['PassWordUser'])) {
+                    throw new \Exception("Mot de passe incorrect");
+                }
+
+                // Supprimer l'utilisateur
+                $deleteStmt = $this->pdo->prepare("DELETE FROM User WHERE idUser = ?");
+                $deleteStmt->execute([$userId]);
+
+                // Déconnecter l'utilisateur
+                session_unset();
+                session_destroy();
+
+                $_SESSION['successMessage'] = 'Votre compte a été supprimé avec succès';
+                header('Location: /');
+                exit;
+
+            } catch (\Exception $e) {
+                $_SESSION['errorMessage'] = 'Erreur: ' . $e->getMessage();
+                header('Location: /profile');
+                exit;
+            }
         }
     }
 }
