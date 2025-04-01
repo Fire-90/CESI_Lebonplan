@@ -80,6 +80,10 @@ switch ($page) {
         $controller = new AccountController();
         $controller->logout();
         break;
+    case 'legal-notice':
+        $controller = new HomeController();
+        $controller->legal($user); // Passer $user
+        break;
     default:
         $controller = new HomeController();
         $controller->home($user); // Passer $user

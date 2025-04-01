@@ -41,4 +41,8 @@ class HomeController extends BaseController {
     public function postuler() {
         $this->render('postuler.twig');
     }
+
+    public function legal() {
+        $this->render('legal-notice.twig');
+    }
 }
