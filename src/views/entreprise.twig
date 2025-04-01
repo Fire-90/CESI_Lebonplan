@@ -7,6 +7,7 @@
 
     <a href="{{ path('ajout-entreprise') }}" class="btn-add">➕ Ajouter une entreprise</a>
 
+    {% if permLVL == 2 %}
     <div class="table-container">
         <table class="table-entreprises">
             <thead>
@@ -14,7 +15,51 @@
                     <th>Nom</th>
                     <th>Secteur</th>
                     <th>Ville</th>
-                    <th>Actions</th>
+                    <th>Evaluation</th>
+                    <th>Actions</th>     
+                </tr>
+            </thead>
+            <tbody>
+                {% if entreprises is empty %}
+                    <tr>
+                        <td colspan="4" class="no-data">Aucune entreprise enregistrée.</td>
+                    </tr>
+                {% else %}
+                    {% for entreprise in entreprises %}
+                        <tr>
+                            <td>{{ entreprise.NameCompany }}</td>
+                            <td>{{ entreprise.Sector }}</td>
+                            <td>{{ entreprise.City }}</td>
+                                                        <td>
+                                {% for i in 1..5 %}
+                                    {% if i <= entreprise.Evaluation %}
+                                        ⭐
+                                    {% else %}
+                                        ☆
+                                    {% endif %}
+                                {% endfor %}
+                                ({{ entreprise.Evaluation }}/5)
+                            </td>
+                            <td class="action-links">
+                                <a href="{{ path('edit-entreprise') }}&id={{ entreprise.idCompany }}" class="btn-edit">✏️ Modifier</a>
+                                <a href="{{ path('delete-entreprise') }}&id={{ entreprise.idCompany }}" class="btn-delete">🗑️ Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    {% if permLVL == 0 %}
+    <div class="table-container">
+        <table class="table-entreprises">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Secteur</th>
+                    <th>Ville</th>
                     <th>Evaluation</th>
                 </tr>
             </thead>
@@ -29,10 +74,15 @@
                             <td>{{ entreprise.NameCompany }}</td>
                             <td>{{ entreprise.Sector }}</td>
                             <td>{{ entreprise.City }}</td>
-                            <td>{{ entreprise.Evaluation }}</td>
-                            <td class="action-links">
-                                <a href="{{ path('edit-entreprise') }}&id={{ entreprise.idCompany }}" class="btn-edit">✏️ Modifier</a>
-                                <a href="{{ path('delete-entreprise') }}&id={{ entreprise.idCompany }}" class="btn-delete">🗑️ Supprimer</a>
+                            <td>
+                                {% for i in 1..5 %}
+                                    {% if i <= entreprise.Evaluation %}
+                                        ⭐
+                                    {% else %}
+                                        ☆
+                                    {% endif %}
+                                {% endfor %}
+                                ({{ entreprise.Evaluation }}/5)
                             </td>
                         </tr>
                     {% endfor %}
@@ -40,6 +90,7 @@
             </tbody>
         </table>
     </div>
+    {% endif %}
 
     <div class="pagination">
     {% if currentPage > 1 %}
