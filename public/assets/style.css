@@ -98,7 +98,7 @@ a {
         font-size: 20px;
         justify-content: space-between;
         padding: 13px 15px;
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgb(0, 0, 0) 70%, rgba(255, 132, 0, 0.603)); /* Dégradé noir vers orange subtile */
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgb(0, 0, 0) 60%, rgba(255, 132, 0, 0.603)); /* Dégradé noir vers orange subtile */
         color: white;
         box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.1); /* Ombre légère pour effet de profondeur */
         border-radius: 8px; /* Bordure arrondie */
@@ -268,6 +268,9 @@ a {
     font-size: 0.8em;
     padding: 30px 10px;
 }
+.footer a{
+    color: white;
+}
 
 /* ---------------- Categories ---------------- */
 .category ul {
@@ -398,26 +401,47 @@ a {
     justify-content: center;
     flex-wrap: wrap;
     gap: 30px;
+    margin-top: 20px;
 }
 
 .offer {
     width: 500px;
-    box-shadow: 2px 2px 4px rgb(173, 173, 173);
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.offer:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
 
 .postuler {
-    background-color: orangered;
+    background: linear-gradient(135deg, #ff7f50, #ff4500); /* Dégradé orange doux */
     font-weight: bold;
     text-align: center;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 2px 2px 4px rgb(173, 173, 173);
+    border-radius: 30px;
+    padding: 12px 20px;
+    margin-top: 15px;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
+
+.postuler:hover {
+    background: linear-gradient(135deg, #ff6f2a, #ff4f00); /* Un peu plus foncé au survol */
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.355); /* Ombre plus marquée au survol */
+}
+
 
 .file-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    margin-top: 15px;
 }
 
 /* ---------------- Error and Success Messages ---------------- */
@@ -425,48 +449,36 @@ a {
 .mail-error,
 .file-error,
 .success {
-    padding: 5px;
-    border-radius: 5px;
-    margin: 0;
-    justify-content: center;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+    font-weight: bold;
+    text-align: center;
 }
 
 .error,
 .mail-error,
 .file-error {
-    color: red;
     background-color: #ffebeb;
-    border: 1px solid red;
-}
-
-.file-success {
-    margin: 0px;
-    margin-top: 2px;
-    font-size: 13px;
-    font-style: italic;
-    font-weight: normal;
-    color: rgb(80, 80, 80);
+    color: #e74c3c;
+    border: 2px solid #e74c3c;
 }
 
 .success {
-    color: green;
-    background-color: #f6ffeb;
-    border: 1px solid green;
-    font-weight: bold;
-    padding: 20px;
+    background-color: #d4edda;
+    color: #28a745;
+    border: 2px solid #28a745;
+    font-weight: normal;
 }
 
-.error {
-    padding: 20px;
-}
-
-.mail-error,
-.file-error {
-    margin-top: 10px;
+.file-success {
+    margin: 10px 0;
+    font-size: 14px;
+    font-style: italic;
+    color: #4d4d4d;
 }
 
 /* ---------------- Back to Top Button ---------------- */
-
 .top-button-container {
     width: 100%;
     display: flex;
@@ -476,21 +488,29 @@ a {
 .top-button {
     display: none;
     position: fixed;
-    top: 1%;
-    background-color: #EA712E;
+    top: 2%;
+    right: 2%;
+    background-color: #ff7f50;
     color: white;
     border: none;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 50%;
+    padding: 15px;
     font-size: 20px;
     cursor: pointer;
     transition: all 0.3s ease-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .top-button:hover {
-    transform: scale(1.05);
-    background-color: #ff8442;
+    background-color: #ff6f2a;
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
+
+.top-button:focus {
+    outline: none;
+}
+
 
 /* ---------------- Hidden Messages ---------------- */
 .mail-messages .file-messages {

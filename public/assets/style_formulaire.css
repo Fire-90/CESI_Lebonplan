@@ -1,125 +1,186 @@
+/* ---------------- Formulaire ---------------- */
 .formulaire {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    max-width: 900px;
+    margin: 40px 0;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding-left: 20px; /* Ajout d'une marge à gauche */
+    margin-left: 0; /* S'assurer que tout est aligné à gauche */
+}
+
+.formulaire h1 {
+    color: #FF7043; /* Couleur orange douce */
+    font-size: 24px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.formulaire h2, .formulaire h3, .formulaire h1 {
+    margin-bottom: 10px;
+}
+
+.formulaire .section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-weight: bold;
+    color: #FF7043; /* Couleur orange douce */
+}
+
+.formulaire input,
+.formulaire select,
+.formulaire textarea {
+    margin-top: 10px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.formulaire input:focus,
+.formulaire select:focus,
+.formulaire textarea:focus {
+    border-color: #FF7043; /* Couleur orange au focus */
+    box-shadow: 0 0 8px rgba(255, 112, 67, 0.3);
+}
+
+/* ---------------- Checkboxes ---------------- */
+.formulaire .checkbox,
+.formulaire .checkbox2 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.formulaire .checkbox2 {
+    flex-direction: row;
+    align-items: center; /* S'assurer que les éléments sont bien alignés à gauche */
+}
+
+.formulaire .checkbox input,
+.formulaire .checkbox2 input {
+    accent-color: #FF7043; /* Accent couleur orange pour les cases */
+    margin-right: 10px; /* Ajoute de l'espace entre la checkbox et le texte */
+}
+
+.formulaire .box {
+    font-size: 16px;
+    color: #333;
+    display: inline-flex; /* Aligne horizontalement la checkbox et le texte */
+    align-items: center; /* Centrage vertical du texte avec la checkbox */
+    gap: 5px; /* Ajoute un petit espace entre la checkbox et le texte */
+}
+
+/* ---------------- Boutons ---------------- */
+.formulaire .upload-btn {
+    background: linear-gradient(135deg, #FF7043, #FF5722); /* Dégradé orange doux */
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.formulaire .upload-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #FF5722, #FF7043); /* Changement de direction du dégradé au survol */
+}
+
+.formulaire .file-container {
+    margin-top: 15px;
+    position: relative;
+}
+
+.formulaire .file-name-display {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.formulaire .specifications {
+    font-size: 14px;
+    color: #555;
+    margin-top: 5px;
 }
 
 .buttons {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
-.formulaire .section {
-    display : flex;
-    flex-direction: column;
-    align-items: flex-start;
-    font-weight: bold;
-    color: #EA712E;
-}
-
-.formulaire input {
-    margin-top: 5px;
-    border: none;
-    border-radius: 5px;
-    height: 25px;
-}
-
-.formulaire .error-input {
-    border: solid 2px red;
-    background-color: rgba(255, 166, 166, 0.312);
-}
-
-
-.formulaire select {
-    margin-top: 5px;
-    border: none;
-    border-radius: 5px;
-    height: 25px;
-}
-
-.formulaire textarea {
-    margin-top: 5px;
-    border: none;
-    border-radius: 5px;
-    height: 100px;
-    width: 700px;
-    resize: none;
+    justify-content: flex-start;
+    gap: 20px;
+    margin-top: 20px;
 }
 
 .formulaire #submit {
-    background-color: #EA712E;
+    background: linear-gradient(135deg, #FF7043, #FF5722); /* Dégradé orange */
     color: white;
     font-weight: bold;
     border: none;
-    border-radius: 5px;
-    height: 35px;
-    width: 100px;
-    transition: all 0.2s ease-out;
-}
-
-.buttons #reset {
-    margin-top: 0px;
-    border: solid 1px;
-    height: 35px;
-    width: 110px;
-    transition: all 0.2s ease-out;
+    border-radius: 30px;
+    height: 45px;
+    width: 150px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+    text-transform: uppercase;
 }
 
 .formulaire #submit:hover {
-    transform: scale(1.03);
-    background-color: #ff8442;
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #FF5722, #FF7043); /* Changement du dégradé au survol */
+}
+
+#reset {
+    background-color: #FFF;
+    border: 2px solid #FF7043;
+    color: #FF7043;
+    font-weight: bold;
+    height: 45px;
+    width: 150px;
+    border-radius: 30px;
     cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    text-transform: uppercase;
 }
 
-.buttons #reset:hover {
-    transform: scale(1.03);
-    background-color: #ffffff;
-    cursor: pointer;
-}
-
-input[type="radio" i] {
-    margin: 5px;
-}
-
-.formulaire .checkbox {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    accent-color: #EA712E;
-}
-
-.formulaire .checkbox2 {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    accent-color: #EA712E;
-}
-
-.formulaire .box {
-    font-weight: normal;
-    display: flex;
-    align-items: center;
-    height: 20px;
-    color: black;
-    font-size: 15px;
-}
-
-.formulaire .upload-btn {
-    margin-top: 5px;
-    display: inline-block;
-    background-color: #EA712E;
+#reset:hover {
+    transform: scale(1.05);
+    background-color: #FF7043;
     color: white;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    transition: all 0.3s ease-out;
 }
 
-.formulaire .upload-btn:hover {
-    cursor: pointer;
-    background-color: #ff8442;
-    transform: scale(1.025);
+/* ---------------- Alert and File Messages ---------------- */
+.alert-message,
+.file-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* ---------------- Responsiveness ---------------- */
+@media (max-width: 768px) {
+    .formulaire {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .formulaire textarea {
+        width: 100%;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .formulaire h1 {
+        font-size: 22px;
+    }
 }
