@@ -23,49 +23,66 @@ class PostController extends BaseController {
             $page = max(1, (int)$page);
             $start = ($page - 1) * $perPage;
     
-            // Nombre total d'offres
-            $stmtTotal = $this->pdo->query("SELECT COUNT(*) as total FROM Offer" );
+            // Récupérer le terme de recherche
+            $searchTerm = filter_input(INPUT_GET, 'recherche', FILTER_SANITIZE_STRING);
+            $searchTerm = trim($searchTerm);
+    
+            // Requête de base
+            $sqlBase = "SELECT Offer.idOffer, Offer.NameOffer, Offer.DescOffer, Offer.RemunOffer, 
+                       Offer.DateOffer, Company.NameCompany, Company.City 
+                       FROM Offer JOIN Company ON Offer.idCompany = Company.idCompany";
+    
+            // Clause WHERE si recherche
+            $whereClause = "";
+            $params = [];
+            if (!empty($searchTerm)) {
+                $whereClause = " WHERE (Offer.NameOffer LIKE :searchTerm OR 
+                              Offer.DescOffer LIKE :searchTerm OR 
+                              Company.NameCompany LIKE :searchTerm OR 
+                              Company.City LIKE :searchTerm)";
+                $params[':searchTerm'] = "%$searchTerm%";
+            }
+    
+            // Comptage total
+            $stmtTotal = $this->pdo->prepare("SELECT COUNT(*) as total FROM Offer 
+                                            JOIN Company ON Offer.idCompany = Company.idCompany" . $whereClause);
+            foreach ($params as $key => $value) {
+                $stmtTotal->bindValue($key, $value);
+            }
+            $stmtTotal->execute();
             $totalOffre = $stmtTotal->fetch(PDO::FETCH_ASSOC)['total'];
             $totalPages = ceil($totalOffre / $perPage);
     
-            // Récupération des offres paginées
-            $stmt = $this->pdo->prepare("
-                SELECT Offer.idOffer, Offer.NameOffer, Offer.DescOffer, Offer.RemunOffer, Offer.DateOffer, 
-                Company.NameCompany 
-                FROM Offer
-                JOIN Company ON Offer.idCompany = Company.idCompany
-                LIMIT :start, :perPage
-            ");
+            // Récupération paginée
+            $sql = $sqlBase . $whereClause . " LIMIT :start, :perPage";
+            $stmt = $this->pdo->prepare($sql);
+            foreach ($params as $key => $value) {
+                $stmt->bindValue($key, $value);
+            }
             $stmt->bindValue(':start', $start, PDO::PARAM_INT);
             $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
             $stmt->execute();
             $offers = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-            // Vérification que les offres existent
-            if (!$offers) {
-                throw new \Exception("Aucune offre trouvée dans la base de données.");
-            }
-
+            // Gestion des favoris
             if ($this->user) {
                 foreach ($offers as &$offer) {
                     $offer['isFavorite'] = $this->isInWishlist($offer['idOffer']);
                 }
             }
     
-            // Affichage avec Twig
+            // Passage des données au template
             $this->render('offres.twig', [
                 'Offer' => $offers,
                 'currentPage' => $page,
-                'totalPages' => $totalPages
+                'totalPages' => $totalPages,
+                'searchTerm' => $searchTerm
             ]);
     
         } catch (PDOException $e) {
-            echo "Erreur SQL : " . $e->getMessage();
-        } catch (\Exception $e) {
-            echo "Erreur : " . $e->getMessage();
+            // Gestion des erreurs
         }
     }
-    
 
     /**
      * Ajout d'une offre
