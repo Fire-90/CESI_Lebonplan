@@ -1,0 +1,51 @@
+{% extends "base.twig" %}
+
+{% block title %}Modifier l'offre - Lebonplan{% endblock %}
+
+{% block content %}
+    <section>
+        <h1 class="center">Modifier l'offre</h1>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form action="?page=edit-offer&id={{ offer.idOffer }}" method="POST">
+            <div class="form-group">
+                <label for="NameOffer">Nom du poste</label>
+                <input type="text" id="NameOffer" name="NameOffer" value="{{ offer.NameOffer }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="DescOffer">Description</label>
+                <textarea id="DescOffer" name="DescOffer" required>{{ offer.DescOffer }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="RemunOffer">Rémunération</label>
+                <input type="text" id="RemunOffer" name="RemunOffer" value="{{ offer.RemunOffer }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="DateOffer">Date de publication</label>
+                <input type="date" id="DateOffer" name="DateOffer" value="{{ offer.DateOffer }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="idCompany">Entreprise :</label>
+                <select name="idCompany" id="idCompany" required>
+                    <option value="">-- Sélectionnez une entreprise --</option>
+                    {% for company in companies %}
+                        <option value="{{ company.idCompany }}"
+                            {% if company.idCompany == offer.idCompany %}selected{% endif %}>
+                            {{ company.NameCompany }} ({{ company.City }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit">Enregistrer</button>
+            <a href="?page=offer" class="btn-cancel">Annuler</a>
+        </form>
+    </section>
+{% endblock %}

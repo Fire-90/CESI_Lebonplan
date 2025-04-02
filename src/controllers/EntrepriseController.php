@@ -62,7 +62,7 @@ class EntrepriseController extends BaseController {
                     $stmt = $this->pdo->prepare("INSERT INTO Company (NameCompany, EmailCompany, Sector, City) VALUES (:nom, :email, :secteur, :ville)");
                     $stmt->execute([
                         ':nom' => $nom,
-                        ':email'=>$email,
+                        ':email'=> $email,
                         ':secteur' => $secteur,
                         ':ville' => $ville
                     ]);
@@ -115,7 +115,7 @@ class EntrepriseController extends BaseController {
             } catch (PDOException $e) {
                 $this->render('edit-entreprise.twig', [
                     'error' => "Erreur lors de la modification : " . $e->getMessage(),
-                    'entreprise' => ['idCompany' => $id]    
+                    'entreprise' => ['idCompany' => $id]
                 ]);
                 return;
             }
