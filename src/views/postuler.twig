@@ -5,10 +5,28 @@
 {% block content %}
     <link rel="stylesheet" href="/assets/style_formulaire.css">
     <div class="top-button-container">
-        <button class="top-button" id="backToTop">▲ HAUT ▲</button>
+        <a href="#top" class="top-button">▲ HAUT ▲</a>
     </div>
 
     <main>
+        {% if success %}
+            <div class="alert success">{{ success }}</div>
+        {% endif %}
+        
+        {% if error %}
+            <div class="alert error">{{ error }}</div>
+        {% endif %}
+
+        {% if errors %}
+            <div class="alert error">
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
         <div>
             <h1 class="center">Postuler à une offre de stage</h1>
             <h2> Vous pouvez ici répondre directement à l'offre de stage qui a été déposée par l'entreprise. Soyez le
@@ -26,66 +44,80 @@
             </div>
         </div>
 
-		<div class="formulaire">
-			<h1>Envoyez votre candidature dès maintenant</h1>
+        <form class="formulaire" method="post" enctype="multipart/form-data">
+            <h1>Envoyez votre candidature dès maintenant</h1>
 
-			<div class="section">CIVILITÉ
-				<select name="Gender">
-					<option value="Monsieur">Monsieur</option>
-					<option value="Madame">Madame</option>
-				</select>
-			</div>
+            <div class="section">CIVILITÉ
+                <select name="Gender" required>
+                    <option value="Monsieur" {% if formData.Gender == 'Monsieur' %}selected{% endif %}>Monsieur</option>
+                    <option value="Madame" {% if formData.Gender == 'Madame' %}selected{% endif %}>Madame</option>
+                </select>
+            </div>
 
-			<div class="section">NOM<input name="lastname" type="text" size="25" value="" required></div>
+            <div class="section">NOM
+                <input name="lastname" type="text" size="25" value="{{ formData.lastname ?? '' }}" required>
+            </div>
 
-			<div class="section">PRÉNOM<input name="surname" type="text" size="25" value="" required></div>
+            <div class="section">PRÉNOM
+                <input name="surname" type="text" size="25" value="{{ formData.surname ?? '' }}" required>
+            </div>
 
-			<div class="section">COURRIEL
-				<input name="email" type="email" size="35" value="" required>
-				<div class="mail-message" id="mail-messages"></div>
-			</div>
+            <div class="section">COURRIEL
+                <input name="email" type="email" size="35" value="{{ formData.email ?? '' }}" required>
+            </div>
 
-			<div class="section">A PROPOS DE VOUS
-				<div class="checkbox">
-					<div class="box"><input type="checkbox" name="Permis" value="permis">Permis B</div>
-					<div class="box"><input type="checkbox" name="Car" value="car">Véhiculé</div>
-					<div class="box"><input type="checkbox" name="Certication" value="certication">Certifications
-						(Microsoft, Cisco)</div>
-				</div>
-			</div>
+            <div class="section">A PROPOS DE VOUS
+                <div class="checkbox">
+                    <div class="box">
+                        <input type="checkbox" name="Permis" value="permis" {% if formData.Permis %}checked{% endif %}>
+                        Permis B
+                    </div>
+                    <div class="box">
+                        <input type="checkbox" name="Car" value="car" {% if formData.Car %}checked{% endif %}>
+                        Véhiculé
+                    </div>
+                    <div class="box">
+                        <input type="checkbox" name="Certication" value="certication" {% if formData.Certication %}checked{% endif %}>
+                        Certifications (Microsoft, Cisco)
+                    </div>
+                </div>
+            </div>
 
-			<div class="section">
-				<div class="checkbox2">
-					JE SUIS MAJEUR
-					<div class="box"><input type="radio" name="Majeur" value="YES" checked="checked">Oui </div>
-					<div class="box"><input type="radio" name="Majeur" value="NO" checked="checked">Non </div>
-				</div>
-			</div>
+            <div class="section">
+                <div class="checkbox2">
+                    JE SUIS MAJEUR
+                    <div class="box">
+                        <input type="radio" name="Majeur" value="YES" {% if formData.Majeur != 'NO' %}checked{% endif %}>
+                        Oui
+                    </div>
+                    <div class="box">
+                        <input type="radio" name="Majeur" value="NO" {% if formData.Majeur == 'NO' %}checked{% endif %}>
+                        Non
+                    </div>
+                </div>
+            </div>
 
-			<div class="section">VOTRE MESSAGE AU RECRUTEUR
-				<textarea name="feedbacks" rows="5" cols="100"> </textarea>
-			</div>
+            <div class="section">VOTRE MESSAGE AU RECRUTEUR
+                <textarea name="feedbacks" rows="5" cols="100" required>{{ formData.feedbacks ?? '' }}</textarea>
+            </div>
 
-			<div>
-				<div class="file-container">
-					<button id="upload-btn" class="upload-btn">AJOUTER MON CV</button>
-					<input type="file" id="file-upload" hidden accept=".pdf, .doc, .docx, .odt, .rtf, .jpg, .png">
-					<div class="file-name-display" id="file-name-display"></div>
-				</div>
-				<p class="specifications">Poids max 2Mo</p>
-				<p class="specifications">Formats .pdf, .doc, .docx, .odt, .rtf, .jpg ou png</p>
-				<div class="file-message" id="file-messages"></div>
-			</div>
+            <div>
+                <div class="file-container">
+                    <label for="file-upload" class="upload-btn">AJOUTER MON CV</label>
+                    <input type="file" id="file-upload" name="file-upload" required
+                           accept=".pdf, .doc, .docx, .odt, .rtf, .jpg, .png">
+                </div>
+                <p class="specifications">Poids max 2Mo</p>
+                <p class="specifications">Formats .pdf, .doc, .docx, .odt, .rtf, .jpg ou png</p>
+            </div>
 
-			<div class="alert-message" id="alert-messages"> </div>
+            <div class="buttons">
+                <button type="submit">POSTULER</button>
+                <button type="reset">RÉINITIALISER</button>
+            </div>
 
-			<div class="buttons">
-				<button type="submit" id="submit">POSTULER</button>
-				<input type="reset" id="reset" value="RÉINITIALISER">
-			</div>
-
-			<h2 class="smaller">En cliquant sur 'Postuler', vous acceptez les <a href="{{ path('legal-notice') }}">CGU</a> et déclarez avoir pris
-				connaissance de la <a href="{{ path('legal-notice') }}">politique de protection des données</a> de notre site.</h2>
-		</div>
-	</main>
+            <h2 class="smaller">En cliquant sur 'Postuler', vous acceptez les <a href="{{ path('legal-notice') }}">CGU</a> et déclarez avoir pris
+                connaissance de la <a href="{{ path('legal-notice') }}">politique de protection des données</a> de notre site.</h2>
+        </form>
+    </main>
 {% endblock %}

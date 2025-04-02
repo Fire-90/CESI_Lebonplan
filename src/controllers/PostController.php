@@ -228,34 +228,121 @@ class PostController extends BaseController {
         }
     }
 
-    public function postuler($id) {
-        try {
-            $stmt = $this->pdo->prepare("
-                SELECT Offer.*, Company.NameCompany 
-                FROM Offer
-                JOIN Company ON Offer.idCompany = Company.idCompany
-                WHERE idOffer = :id
-            ");
-            $stmt->execute([':id' => $id]);
-            $offer = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-            if (!$offer) {
-                throw new \Exception("Offre non trouvée");
-            }
-    
-            $this->render('postuler.twig', [
-                'offer' => $offer
-            ]);
-        } catch (PDOException $e) {
-            $this->render('postuler.twig', [
-                'error' => "Erreur lors de la récupération de l'offre: " . $e->getMessage()
-            ]);
-        } catch (\Exception $e) {
-            $this->render('postuler.twig', [
-                'error' => $e->getMessage()
-            ]);
+public function postuler($id) {
+    try {
+        // Récupération de l'offre
+        $stmt = $this->pdo->prepare("
+            SELECT Offer.*, Company.NameCompany 
+            FROM Offer
+            JOIN Company ON Offer.idCompany = Company.idCompany
+            WHERE idOffer = :id
+        ");
+        $stmt->execute([':id' => $id]);
+        $offer = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$offer) {
+            throw new \Exception("Offre non trouvée");
         }
+
+        // Traitement du formulaire
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Validation des données
+            $errors = [];
+            $gender = filter_input(INPUT_POST, 'Gender', FILTER_SANITIZE_STRING);
+            $lastname = filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING);
+            $firstname = filter_input(INPUT_POST, 'surname', FILTER_SANITIZE_STRING);
+            $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+            $message = filter_input(INPUT_POST, 'feedbacks', FILTER_SANITIZE_STRING);
+            $hasLicense = isset($_POST['Permis']) ? 1 : 0;
+            $hasVehicle = isset($_POST['Car']) ? 1 : 0;
+            $hasCertifications = isset($_POST['Certication']) ? 1 : 0;
+            $isAdult = ($_POST['Majeur'] === 'YES') ? 1 : 0;
+
+            // Validation du fichier
+            $resumePath = "/files";
+            if (isset($_FILES['file-upload'])) {
+                $file = $_FILES['file-upload'];
+                $allowedFormats = ['pdf', 'doc', 'docx', 'odt', 'rtf', 'jpg', 'png'];
+                $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+                if (!in_array($fileExtension, $allowedFormats)) {
+                    $errors[] = "Format de fichier non valide.";
+                } elseif ($file['size'] > 2 * 1024 * 1024) {
+                    $errors[] = "Le fichier est trop volumineux (max 2Mo).";
+                } else {
+                    $uploadDir = '../uploads/resumes/';
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0777, true);
+                    }
+                    $resumePath = $uploadDir . uniqid() . '.' . $fileExtension;
+                    move_uploaded_file($file['tmp_name'], $resumePath);
+                }
+            }
+
+            if (empty($lastname)) $errors[] = "Le nom est requis.";
+            if (empty($firstname)) $errors[] = "Le prénom est requis.";
+            if (!$email) $errors[] = "L'email est invalide.";
+            if (empty($message)) $errors[] = "Le message est requis.";
+            if (!$resumePath) $errors[] = "Le CV est requis.";
+
+            if (empty($errors)) {
+                // Enregistrement en base de données
+                $stmt = $this->pdo->prepare("
+                    INSERT INTO Apply (
+                        DateApply, ResumeApply, idUser, idOffer,
+                        Gender, LastName, FirstName, Email, HasLicense, 
+                        HasVehicle, HasCertifications, IsAdult, Message
+                    ) VALUES (
+                        NOW(), :resume, :idUser, :idOffer,
+                        :gender, :lastname, :firstname, :email, :hasLicense,
+                        :hasVehicle, :hasCertifications, :isAdult, :messageText
+                    )
+                ");
+
+                $stmt->execute([
+                    ':resume' => $resumePath,
+                    ':idUser' => $this->user ? $this->user['id'] : null,
+                    ':idOffer' => $id,
+                    ':gender' => $gender,
+                    ':lastname' => $lastname,
+                    ':firstname' => $firstname,
+                    ':email' => $email,
+                    ':hasLicense' => $hasLicense,
+                    ':hasVehicle' => $hasVehicle,
+                    ':hasCertifications' => $hasCertifications,
+                    ':isAdult' => $isAdult,
+                    ':messageText' => $message
+                ]);
+
+                $_SESSION['success'] = "Votre candidature a été envoyée avec succès !";
+                header('Location: ?page=offres');
+                exit;
+            }
+
+            // Si erreurs, réafficher le formulaire avec les erreurs
+            $this->render('postuler.twig', [
+                'offer' => $offer,
+                'errors' => $errors,
+                'formData' => $_POST
+            ]);
+            return;
+        }
+
+        // Affichage initial du formulaire
+        $this->render('postuler.twig', [
+            'offer' => $offer
+        ]);
+
+    } catch (PDOException $e) {
+        $this->render('postuler.twig', [
+            'error' => "Erreur lors de la récupération de l'offre: " . $e->getMessage()
+        ]);
+    } catch (\Exception $e) {
+        $this->render('postuler.twig', [
+            'error' => $e->getMessage()
+        ]);
     }
+}
 
 
     //================================================================================
