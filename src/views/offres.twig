@@ -71,15 +71,15 @@
 
     <div class="pagination">
         {% if currentPage > 1 %}
-            <a href="?page=offres&pagination=1{% if searchTerm %}&recherche={{ searchTerm|url_encode }}{% endif %}" class="btn-first">Début</a>
-            <a href="?page=offres&pagination={{ currentPage - 1 }}{% if searchTerm %}&recherche={{ searchTerm|url_encode }}{% endif %}">Précédent</a>
+            <a href="?page=offres&pagination=1{% if searchTerm %}&recherche={{ searchTerm|url_encode }}{% endif %}" class="btn-first"><<</a>
+            <a href="?page=offres&pagination={{ currentPage - 1 }}{% if searchTerm %}&recherche={{ searchTerm|url_encode }}{% endif %}"><</a>
         {% endif %}
 
         <span>Page {{ currentPage }} / {{ totalPages }}</span>
 
         {% if currentPage < totalPages %}
-            <a href="?page=offres&pagination={{ currentPage + 1 }}{% if searchTerm %}&recherche={{ searchTerm|url_encode }}{% endif %}">Suivant</a>
-            <a href="?page=offres&pagination={{ totalPages }}{% if searchTerm %}&recherche={{ searchTerm|url_encode }}{% endif %}" class="btn-last">Fin</a>
+            <a href="?page=offres&pagination={{ currentPage + 1 }}{% if searchTerm %}&recherche={{ searchTerm|url_encode }}{% endif %}">></a>
+            <a href="?page=offres&pagination={{ totalPages }}{% if searchTerm %}&recherche={{ searchTerm|url_encode }}{% endif %}" class="btn-last">>></a>
         {% endif %}
     </div>
 {% endblock %}

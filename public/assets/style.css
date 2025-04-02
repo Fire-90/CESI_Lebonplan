@@ -874,6 +874,16 @@ a {
     padding: 20px;
 }
 
+/* Conteneur principal du formulaire */
+.form-entreprise {
+    display: flex;
+    flex-direction: column;  /* Assure que le titre et le formulaire soient l'un au-dessus de l'autre */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;  /* Prendre toute la hauteur de la page */
+    padding: 20px;
+    margin-top: -100px;
+}
 
 /* Boîte contenant le formulaire */
 form {
