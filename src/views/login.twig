@@ -12,7 +12,7 @@
             <div class="forms-container">
                 <!-- Formulaire d'inscription -->
                 <div class="form-container signup">
-                    <form action="{{ path('signup') }}" method="post">
+                    <form class="form-account" action="{{ path('signup') }}" method="post">
                         <h2>Inscription</h2>
                         <select id="loginselect" name="loginselect" required>
                             <option value="" disabled selected>--- Sélectionnez votre statut ---</option>
@@ -30,7 +30,7 @@
 
                 <!-- Formulaire de connexion -->
                 <div class="form-container login">
-                    <form action="{{ path('login') }}" method="post">
+                    <form class="form-account" action="{{ path('login') }}" method="post">
                         <h2>Connexion</h2>
                         <input type="email" name="email" placeholder="Email" required=""/>
                         <input type="password" name="pswd" placeholder="Mot de Passe" required=""/>

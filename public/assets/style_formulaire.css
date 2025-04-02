@@ -91,10 +91,19 @@ h1, h2 {
 /* Style des champs de saisie */
 input[type="text"],
 input[type="email"],
-textarea,
 select {
     width: 100%;
     padding: 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+textarea {
+    width: 100%;
     margin-top: 10px;
     border-radius: 8px;
     border: 1px solid #ddd;

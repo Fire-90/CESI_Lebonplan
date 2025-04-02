@@ -884,8 +884,15 @@ a {
     padding: 20px;
 }
 
-/* Boîte contenant le formulaire */
-form {
+.form-account {
+    background: white;
+    max-width: 1000px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form {
     background: white;
     max-width: 1000px;
     width: 100%;
@@ -930,7 +937,6 @@ form {
 .form-group input,
 .form-group textarea,
 select {
-    width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
