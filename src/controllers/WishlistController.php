@@ -21,9 +21,10 @@ class WishlistController extends BaseController {
 
         try {
             $stmt = $this->pdo->prepare("
-                SELECT o.* 
+                SELECT o.*, Company.NameCompany 
                 FROM Offer o
                 JOIN WishList w ON o.idOffer = w.idOffer
+                JOIN Company ON o.idCompany = Company.idCompany
                 WHERE w.idUser = :userId
             ");
             $stmt->execute([':userId' => $this->user['id']]);

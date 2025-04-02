@@ -64,9 +64,16 @@ class AccountController extends BaseController {
                 $email = $_POST['email'] ?? null;
                 $phone = $_POST['broj'] ?? null;
                 $password = $_POST['pswd'] ?? null;
+                $loginselect = $_POST['loginselect'] ?? null;
     
-                if (!$name || !$email || !$password) {
+                if (!$name || !$email || !$password || $loginselect === null) {
                     throw new \Exception('Tous les champs obligatoires ne sont pas remplis');
+                }
+    
+                // Convertir en entier et valider les valeurs permises
+                $permLVL = (int)$loginselect;
+                if (!in_array($permLVL, [0, 1])) {
+                    throw new \Exception('Statut invalide');
                 }
     
                 $checkStmt = $this->pdo->prepare("SELECT EmailUser FROM User WHERE EmailUser = ?");
@@ -82,7 +89,7 @@ class AccountController extends BaseController {
                      VALUES (?, ?, ?, ?, ?)"
                 );
     
-                $success = $stmt->execute([$name, $email, $phone, $hashedPassword, 0]);
+                $success = $stmt->execute([$name, $email, $phone, $hashedPassword, $permLVL]);
                 if ($success) {
                     $_SESSION['successMessage'] = 'Inscription réussie! Vous pouvez maintenant vous connecter.';
                     header("Location: /login");

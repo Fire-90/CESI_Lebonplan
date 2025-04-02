@@ -11,20 +11,25 @@
                 <div class="offer hoverable">
                     {# Lien pour retirer des favoris #}
                     <div style="text-align: right;">
-                        <a href="?page=toggle-wishlist&id={{ offre.idOffer }}" title="Retirer des favoris">★</a>
+                        <a href="?page=toggle-wishlist&id={{ offre.idOffer }}" title="Retirer des favoris">
+                            <span class="wishlist-heart {% if offre.isFavorite %}active{% endif %}">
+                                ♥
+                            </span>
+                        </a>
                     </div>
                     
                     <h1 class="title center">{{ offre.NameOffer }}</h1>
                     <h2 class="small center">{{ offre.DescOffer }} | {{ offre.RemunOffer }}</h2>
-                    <h2 class="small center">{{ offre.idCompany}} | Publiée le {{ offre.DateOffer|date("d/m/Y") }}</h2>
+                    <h2 class="small center">{{ offre.NameCompany}} | Publiée le {{ offre.DateOffer|date("d/m/Y") }}</h2>
                     <h1 class="center">
-                        <a href="{{ path('postuler', {'id': offre.idOffer}) }}" class="postuler clickable">POSTULER</a>
+                        <a href="?page=postuler&id={{ offre.idOffer }}" class="postuler clickable"> POSTULER </a>
                     </h1>
                 </div>
             {% endfor %}
         </div>
+
     {% else %}
-        <p class="center">Vous n'avez aucune offre dans vos favoris.</p>
+        <p class="center">Vous n'avez aucune offre dans votre liste de souhaits.</p>
     {% endif %}
 
     {# Affichage des messages #}
