@@ -200,19 +200,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Function to toggle the navigation menu
-    function toggleBurger() {
-        document.getElementById('burger').classList.toggle('expanded');
-    }
+// Script pour gérer l'ouverture/fermeture du menu burger
+const burgerIcon = document.getElementById('burger-icon');
+const burgerMenu = document.querySelector('.burger .bar');
 
-    // Close the menu when the user scrolls
-    window.addEventListener('scroll', function() {
-        // If the menu is expanded and the user scrolls, collapse it
-        if (document.getElementById('burger').classList.contains('expanded')) {
-            document.getElementById('burger').classList.remove('expanded');
-        }
-    });
+// Lorsque l'icône du burger est cliquée
+burgerIcon.addEventListener('click', function() {
+    burgerMenu.classList.toggle('active'); // Ajoute ou enlève la classe 'active' pour afficher/masquer le menu
+});
+
+// Fermer le menu burger lorsqu'on clique à l'extérieur du menu
+document.addEventListener('click', function(event) {
+    if (!burgerIcon.contains(event.target) && !burgerMenu.contains(event.target)) {
+        burgerMenu.classList.remove('active'); // Ferme le menu
+    }
 });
 
 
