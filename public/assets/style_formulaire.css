@@ -14,37 +14,36 @@
 @font-face {
     font-family: 'Raleway-Light';
     src: url('raleway/Raleway-Light.ttf') format('truetype');
-    font-weight: normal;
+    font-weight: lighter;
 }
 
-::selection{
+::selection {
     background-color: orange;
 }
 
 /* ---------------- Global Styles ---------------- */
 html {
-    scroll-behavior: smooth;    
+    scroll-behavior: smooth;
 }
 
 body {
     background-color: #f3f3f3;
-    font-family: Raleway, sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: lighter;
     margin: 0;
     display: flex;
     flex-direction: column;
-    
 }
+
 /* Conteneur principal du formulaire */
 main {
-    width: 80%; /* Formulaire plus large */
+    width: 80%;
     margin: 30px auto;
     padding: 40px;
-    background-color: #ffffff00;
+    background-color: #ffffff;
     border-radius: 12px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 
 h1, h2 {
     color: #333;
@@ -104,12 +103,11 @@ select {
     transition: all 0.3s ease;
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
+input:focus,
 textarea:focus,
 select:focus {
     border-color: #FF6F00;
-    background-color: #ffffffc6;
+    background-color: #ffffff;
     outline: none;
 }
 
@@ -121,33 +119,38 @@ textarea[name="feedbacks"] {
     height: 160px;
 }
 
-/* Style des boutons */
-button,
-input[type="reset"],
-#upload-btn {
+/* Cache complètement l'input pour éviter le bouton natif */
+#file-upload {
+    display: none;
+}
+
+/* Style du bouton personnalisé */
+.custom-upload-btn {
     padding: 12px 24px;
-    background: linear-gradient(145deg, #5fa3e1 0%, #3a80c3 100%); /* Bleu plus intense et vif */
+    background: linear-gradient(145deg, #5fa3e1 0%, #3a80c3 100%);
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre plus nette */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+    display: inline-block; /* Pour éviter les comportements de texte */
+    text-align: center;
 }
 
-button:hover,
-input[type="reset"]:hover,
-#upload-btn:hover {
-    background: linear-gradient(145deg, #3a80c3 0%, #5fa3e1 100%); /* Effet de survol plus vif avec un bleu plus fort */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Ombre plus nette au survol */
+/* Effet au survol */
+.custom-upload-btn:hover {
+    background: linear-gradient(145deg, #3a80c3 0%, #5fa3e1 100%);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-
-button:active,
-input[type="reset"]:active {
+/* Effet au clic */
+.custom-upload-btn:active {
     transform: translateY(2px);
 }
+
+
 
 /* Alignement des checkboxes */
 .checkbox,
@@ -244,36 +247,13 @@ button[type="submit"]:active {
     transform: translateY(2px);
 }
 
-input[type="reset"] {
-    background: linear-gradient(145deg, #FF9800 0%, #FF5722 100%);
-    width: 48%;
-}
-
-input[type="reset"]:hover {
-    background: linear-gradient(145deg, #FF5722 0%, #FF9800 100%);
-}
-
-input[type="reset"]:active {
-    transform: translateY(2px);
-}
-
-/* Réinitialiser les marges */
-h1, h2, h3 {
-    margin-top: 0;
-}
-
-h1.center {
-    margin-bottom: 20px;
-    margin-top: -100px;
-}
-
 /* Animation d'apparition douce */
 @keyframes fadeIn {
-    0% {
+    from {
         opacity: 0;
         transform: translateY(20px);
     }
-    100% {
+    to {
         opacity: 1;
         transform: translateY(0);
     }
