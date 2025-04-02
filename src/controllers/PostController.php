@@ -24,12 +24,18 @@ class PostController extends BaseController {
             $start = ($page - 1) * $perPage;
     
             // Nombre total d'offres
-            $stmtTotal = $this->pdo->query("SELECT COUNT(*) as total FROM Offer");
+            $stmtTotal = $this->pdo->query("SELECT COUNT(*) as total FROM Offer" );
             $totalOffre = $stmtTotal->fetch(PDO::FETCH_ASSOC)['total'];
             $totalPages = ceil($totalOffre / $perPage);
     
             // Récupération des offres paginées
-            $stmt = $this->pdo->prepare("SELECT * FROM Offer LIMIT :start, :perPage");
+            $stmt = $this->pdo->prepare("
+                SELECT Offer.idOffer, Offer.NameOffer, Offer.DescOffer, Offer.RemunOffer, Offer.DateOffer, 
+                       Company.NameCompany 
+                FROM Offer
+                JOIN Company ON Offer.idCompany = Company.idCompany
+                LIMIT :start, :perPage
+            ");
             $stmt->bindValue(':start', $start, PDO::PARAM_INT);
             $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
             $stmt->execute();
@@ -71,16 +77,20 @@ class PostController extends BaseController {
                 $desc = filter_input(INPUT_POST, 'DescOffer', FILTER_SANITIZE_STRING);
                 $renum = filter_input(INPUT_POST, 'RemunOffer', FILTER_SANITIZE_STRING);
                 $date = filter_input(INPUT_POST, 'DateOffer', FILTER_SANITIZE_STRING);
-
-                if (!empty($nom) && !empty($desc) && !empty($renum) && !empty($date)) {
-                    $stmt = $this->pdo->prepare("INSERT INTO Offer (NameOffer, DescOffer, RemunOffer, DateOffer) VALUES (:nom, :descoffer, :renum, :dateoffer)");
+                $idCompany = filter_input(INPUT_POST, 'idCompany', FILTER_SANITIZE_NUMBER_INT);
+    
+                if (!empty($nom) && !empty($desc) && !empty($renum) && !empty($date) && !empty($idCompany)) {
+                    $stmt = $this->pdo->prepare("INSERT INTO Offer (NameOffer, DescOffer, RemunOffer, DateOffer, idCompany) 
+                        VALUES (:nom, :descoffer, :renum, :dateoffer, :idCompany)
+                    ");
                     $stmt->execute([
                         ':nom' => $nom,
                         ':descoffer' => $desc,
                         ':renum' => $renum,
-                        ':dateoffer' => $date
+                        ':dateoffer' => $date,
+                        ':idCompany' => $idCompany
                     ]);
-
+    
                     header('Location: ?page=offer');
                     exit;
                 } else {
@@ -88,20 +98,37 @@ class PostController extends BaseController {
                 }
             } catch (PDOException $e) {
                 $this->render('add-offer.twig', [
-                    'error' => "Erreur lors de l'ajout de l'offre : " . $e->getMessage()
+                    'error' => "Erreur lors de l'ajout de l'offre : " . $e->getMessage(),
+                    'companies' => $this->getCompanies()
                 ]);
                 return;
             } catch (\Exception $e) {
                 $this->render('add-offer.twig', [
-                    'error' => $e->getMessage()
+                    'error' => $e->getMessage(),
+                    'companies' => $this->getCompanies()
                 ]);
                 return;
             }
         }
-
-        $this->render('add-offer.twig');
+    
+        // Récupération des entreprises et affichage du formulaire
+        $this->render('add-offer.twig', [
+            'companies' => $this->getCompanies()
+        ]);
     }
-
+    
+    /**
+     * Récupérer toutes les entreprises pour le menu déroulant
+     */
+    private function getCompanies() {
+        try {
+            $stmt = $this->pdo->query("SELECT idCompany, NameCompany, City FROM Company");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+    
     /**
      * Modification d'une offre
      */

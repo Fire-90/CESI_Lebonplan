@@ -1086,6 +1086,79 @@ a {
 }
 
 
+/* Style de base du select */
+#loginselect {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 5%;
+    background: #f0f4f7; /* Dégradé léger de fond */
+    border: 2px solid #007bff; /* Bordure bleue */
+    border-radius: 8px; /* Coins arrondis */
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    outline: none;
+    appearance: none; /* Enlève la flèche par défaut pour personnalisation */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Ajouter une flèche personnalisée à droite */
+#loginselect::-ms-expand {
+    display: none; /* Supprimer la flèche par défaut pour IE */
+}
+
+#loginselect::after {
+    content: '\2193'; /* Flèche vers le bas */
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    font-size: 18px;
+    color: #007bff;
+}
+
+/* Changement de la couleur du border au focus */
+#loginselect:focus {
+    border-color: #0056b3; /* Changer la couleur de la bordure au focus */
+    background-color: #e7f3fe; /* Légère variation de couleur en focus */
+}
+
+/* Effet de survol (hover) */
+#loginselect:hover {
+    border-color: #0056b3; /* Bordure bleue au survol */
+}
+
+/* Style de l'option */
+#loginselect option {
+    background: #fff;
+    color: #333;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Animation d'ouverture du select */
+#loginselect {
+    position: relative;
+    padding-right: 30px; /* Pour faire de la place pour la flèche personnalisée */
+}
+
+#loginselect:focus {
+    animation: bounceIn 0.5s ease-out;
+}
+
+
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    #loginselect {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+
 /* Conteneur d'authentification */
 .auth-container {
     display: flex;
