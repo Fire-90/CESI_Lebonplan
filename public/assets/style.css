@@ -110,6 +110,29 @@ a {
     overflow: hidden;
 }
 
+.hero-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.hero-container img {
+    max-width: 25%;
+    height: auto;
+    margin-top: -90px;
+    margin-bottom: -20px;
+}
+
+/* Logo plus grand en mode mobile */
+@media screen and (max-width: 768px) {
+    .hero-container img {
+        max-width: 70%;  /* Augmente la taille du logo pour les petits écrans */
+        margin-top: -10px;  /* Réduit l'écart si nécessaire */
+    }
+}
+
 .hero-content h2 {
     font-size: 3rem;
     margin-bottom: 10px;

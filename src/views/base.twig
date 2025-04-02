@@ -11,11 +11,6 @@
 </head>
 <body>
 
-    <!-- Logo et titre -->
-    <div class="title center">
-        <img src="/assets/images/logo_full.png" alt="Lebonplan - Le meilleur site d'annonces en ligne">
-    </div>
-
     <!-- Vérifier si on est sur la page de login -->
     {% if app.request.attributes.get('_route') == 'login' %}
         <!-- Si c'est la page de connexion, afficher une navbar simple -->
@@ -79,10 +74,12 @@
         </div>
     {% endif %}
 
+
     <!-- Contenu principal -->
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+<main>    
+    {% block content %}{% endblock %}
+</main>
+
 
     <!-- Pied de page -->
     <footer class="footer center">
