@@ -20,9 +20,9 @@
                     
                     <h1 class="title center">{{ offre.NameOffer }}</h1>
                     <h2 class="small center">{{ offre.DescOffer }} | {{ offre.RemunOffer }}</h2>
-                    <h2 class="small center">{{ offre.idCompany}} | Publiée le {{ offre.DateOffer|date("d/m/Y") }}</h2>
+                    <h2 class="small center">{{ offre.NameCompany}} | Publiée le {{ offre.DateOffer|date("d/m/Y") }}</h2>
                     <h1 class="center">
-                        <a href="{{ path('postuler', {'id': offre.idOffer}) }}" class="postuler clickable">POSTULER</a>
+                        <a href="?page=postuler&id={{ offre.idOffer }}" class="postuler clickable"> POSTULER </a>
                     </h1>
                 </div>
             {% endfor %}
