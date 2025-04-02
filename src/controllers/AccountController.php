@@ -263,9 +263,17 @@ class AccountController extends BaseController {
                     throw new \Exception("Mot de passe incorrect");
                 }
 
-                // Supprimer l'utilisateur
-                $deleteStmt = $this->pdo->prepare("DELETE FROM User WHERE idUser = ?");
-                $deleteStmt->execute([$userId]);
+                // 1. Supprimer les entrées dans la table Apply
+                $deleteApplyStmt = $this->pdo->prepare("DELETE FROM Apply WHERE idUser = ?");
+                $deleteApplyStmt->execute([$userId]);
+
+                // 2. Supprimer les entrées dans la table Wishlist
+                $deleteWishlistStmt = $this->pdo->prepare("DELETE FROM Wishlist WHERE idUser = ?");
+                $deleteWishlistStmt->execute([$userId]);
+
+                // 3. Supprimer l'utilisateur
+                $deleteUserStmt = $this->pdo->prepare("DELETE FROM User WHERE idUser = ?");
+                $deleteUserStmt->execute([$userId]);
 
                 // Déconnecter l'utilisateur
                 session_unset();
