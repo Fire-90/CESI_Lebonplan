@@ -156,7 +156,10 @@ class PostController extends BaseController {
                 $renum = filter_input(INPUT_POST, 'RemunOffer', FILTER_SANITIZE_STRING);
                 $date = filter_input(INPUT_POST, 'DateOffer', FILTER_SANITIZE_STRING);
 
+
                 if (!empty($nom) && !empty($desc) && !empty($renum) && !empty($date)) {
+                    $renum = number_format($renum, 0, ',', ' ') . '€/mois';
+                    
                     $stmt = $this->pdo->prepare("UPDATE Offer SET NameOffer = :nom, DescOffer = :descoffer, RemunOffer = :renum, DateOffer = :dateoffer WHERE idOffer = :id");
                     $stmt->execute([
                         ':nom' => $nom,
@@ -246,12 +249,12 @@ class PostController extends BaseController {
 
 public function postuler($id) {
     try {
-        // Récupération de l'offre
+        // Récupération de l'offre de base
         $stmt = $this->pdo->prepare("
             SELECT Offer.*, Company.NameCompany 
             FROM Offer
             JOIN Company ON Offer.idCompany = Company.idCompany
-            WHERE idOffer = :id
+            WHERE Offer.idOffer = :id
         ");
         $stmt->execute([':id' => $id]);
         $offer = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -259,6 +262,19 @@ public function postuler($id) {
         if (!$offer) {
             throw new \Exception("Offre non trouvée");
         }
+
+        // Récupération des compétences associées à l'offre avec leurs noms
+        $stmtCompetences = $this->pdo->prepare("
+            SELECT Competence.NameCompetence 
+            FROM OfferCompetence
+            JOIN Competence ON OfferCompetence.idCompetence = Competence.idCompetence
+            WHERE OfferCompetence.idOffer = :id
+        ");
+        $stmtCompetences->execute([':id' => $id]);
+        $competences = $stmtCompetences->fetchAll(PDO::FETCH_COLUMN);
+
+        // Ajout des compétences à l'offre pour le template
+        $offer['Competences'] = $competences;
 
         // Traitement du formulaire
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

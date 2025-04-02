@@ -41,6 +41,11 @@
             <div class="list">
                 <span>{{ offer.DescOffer }}</span>
                 <span>{{ offer.RemunOffer }}</span>
+                {% if offer.Competences %}
+                    {% for competence in offer.Competences %}
+                        <span>{{ competence }}</span>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
 
