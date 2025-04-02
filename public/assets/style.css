@@ -125,7 +125,7 @@ a {
     margin-bottom: -20px;
 }
 
-/* Logo plus grand en mode mobile */
+/* Logo  grand en mode mobile */
 @media screen and (max-width: 768px) {
     .hero-container img {
         max-width: 60%;  /* Augmente la taille du logo pour les petits écrans */
@@ -272,9 +272,13 @@ a {
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5); /* Ombre pour un effet de profondeur */
 }
 
-/* Lorsque la sidebar a la classe 'active', elle se déplace à gauche */
 .sidebar.active {
-    left: 0; /* Fait glisser la sidebar vers la gauche */
+    left: 0;
+}
+
+/* Style du premier lien */
+.sidebar a:first-child {
+    margin-top: 30px; /* Espace plus grand au-dessus du premier lien */
 }
 
 /* Style des liens de la sidebar */
@@ -282,8 +286,8 @@ a {
     display: block;
     padding: 15px 20px;
     text-decoration: none;
-    color: #f39c12; /* Orange doux pour le texte */
-    font-size: 18px; /* Taille de texte confortable */
+    color: #f39c12;
+    font-size: 18px;
     transition: background-color 0.3s ease, padding-left 0.3s ease; /* Animation fluide sur le survol */
 }
 
@@ -337,7 +341,7 @@ a {
 /* Réduction de la largeur pour les petits écrans */
 @media (max-width: 768px) {
     .sidebar {
-        width: 220px; /* Réduit la largeur pour les écrans plus petits */
+        width: 220px; /* Réduit la largeur pour les écrans  petits */
     }
 
     .sidebar a {
@@ -349,6 +353,7 @@ a {
         padding: 12px 18px; /* Réduit les marges du bouton */
     }
 }
+
 
   
   
@@ -388,7 +393,7 @@ a {
 
     /* Effet au survol pour la navbar */
     .navbar:hover {
-        box-shadow: 0 12px 60px rgba(0, 0, 0, 0.253); /* Ombre plus marquée au survol */
+        box-shadow: 0 12px 60px rgba(0, 0, 0, 0.253); /* Ombre  marquée au survol */
     }
     
     /* Styles de base pour le dropdown utilisateur */
@@ -517,28 +522,37 @@ a {
 
     /* Style du conteneur du burger */
     .burger {
-        width: 25%; /* Augmenté pour plus de visibilité */
+        width: 50px; /* Fixe une largeur pour le menu burger */
+        height: 40px; /* Ajuste la hauteur si nécessaire */
         display: flex;
         flex-direction: column;
+        justify-content: space-between; /* Assure un espacement égal entre les lignes */
         align-items: center;
         position: fixed;
-        top: 5px; /* Un peu plus d'espace depuis le haut */
-        left: -8%; /* Déplacé à gauche */
-        font-size: 18px; /* Plus lisible */
-        transition: all 0.5s ease-out;
+        top: 20px; /* Distance du haut */
+        left: 20px; /* Distance du bord gauche */
+        font-size: 24px; /* Ajuste la taille de la police pour les icônes */
+        transition: all 0.3s ease-out; /* Transition fluide */
         color: white;
-        z-index: 1000;
+        z-index: 1000; /* Pour que l'icône du burger soit au-dessus des autres éléments */
     }
+    
+    /* Optionnel : ajout d'un effet sur le survol ou le clic */
+    .burger:hover {
+        cursor: pointer;
+        opacity: 0.8; /* Effet de survol */
+    }
+    
 
     /* Icône du burger */
     .burger .burger-icon {
-        background-color: rgba(0, 0, 0, 0.65); /* Fond sombre */
-        width: 45px; /* Taille plus large */
+        background-color: rgba(0, 0, 0, 0.65);
+        width: 45px;
         height: 45px;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 25%; /* Pour une forme circulaire */
+        border-radius: 25%;
         transition: all 0.3s ease-out;
     }
 
@@ -751,7 +765,7 @@ a {
 
 .title img:hover {
     transform: scale(1.05); /* Effet de zoom au survol */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Ombre plus marquée au survol */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Ombre  marquée au survol */
 }
 
 
@@ -862,9 +876,9 @@ a {
 }
 
 .postuler:hover {
-    background: linear-gradient(135deg, #ff6f2a, #ff4f00); /* Un peu plus foncé au survol */
+    background: linear-gradient(135deg, #ff6f2a, #ff4f00); /* Un peu  foncé au survol */
     transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.355); /* Ombre plus marquée au survol */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.355); /* Ombre  marquée au survol */
 }
 
 
@@ -1006,7 +1020,7 @@ a {
 }
 
 .btn-add:hover {
-    background: linear-gradient(135deg, #ff6a00, #e55c00); /* Gradient légèrement plus foncé au survol */
+    background: linear-gradient(135deg, #ff6a00, #e55c00); /* Gradient légèrement  foncé au survol */
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
     transform: translateY(-3px);
 }
@@ -1124,13 +1138,13 @@ a {
 }
 
 .action-links .btn-edit:hover {
-    background: linear-gradient(135deg, #29b300, #1c9b00); /* Dégradé plus foncé au survol */
+    background: linear-gradient(135deg, #29b300, #1c9b00); /* Dégradé  foncé au survol */
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
     transform: translateY(-3px);
 }
 
 .action-links .btn-edit:active {
-    background: linear-gradient(135deg, #1c9b00, #29b300); /* Couleur plus foncée au clic */
+    background: linear-gradient(135deg, #1c9b00, #29b300); /* Couleur  foncée au clic */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transform: translateY(2px); /* Effet d'enfoncement au clic */
 }
@@ -1151,13 +1165,13 @@ a {
 }
 
 .action-links .btn-delete:hover {
-    background: linear-gradient(135deg, #c0392b, #a93226); /* Dégradé plus foncé au survol */
+    background: linear-gradient(135deg, #c0392b, #a93226); /* Dégradé  foncé au survol */
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
     transform: translateY(-3px);
 }
 
 .action-links .btn-delete:active {
-    background: linear-gradient(135deg, #a93226, #c0392b); /* Couleur plus foncée au clic */
+    background: linear-gradient(135deg, #a93226, #c0392b); /* Couleur  foncée au clic */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transform: translateY(2px); /* Effet d'enfoncement au clic */
 }
@@ -1584,7 +1598,7 @@ input[type="password"]:focus {
     background-color: #e1e1e1;
 }
 
-/* Style pour les éléments lorsque l'écran est plus petit (mobile) */
+/* Style pour les éléments lorsque l'écran est  petit (mobile) */
 @media (max-width: 600px) {
     .form-input,
     .form-textarea {

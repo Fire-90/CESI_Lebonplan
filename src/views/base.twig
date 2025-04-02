@@ -22,10 +22,14 @@
         <!-- Navigation pour écrans larges (navbar standard) -->
         <nav class="navbar">
             <div class="bar">
-                <a href="{{ path('home') }}" class="{% if current_page == 'home' %}selected{% endif %}">Accueil</a> <span>|</span>
-                <a href="{{ path('entreprises') }}" class="{% if current_page == 'entreprises' %}selected{% endif %}">Entreprises</a> <span>|</span>
-                <a href="{{ path('offres') }}" class="{% if current_page == 'offres' %}selected{% endif %}">Offres</a> <span>|</span>
-                <a href="{{ path('wishlist') }}" class="{% if current_page == 'wishlist' %}selected{% endif %}">Wishlist</a> <span>|</span>
+                <a href="{{ path('home') }}" class="{% if current_page == 'home' %}selected{% endif %}">Accueil</a>
+                <span>|</span>
+                <a href="{{ path('entreprises') }}" class="{% if current_page == 'entreprises' %}selected{% endif %}">Entreprises</a>
+                <span>|</span>
+                <a href="{{ path('offres') }}" class="{% if current_page == 'offres' %}selected{% endif %}">Offres</a>
+                <span>|</span>
+                <a href="{{ path('wishlist') }}" class="{% if current_page == 'wishlist' %}selected{% endif %}">Wishlist</a>
+                <span>|</span>
                 <a href="{{ path('contact') }}" class="{% if current_page == 'contact' %}selected{% endif %}">Contact</a>
             </div>
             <div class="account">
@@ -61,17 +65,23 @@
             <a href="{{ path('offres') }}">Offres</a>
             <a href="{{ path('wishlist') }}">Wishlist</a>
             <a href="{{ path('contact') }}">Contact</a>
+            
             {% if user %}
-                <div class="dropdown-content">
-                    <a href="{{ path('profile') }}">Mon profil</a>
-                    <a href="{{ path('logout') }}">Déconnexion</a>
-                </div>
+                <!-- Si l'utilisateur est connecté -->
+                <a href="{{ path('profile') }}" class="user-profile">
+                    <i class="fas fa-user-circle"></i> {{ user.name }}
+                </a>
+                <a href="{{ path('logout') }}" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </a>
             {% else %}
+                <!-- Si l'utilisateur n'est pas connecté -->
                 <a href="{{ path('login') }}" class="connexion-inscription-btn">
                     <i class="fas fa-right-to-bracket"></i> Connexion
                 </a>
             {% endif %}
         </div>
+
 
     {% endif %}
 
