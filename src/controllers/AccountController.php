@@ -123,6 +123,8 @@ class AccountController extends BaseController {
     
         try {
             $userId = $_SESSION['user']['id'];
+            
+            // Récupération des infos utilisateur
             $stmt = $this->pdo->prepare("SELECT * FROM User WHERE idUser = ?");
             $stmt->execute([$userId]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -137,12 +139,29 @@ class AccountController extends BaseController {
                 $_SESSION['permLVL'] = $user['PermLVL'];
             }
     
+            // Récupération des postulations de l'utilisateur
+            $applicationsQuery = "
+                SELECT 
+                    a.*, 
+                    o.NameOffer AS OfferName,
+                    c.NameCompany AS CompanyName
+                FROM Apply a
+                JOIN Offer o ON a.idOffer = o.idOffer
+                JOIN Company c ON o.idCompany = c.idCompany
+                WHERE a.idUser = ?
+                ORDER BY a.DateApply DESC
+            ";
+            $applicationsStmt = $this->pdo->prepare($applicationsQuery);
+            $applicationsStmt->execute([$userId]);
+            $applications = $applicationsStmt->fetchAll(PDO::FETCH_ASSOC);
+    
             $isEditing = isset($_GET['edit']) && $_GET['edit'] === 'true';
     
             $this->render('profile.twig', [
                 'successMessage' => $_SESSION['successMessage'] ?? null,
                 'errorMessage' => $_SESSION['errorMessage'] ?? null,
-                'isEditing' => $isEditing
+                'isEditing' => $isEditing,
+                'applications' => $applications // Passer les postulations à la vue
             ]);
             unset($_SESSION['successMessage'], $_SESSION['errorMessage']);
     
