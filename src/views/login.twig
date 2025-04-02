@@ -11,9 +11,9 @@
                     <form action="{{ path('signup') }}" method="post">
                         <h2>Inscription</h2>
 		                <select id="loginselect" name="loginselect" required>
-                            <option value="option1" disabled selected>--- Sélectionnez votre statut ---</option>
-                            <option value="option2">Etudiant</option>
-                            <option value="option3">Pilote</option>
+                            <option value="" disabled selected>--- Sélectionnez votre statut ---</option>
+                            <option value="0">Etudiant</option>
+                            <option value="1">Pilote</option>
                         </select>
 
                         <input type="text" name="txt" placeholder="Nom d'Utilisateur" required="">
