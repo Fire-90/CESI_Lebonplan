@@ -201,6 +201,30 @@ class PostController extends BaseController {
         }
     }
 
+    public function postuler($id) {
+        try {
+            $stmt = $this->pdo->prepare("SELECT * FROM Offer WHERE idOffer = :id");
+            $stmt->execute([':id' => $id]);
+            $offer = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            if (!$offer) {
+                throw new \Exception("Offre non trouvée");
+            }
+    
+            $this->render('postuler.twig', [
+                'offer' => $offer
+            ]);
+        } catch (PDOException $e) {
+            $this->render('postuler.twig', [
+                'error' => "Erreur lors de la récupération de l'offre: " . $e->getMessage()
+            ]);
+        } catch (\Exception $e) {
+            $this->render('postuler.twig', [
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
 
     //================================================================================
     /**
