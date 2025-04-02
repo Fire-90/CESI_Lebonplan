@@ -10,6 +10,10 @@
                 <div class="form-container signup">
                     <form action="{{ path('signup') }}" method="post">
                         <h2>Inscription</h2>
+		                <select id="loginselect" name="loginselect" placeholder="" required="">
+    		                <option value="option1">Etudiant</option>
+    		                <option value="option2">Pilote</option>
+		                </select>
                         <input type="text" name="txt" placeholder="Nom d'Utilisateur" required="">
                         <input type="email" name="email" placeholder="Adresse Email" required="">
                         <input type="number" name="broj" placeholder="Numéro de Téléphone" required="">
