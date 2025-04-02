@@ -80,15 +80,6 @@ switch ($page) {
         $controller = new WishlistController();
         $controller->index(); 
         break;
-    case 'wishlist-add':
-        $controller = new WishlistController();
-        if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-            $controller->add((int) $_GET['id']);
-        } else {
-            header('Location: index.php?page=offres');
-            exit;
-        }
-        break;
     case 'toggle-wishlist':
         $controller = new PostController();
         if (isset($_GET['id']) && is_numeric($_GET['id'])) {
@@ -149,12 +140,12 @@ switch ($page) {
                 default:
                     // Mode visualisation ou édition
                     $editMode = isset($_GET['edit']) && $_GET['edit'] === 'true';
-                    $controller->profile($editMode);
+                    $controller->profile();
                     break;
             }
         } else {
             $editMode = isset($_GET['edit']) && $_GET['edit'] === 'true';
-            $controller->profile($editMode);
+            $controller->profile();
         }
         break;
     default:
