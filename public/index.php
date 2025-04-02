@@ -103,8 +103,13 @@ switch ($page) {
         $controller->contact(); 
         break;
     case 'postuler':
-        $controller = new HomeController();
-        $controller->postuler(); 
+        $controller = new PostController();
+        if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+            $controller->postuler((int) $_GET['id']);
+        } else {
+            header('Location: index.php?page=offres');
+            exit;
+        }
         break;
     case 'login':
         $controller = new AccountController();
