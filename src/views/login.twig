@@ -2,6 +2,10 @@
 
 {% block title %}Connexion / Inscription{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="assets/style_login.css">
+{% endblock %}
+
 {% block content %}
     <div class="main">
         <div class="auth-container">
@@ -10,16 +14,16 @@
                 <div class="form-container signup">
                     <form action="{{ path('signup') }}" method="post">
                         <h2>Inscription</h2>
-		                <select id="loginselect" name="loginselect" required>
+                        <select id="loginselect" name="loginselect" required>
                             <option value="" disabled selected>--- Sélectionnez votre statut ---</option>
                             <option value="0">Etudiant</option>
                             <option value="1">Pilote</option>
                         </select>
 
-                        <input type="text" name="txt" placeholder="Nom d'Utilisateur" required="">
-                        <input type="email" name="email" placeholder="Adresse Email" required="">
-                        <input type="number" name="broj" placeholder="Numéro de Téléphone" required="">
-                        <input type="password" name="pswd" placeholder="Mot de Passe" required="">
+                        <input type="text" name="txt" placeholder="Nom d'Utilisateur" required=""/>
+                        <input type="email" name="email" placeholder="Adresse Email" required=""/>
+                        <input type="number" name="broj" placeholder="Numéro de Téléphone" required=""/>
+                        <input type="password" name="pswd" placeholder="Mot de Passe" required=""/>
                         <button type="submit" class="btn-submit">S'inscrire</button>
                     </form>
                 </div>
@@ -28,8 +32,8 @@
                 <div class="form-container login">
                     <form action="{{ path('login') }}" method="post">
                         <h2>Connexion</h2>
-                        <input type="email" name="email" placeholder="Email" required="">
-                        <input type="password" name="pswd" placeholder="Mot de Passe" required="">
+                        <input type="email" name="email" placeholder="Email" required=""/>
+                        <input type="password" name="pswd" placeholder="Mot de Passe" required=""/>
                         <button type="submit" class="btn-submit">Se Connecter</button>
                     </form>
                 </div>

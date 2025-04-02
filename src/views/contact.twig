@@ -13,24 +13,23 @@
         <p class="center response-time">
             Nous vous répondrons dans tous les cas dans les délais les plus brefs.
         </p>
-        
-        <article class="feedback-form-container">
-            <form class="feedback-form">
-                <h2 class="form-title">Vous avez la parole</h2>
-                
-                <label for="fullname" class="form-label">Nom complet
-                    <input id="fullname" name="fullname" type="text" class="form-input" value="" size="100" required>
-                </label>
-                
-                <label for="feedbacks" class="form-label">Votre message
-                    <textarea id="feedbacks" name="feedbacks" class="form-textarea" rows="5" cols="100"></textarea>
-                </label>
-                
-                <div class="buttons">
-                    <button type="submit" class="submit-button">Envoyer</button>
-                    <input type="reset" value="Effacer" class="reset-button">
-                </div>
-            </form>
-        </article>					
+
+        <!-- Formulaire de contact directement ici -->
+        <form class="feedback-form">
+            <h2 class="form-title">Vous avez la parole</h2>
+            
+            <label for="fullname" class="form-label">Nom complet
+                <input id="fullname" name="fullname" type="text" class="form-input" value="" size="100" required>
+            </label>
+            
+            <label for="feedbacks" class="form-label">Votre message
+                <textarea id="feedbacks" name="feedbacks" class="form-textarea" rows="5" cols="100"></textarea>
+            </label>
+            
+            <div class="buttons">
+                <button type="submit" class="submit-button">Envoyer</button>
+                <input type="reset" value="Effacer" class="reset-button">
+            </div>
+        </form>					
     </section>
 {% endblock %}
