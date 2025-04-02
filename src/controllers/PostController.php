@@ -156,7 +156,10 @@ class PostController extends BaseController {
                 $renum = filter_input(INPUT_POST, 'RemunOffer', FILTER_SANITIZE_STRING);
                 $date = filter_input(INPUT_POST, 'DateOffer', FILTER_SANITIZE_STRING);
 
+
                 if (!empty($nom) && !empty($desc) && !empty($renum) && !empty($date)) {
+                    $renum = number_format($renum, 0, ',', ' ') . '€/mois';
+                    
                     $stmt = $this->pdo->prepare("UPDATE Offer SET NameOffer = :nom, DescOffer = :descoffer, RemunOffer = :renum, DateOffer = :dateoffer WHERE idOffer = :id");
                     $stmt->execute([
                         ':nom' => $nom,
