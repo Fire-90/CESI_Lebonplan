@@ -1,10 +1,10 @@
-# Lebonplan - Plateforme d'annonces de stages & alternances étudiants
+![Logo ou Bannière si disponible](http://lebonplan.westeurope.cloudapp.azure.com/assets/images/logo_full.png)
+
+# Plateforme d'annonces de stages & alternances étudiants
 
 # [CLIQUEZ ICI POUR ACCEDEZ AU SITE](http://lebonplan.westeurope.cloudapp.azure.com/)
 
-![Logo ou Bannière si disponible](http://lebonplan.westeurope.cloudapp.azure.com/assets/images/logo_full.png)
-
-**CESI_Lebonplan** est une plateforme web inspirée de Leboncoin, spécialement conçue pour les étudiants du CESI à la recherche de stages. Développée en PHP avec une architecture moderne utilisant Twig et Composer.
+**LeBonplan** est une plateforme web inspirée de Leboncoin, spécialement conçue pour les étudiants du CESI à la recherche de stages. Développée en PHP avec une architecture moderne utilisant Twig et Composer.
 
 ## Fonctionnalités principales
 
