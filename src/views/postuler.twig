@@ -9,23 +9,13 @@
     </div>
 
     <main>
-        {% if success %}
-            <div class="alert success">{{ success }}</div>
+        {% if successMessage %}
+            <div class="alertt alertt-success">{{ successMessage }}</div>
         {% endif %}
-        
-        {% if error %}
-            <div class="alert error">{{ error }}</div>
+        {% if errorMessage %}
+            <div class="alertt alertt-danger">{{ errorMessage }}</div>
         {% endif %}
 
-        {% if errors %}
-            <div class="alert error">
-                <ul>
-                    {% for error in errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
 
         <div>
             <h1 class="center">Postuler à une offre de stage</h1>

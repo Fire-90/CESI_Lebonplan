@@ -408,7 +408,7 @@ public function postuler($id) {
 
                 $this->render('postuler.twig', [
                     'offer' => $offer,
-                    'success' => "Votre candidature a été envoyée avec succès !",
+                    'successMessage' => "Votre candidature a été envoyée avec succès !",
                     'formData' => $_POST
                 ]);
                 return;
@@ -417,7 +417,7 @@ public function postuler($id) {
             // Si erreurs, réafficher le formulaire avec les erreurs
             $this->render('postuler.twig', [
                 'offer' => $offer,
-                'errors' => $errors,
+                'errorMessage' => $errors,
                 'formData' => $_POST
             ]);
             return;
@@ -431,13 +431,13 @@ public function postuler($id) {
     } catch (PDOException $e) {
         $this->render('postuler.twig', [
             'offer' => $offer ?? null,
-            'error' => "Erreur lors de la récupération de l'offre: " . $e->getMessage(),
+            'errorMessage' => "Erreur lors de la récupération de l'offre: " . $e->getMessage(),
             'formData' => $_POST ?? []
         ]);
     } catch (\Exception $e) {
         $this->render('postuler.twig', [
             'offer' => $offer ?? null,
-            'error' => $e->getMessage(),
+            'errorMessage' => $e->getMessage(),
             'formData' => $_POST ?? []
         ]);
     }
