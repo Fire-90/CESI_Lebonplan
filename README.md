@@ -1,15 +1,16 @@
-# CESI_Lebonplan - Plateforme d'annonces de stages étudiants
+# Lebonplan - Plateforme d'annonces de stages & alternances étudiants
 
-![Logo ou Bannière si disponible](lien/vers/une/image.png)
+# [CLIQUEZ ICI POUR ACCEDEZ AU SITE](http://lebonplan.westeurope.cloudapp.azure.com/)
+
+![Logo ou Bannière si disponible](http://lebonplan.westeurope.cloudapp.azure.com/assets/images/logo_full.png)
 
 **CESI_Lebonplan** est une plateforme web inspirée de Leboncoin, spécialement conçue pour les étudiants du CESI à la recherche de stages. Développée en PHP avec une architecture moderne utilisant Twig et Composer.
 
 ## Fonctionnalités principales
 
 ✅ **Dépôt d'annonces** : Les entreprises peuvent publier des offres de stage  
-✅ **Recherche avancée** : Filtres par domaine, localisation, durée, etc.  
+✅ **Recherche avancée** : Filtres par domaine, localisation, etc.  
 ✅ **Profils étudiants** : CV et compétences visibles par les recruteurs  
-✅ **Messagerie intégrée** : Communication directe entre étudiants et entreprises  
 ✅ **Système de favoris** : Sauvegarde des annonces préférées  
 
 ## Technologies utilisées
@@ -19,7 +20,7 @@
 - **Gestion des dépendances** : Composer
 - **Base de données** : MySQL
 - **Frontend** : HTML5, CSS3, JavaScript
-- **Outils** : Git, [autres outils si pertinents]
+- **Outils** : Git, Visual Studio Code
 
 ## Prérequis
 
@@ -27,10 +28,3 @@
 - MySQL 5.7+
 - Composer installé
 - Serveur web (Apache/Nginx)
-
-## Installation
-
-1. **Cloner le dépôt** :
-   ```bash
-   git clone https://github.com/Fire-90/CESI_Lebonplan.git
-   cd CESI_Lebonplan
