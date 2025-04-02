@@ -252,8 +252,7 @@ class PostController extends BaseController {
         try {
             // Récupération de l'ID
             $id = $_POST['id'] ?? $_GET['id'] ?? null;
-            error_log("ID reçu: " . var_export($id, true));
-    
+
             if (!$id || !is_numeric($id)) {
                 throw new \Exception("ID d'offre invalide");
             }
@@ -268,42 +267,53 @@ class PostController extends BaseController {
                 throw new \Exception("Offre introuvable");
             }
     
-        // Vérification confirmation suppression
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // D'abord supprimer les compétences associées
-            $deleteCompetences = $this->pdo->prepare("DELETE FROM OfferCompetence WHERE idOffer = ?");
-            $deleteCompetences->execute([$id]);
-            
-            // Ensuite supprimer l'offre
-            $delete = $this->pdo->prepare("DELETE FROM Offer WHERE idOffer = ?");
-            $delete->execute([$id]);
-            
-            $count = $delete->rowCount();
-            
-            if ($count > 0) {
-                header("Location: ?page=offres");
-                exit;
-            }
-            throw new \Exception("Erreur lors de la suppression");
-        }
+            // Si confirmation reçue
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // Suppression des compétences associées
+                $deleteCompetences = $this->pdo->prepare("DELETE FROM OfferCompetence WHERE idOffer = ?");
+                $deleteCompetences->execute([$id]);
+                
+                // Suppression de l'offre
+                $delete = $this->pdo->prepare("DELETE FROM Offer WHERE idOffer = ?");
+                $delete->execute([$id]);
+                
+                if ($delete->rowCount() > 0) {
+                    // Récupérer à nouveau les offres pour affichage
+                    $stmt = $this->pdo->query("SELECT Offer.*, Company.NameCompany 
+                                             FROM Offer JOIN Company ON Offer.idCompany = Company.idCompany");
+                    $offers = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-            // Affichage de la confirmation
+                    // Afficher directement avec le message de succès
+                    $this->render('offres.twig', [
+                        'Offer' => $offers,
+                        'currentPage' => 1,
+                        'totalPages' => 1,
+                        'successMessage' => "L'offre a été supprimée avec succès !"
+                    ]);
+                    return;
+                }
+                throw new \Exception("Erreur lors de la suppression");
+            }
+    
+            // Affichage de la confirmation de suppression
             $this->render('delete-offer.twig', [
-                'offer' => $offer,
-                'current_url' => "http://cesi-static.local/public/index.php?page=delete-offer&id=$id"
+                'offer' => $offer
             ]);
     
-            } catch (\Exception $e) {
-                error_log("ERREUR: " . $e->getMessage());
-                $this->render('offres.twig', [
-                    'errorMessage' => $e->getMessage(),
-                    'Offer' => [],
-                    'currentPage' => 1,
-                    'totalPages' => 1
-                ]);
-            }
-    }
+        } catch (\Exception $e) {
+            // En cas d'erreur, afficher la page des offres avec le message d'erreur
+            $stmt = $this->pdo->query("SELECT Offer.*, Company.NameCompany 
+                                     FROM Offer JOIN Company ON Offer.idCompany = Company.idCompany");
+            $offers = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
+            $this->render('offres.twig', [
+                'Offer' => $offers,
+                'currentPage' => 1,
+                'totalPages' => 1,
+                'errorMessage' => $e->getMessage()
+            ]);
+        }
+    }
 
 public function postuler($id) {
 

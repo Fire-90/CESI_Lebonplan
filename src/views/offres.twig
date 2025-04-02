@@ -11,10 +11,10 @@
         <h1 class="center">Postuler à nos offres disponibles</h1>
     </div>
 
-    {% if successMessage %}
+    {% if successMessage is defined %}
         <div class="alertt alertt-success">{{ successMessage }}</div>
     {% endif %}
-    {% if errorMessage %}
+    {% if errorMessage is defined %}
         <div class="alertt alertt-danger">{{ errorMessage }}</div>
     {% endif %}
 
