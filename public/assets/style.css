@@ -90,18 +90,15 @@ a {
 
 /* ----------------Home.twig----------------------- */
 
-/* ----------------Home.twig----------------------- */
-
 .hero {
-    background: linear-gradient(135deg, 
+    background: linear-gradient(100deg,
             rgba(0, 0, 255, 0.8) 0%, 
             rgba(0, 0, 255, 0.8) 15%,
             rgba(0, 0, 0, 0.85) 43%,
-            rgba(0, 0, 0, 0.85) 58%,
-            rgba(255, 132, 0, 0.7) 99%,
+            rgba(0, 0, 0, 0.85) 72%,
+            rgba(255, 132, 0, 0.7) 95%,
             rgba(255, 132, 0, 0.7) 100%
-        ),
-        url('/assets/images/hero-bg.jpg') no-repeat center center;
+            );
     background-size: cover;
     padding: 80px 20px;
     color: white;
@@ -378,10 +375,10 @@ a {
         font-size: 20px;
         justify-content: space-between;
         padding: 13px 15px;
-        background: linear-gradient(135deg, 
+        background: linear-gradient(100deg, 
             rgba(0, 0, 255, 0.8) 0%, 
             rgba(0, 0, 255, 0.8) 20%, /* Le bleu occupe 35% à gauche */
-            rgba(0, 0, 0, 0.85) 55%, /* Transition progressive vers le noir */
+            rgba(0, 0, 0, 0.85) 45%, /* Transition progressive vers le noir */
             rgba(0, 0, 0, 0.85) 75%, /* Le noir occupe 20% au centre */
             rgba(255, 132, 0, 0.7) 99%, /* Transition progressive vers l'orange */
             rgba(255, 132, 0, 0.7) 100% /* L'orange occupe 35% à droite */
