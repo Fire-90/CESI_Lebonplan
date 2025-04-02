@@ -1,293 +1,95 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const nomInput = document.querySelector("input[name='lastname']");
-    const emailInput = document.querySelector("input[name='email']");
-    const fileInput = document.getElementById("file-upload");
-    const submitButton = document.getElementById("submit");
-    const messageInput = document.querySelector("textarea[name='feedbacks']");
-    const prenomInput = document.querySelector("input[name='surname']");
-    const alertContainer = document.getElementById("alert-messages");
-    const mailContainer = document.getElementById("mail-messages");
-    const fileContainer = document.getElementById("file-messages");
-    const backToTopButton = document.getElementById("backToTop");
-    const resetButton = document.getElementById("reset");
-    const checkboxes = document.querySelectorAll("input[type='checkbox']");
-    const radioButtons = document.querySelectorAll("input[type='radio']");
+    // Gestion du menu burger
+    const burgerIcon = document.getElementById('burger-icon');
+    const burgerMenu = document.querySelector('.burger .bar');
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (burgerIcon && burgerMenu) {
+        burgerIcon.addEventListener('click', function() {
+            burgerMenu.classList.toggle('active');
+        });
 
-    function displayError(message) {
-        alertContainer.innerHTML = `<p class='error'>${message}</p>`;
-        alertContainer.style.display = "flex";
-    }
-
-    function displaySuccess() {
-        alertContainer.innerHTML = "<p class='success'>Votre candidature a été envoyée avec succès !</p>";
-        alertContainer.style.display = "flex";
-    }
-
-    function displayMail(message) {
-        mailContainer.innerHTML = `<p class='mail-error'>${message}</p>`;
-        mailContainer.style.display = "flex";
-    }
-
-    function displayFile(message) {
-        fileContainer.innerHTML = `<p class='file-error'>${message}</p>`;
-        fileContainer.style.display = "flex";
-    }
-
-    // Mettre le nom en majuscule après saisie
-    nomInput.addEventListener("blur", function () {
-        nomInput.value = nomInput.value.toUpperCase();
-    });
-
-    // Vérification du format d'email
-    emailInput.addEventListener("blur", function () {
-        if (!emailRegex.test(emailInput.value)) {
-            displayMail("Veuillez entrer une adresse email valide.");
-        } else {
-            mailContainer.innerHTML = "";
-            mailContainer.style.display = "none";
-        }
-    });
-
-    document.getElementById('upload-btn').addEventListener('click', function() {
-        document.getElementById('file-upload').click();
-    });
-    
-    document.getElementById('file-upload').addEventListener('change', function(event) {
-        const fileNameDisplay = document.getElementById('file-name-display');
-        fileNameDisplay.textContent = event.target.files.length ? event.target.files[0].name : '';
-    });
-
-    fileInput.addEventListener("change", function () {
-        const allowedFormats = ["pdf", "doc", "docx", "odt", "rtf", "jpg", "png"];
-        const file = fileInput.files[0];
-        const fileNameDisplay = document.getElementById("file-name-display");
-    
-        if (file) {
-            const fileSizeMB = file.size / (1024 * 1024); // Convertir la taille en Mo
-            const fileExtension = file.name.split(".").pop().toLowerCase(); // Extraire l'extension
-    
-            // Vérification du format
-            if (!allowedFormats.includes(fileExtension)) {
-                displayFile("Format non valide. Formats acceptés: .pdf, .doc, .docx, .odt, .rtf, .jpg, .png");
-                fileInput.value = ""; // Réinitialise l'input fichier
-                fileNameDisplay.innerHTML = ""; // Efface l'affichage du fichier
-            } 
-            // Vérification de la taille du fichier
-            else if (fileSizeMB > 2) {
-                displayFile("La taille du fichier dépasse 2 Mo.");
-                fileInput.value = ""; // Réinitialise l'input fichier
-                fileNameDisplay.innerHTML = ""; // Efface l'affichage du fichier
-            } 
-            // Affichage du nom du fichier si tout est correct
-            else {
-                fileContainer.style.display = "none";
-                fileContainer.innerHTML = "";
-                fileNameDisplay.innerHTML = `<p class='file-success'>${file.name}</p>`;
+        // Fermer le menu burger lorsqu'on clique à l'extérieur
+        document.addEventListener('click', function(event) {
+            if (!burgerIcon.contains(event.target) && !burgerMenu.contains(event.target)) {
+                burgerMenu.classList.remove('active');
             }
-        } else {
-            fileNameDisplay.innerHTML = ""; // Efface l'affichage si aucun fichier
-        }
-    });
-    
+        });
+    }
 
-    submitButton.addEventListener("click", function (event) {
-        let errorMessage = "";
-    
-        // Vérifications des champs obligatoires
-        if (!nomInput.value.trim()) {
-            nomInput.classList.add("error-input");
-            errorMessage += "Le nom est requis. ";
-        } else {
-            nomInput.classList.remove("error-input");
+    // Gestion du menu dropdown utilisateur
+    const userDropdown = document.querySelector('.user-dropdown');
+    const dropdownContent = document.querySelector('.dropdown-content');
+
+    if (userDropdown && dropdownContent) {
+        function showDropdown() {
+            dropdownContent.style.display = 'block';
+            dropdownContent.style.opacity = '1';
         }
-        if (!prenomInput.value.trim()) {
-            prenomInput.classList.add("error-input");
-            errorMessage += "Le prénom est requis. ";
-        } else {
-            prenomInput.classList.remove("error-input");
-        }
-        if (!emailRegex.test(emailInput.value)) {
-            emailInput.classList.add("error-input");
-            errorMessage += "L'email est requis. ";
-        } else {
-            emailInput.classList.remove("error-input");
-        }
-        if (!messageInput.value.trim()) {
-            messageInput.classList.add("error-input");
-            errorMessage += "Le message est requis. ";
-        } else {
-            messageInput.classList.remove("error-input");
-        }
-        if (!fileInput.value.trim()) {
-            errorMessage += "Le CV est requis. ";
-        }
-    
-        // Si des erreurs sont trouvées
-        if (errorMessage) {
-            displayError(errorMessage);
-        } else {
-            // Si tout est valide, afficher un message de succès
-            displaySuccess();
-    
-            // Afficher toutes les informations dans la console
-            console.log("Informations envoyées :");
-            console.log("Nom: " + nomInput.value);
-            console.log("Prénom: " + prenomInput.value);
-            console.log("Email: " + emailInput.value);
-    
-            // Affichage des checkboxes avec leur état (true ou false)
-            checkboxes.forEach(checkbox => {
-                console.log(`${checkbox.name}: ${checkbox.checked}`);
-            });
-    
-            // Affichage des radio buttons sélectionnés
-            radioButtons.forEach(radio => {
-                if (radio.checked) {
-                    console.log(`${radio.name}: ${radio.value}`);
+
+        function hideDropdown() {
+            setTimeout(() => {
+                if (!userDropdown.matches(':hover') && !dropdownContent.matches(':hover')) {
+                    dropdownContent.style.opacity = '0';
+                    setTimeout(() => {
+                        dropdownContent.style.display = 'none';
+                    }, 300);
                 }
-            });
-    
-            // Affichage des valeurs sélectionnées dans les <select>
-            const selects = document.querySelectorAll("select");
-            selects.forEach(select => {
-                console.log(`${select.name}: ${select.value}`);
-            });
-
-            console.log("Message: " + messageInput.value);
-            console.log("CV: " + fileInput.value);
+            }, 200);
         }
-    });
-    
 
-    // Réinitialisation du formulaire
-    resetButton.addEventListener("click", function () {
-        alertContainer.style.display = "none";
-        alertContainer.innerHTML = "";
-        mailContainer.style.display = "none";
-        mailContainer.innerHTML = "";
-        fileContainer.style.display = "none";
-        fileContainer.innerHTML = "";
-        nomInput.value = "";
-        prenomInput.value = "";
-        emailInput.value = "";
-        messageInput.value = "";
-        fileInput.value = "";
-
-        nomInput.classList.remove("error-input");
-        prenomInput.classList.remove("error-input");
-        messageInput.classList.remove("error-input");
-        emailInput.classList.remove("error-input");
-
-        checkboxes.forEach(checkbox => checkbox.checked = false);
-        radioButtons.forEach(radio => radio.checked = false);
-        if (radioButtons.length > 0) radioButtons[0].checked = true;
-    });
+        userDropdown.addEventListener('mouseenter', showDropdown);
+        dropdownContent.addEventListener('mouseenter', showDropdown);
+        userDropdown.addEventListener('mouseleave', hideDropdown);
+        dropdownContent.addEventListener('mouseleave', hideDropdown);
+    }
 
     // Gestion du bouton retour en haut de page
-    window.addEventListener("scroll", function () {
-        if (window.scrollY > 200) {
-            backToTopButton.style.display = "block";
-        } else {
-            backToTopButton.style.display = "none";
-        }
-    });
+    const backToTopButton = document.getElementById('backToTop');
 
-    backToTopButton.addEventListener("click", function () {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+    if (backToTopButton) {
+        window.addEventListener("scroll", function () {
+            if (window.scrollY > 200) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        });
 
-});
-
-// Sélectionner les éléments nécessaires
-const burgerIcon = document.getElementById("burger-icon");
-const sidebar = document.getElementById("sidebar");
-
-// Fonction pour afficher la sidebar
-function toggleSidebar() {
-    sidebar.classList.toggle("active");
-}
-
-// Ajouter un écouteur d'événement pour ouvrir/fermer la sidebar lors du clic sur le burger
-burgerIcon.addEventListener("click", toggleSidebar);
-
-// Ajouter un écouteur d'événement pour fermer la sidebar en dehors
-document.addEventListener("click", function (event) {
-    if (!sidebar.contains(event.target) && !burgerIcon.contains(event.target)) {
-        sidebar.classList.remove("active");
+        backToTopButton.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
     }
-});
 
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
+    // Gestion de la bascule entre login et signup
     const loginForm = document.querySelector(".login");
     const signupForm = document.querySelector(".signup");
     const showSignupBtn = document.querySelector("#showSignup");
     const showLoginBtn = document.querySelector("#showLogin");
 
-    // Fonction pour afficher l'inscription et cacher la connexion
-    function showSignup() {
-        loginForm.style.opacity = "0";
-        setTimeout(() => {
-            loginForm.style.display = "none";
-            signupForm.style.display = "block";
+    if (loginForm && signupForm && showSignupBtn && showLoginBtn) {
+        function showSignup() {
+            loginForm.style.opacity = "0";
             setTimeout(() => {
-                signupForm.style.opacity = "1";
-            }, 50);
-        }, 300);
-    }
+                loginForm.style.display = "none";
+                signupForm.style.display = "block";
+                setTimeout(() => {
+                    signupForm.style.opacity = "1";
+                }, 50);
+            }, 300);
+        }
 
-    // Fonction pour afficher la connexion et cacher l'inscription
-    function showLogin() {
-        signupForm.style.opacity = "0";
-        setTimeout(() => {
-            signupForm.style.display = "none";
-            loginForm.style.display = "block";
+        function showLogin() {
+            signupForm.style.opacity = "0";
             setTimeout(() => {
-                loginForm.style.opacity = "1";
-            }, 50);
-        }, 300);
-    }
+                signupForm.style.display = "none";
+                loginForm.style.display = "block";
+                setTimeout(() => {
+                    loginForm.style.opacity = "1";
+                }, 50);
+            }, 300);
+        }
 
-    // Ajout des événements sur les boutons
-    if (showSignupBtn && showLoginBtn) {
         showSignupBtn.addEventListener("click", showSignup);
         showLoginBtn.addEventListener("click", showLogin);
     }
 });
-
-
-// Sélectionner les éléments nécessaires
-const userDropdown = document.querySelector('.user-dropdown');
-const dropdownContent = document.querySelector('.dropdown-content');
-
-// Fonction pour afficher le menu
-function showDropdown() {
-    dropdownContent.style.display = 'block';
-    dropdownContent.style.opacity = '1';
-}
-
-// Fonction pour cacher le menu après un court délai
-function hideDropdown() {
-    setTimeout(() => {
-        if (!userDropdown.matches(':hover') && !dropdownContent.matches(':hover')) {
-            dropdownContent.style.opacity = '0';
-            setTimeout(() => {
-                dropdownContent.style.display = 'none';
-            }, 300); // Délai pour laisser la transition s'appliquer
-        }
-    }, 200); // Petit délai pour éviter que le menu disparaisse trop vite
-}
-
-// Toujours afficher le menu si la souris est sur la zone utilisateur
-userDropdown.addEventListener('mouseenter', showDropdown);
-dropdownContent.addEventListener('mouseenter', showDropdown);
-
-// Cacher le menu uniquement si la souris quitte toute la zone
-userDropdown.addEventListener('mouseleave', hideDropdown);
-dropdownContent.addEventListener('mouseleave', hideDropdown);
-
-
