@@ -152,3 +152,21 @@ document.getElementById('reset-button').addEventListener('click', function() {
     // Réinitialiser le champ fichier (nécessaire car le reset() standard ne le fait pas)
     document.querySelector('input[type="file"]').value = '';
 });
+
+document.getElementById('file-upload').addEventListener('change', function(e) {
+    const fileNameDisplay = document.getElementById('file-name-display');
+    if (this.files.length > 0) {
+        fileNameDisplay.textContent = this.files[0].name;
+        fileNameDisplay.classList.add('has-file');
+    } else {
+        fileNameDisplay.textContent = 'Aucun fichier sélectionné';
+        fileNameDisplay.classList.remove('has-file');
+    }
+});
+
+// Gestion du bouton de réinitialisation
+document.getElementById('reset-button').addEventListener('click', function() {
+    const fileNameDisplay = document.getElementById('file-name-display');
+    fileNameDisplay.textContent = 'Aucun fichier sélectionné';
+    fileNameDisplay.classList.remove('has-file');
+});

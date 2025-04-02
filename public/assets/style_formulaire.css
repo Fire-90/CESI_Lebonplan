@@ -133,6 +133,7 @@ textarea[name="feedbacks"] {
     display: none;
 }
 
+
 /* Style du bouton personnalisé */
 .custom-upload-btn {
     padding: 12px 24px;
@@ -181,9 +182,16 @@ textarea[name="feedbacks"] {
 }
 
 .file-name-display {
-    margin-top: 10px;
     font-style: italic;
     color: #7f8c8d;
+    font-size: 12px;
+    padding: 8px 0;
+    transition: all 0.3s ease;
+}
+
+.file-name-display.has-file {
+    color: #27ae60;
+    font-weight: normal;
 }
 
 /* Messages d'alerte et autres messages */
