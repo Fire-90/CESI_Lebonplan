@@ -65,10 +65,14 @@
                 <a href="{{ path('whishlist') }}">Wishlist</a>
                 <a href="{{ path('contact') }}">Contact</a>
                 {% if user %}
-                    <a href="{{ path('profile') }}">Mon profil ({{ user.name }})</a>
-                    <a href="{{ path('logout') }}">Déconnexion</a>
+                    <div class="dropdown-content">
+                        <a href="{{ path('profile') }}">Mon profil</a>
+                        <a href="{{ path('logout') }}">Déconnexion</a>
+                    </div>
                 {% else %}
-                    <a href="{{ path('login') }}">Connexion / Inscription</a>
+                    <a href="{{ path('login') }}" class="connexion-inscription-btn">
+                        <i class="fas fa-right-to-bracket"></i> Connexion
+                    </a>
                 {% endif %}
             </div>
         </div>

@@ -11,7 +11,11 @@
                 <div class="offer hoverable">
                     {# Lien pour retirer des favoris #}
                     <div style="text-align: right;">
-                        <a href="?page=toggle-wishlist&id={{ offre.idOffer }}" title="Retirer des favoris">★</a>
+                        <a href="?page=toggle-wishlist&id={{ offre.idOffer }}" title="Retirer des favoris">
+                            <span class="wishlist-heart {% if offre.isFavorite %}active{% endif %}">
+                                ♥
+                            </span>
+                        </a>
                     </div>
                     
                     <h1 class="title center">{{ offre.NameOffer }}</h1>
@@ -23,6 +27,7 @@
                 </div>
             {% endfor %}
         </div>
+
     {% else %}
         <p class="center">Vous n'avez aucune offre dans vos favoris.</p>
     {% endif %}
