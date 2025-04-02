@@ -5,7 +5,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Controllers\HomeController;
 use Controllers\EntrepriseController;
 use Controllers\AccountController;
-    use Controllers\PostController;
+use Controllers\PostController;
+use Controllers\WishlistController;
 
 // Récupérer l'utilisateur depuis le cookie (si existant)
 $user = isset($_COOKIE['user']) ? json_decode($_COOKIE['user'], true) : null;
@@ -50,33 +51,52 @@ switch ($page) {
         $controller = new PostController();
             $controller->index($pagination); 
             break;
-        case 'add-offer':
-            $controller = new PostController();
-        $controller->add(); 
-            break;
-        case 'edit-offer':
-            $controller = new PostController();
-            if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-                $controller->edit((int) $_GET['id']);
-            } else {
-                header('Location: index.php?page=offer'); // Redirection si pas d'ID valide
-                exit;
-            }
-            break;
-        case 'delete-offer':
-            $controller = new PostController();
-            $id = $_GET['id'] ?? null;
-            if ($id) {
-                $controller->delete();
-            } else {
-                header('Location: index.php?page=offer'); // Redirection si pas d'ID
-                exit;
-            }
+    case 'add-offer':
+        $controller = new PostController();
+    $controller->add(); 
         break;
+    case 'edit-offer':
+        $controller = new PostController();
+        if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+            $controller->edit((int) $_GET['id']);
+        } else {
+            header('Location: index.php?page=offer'); // Redirection si pas d'ID valide
+            exit;
+        }
+        break;
+    case 'delete-offer':
+        $controller = new PostController();
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            $controller->delete();
+        } else {
+            header('Location: index.php?page=offer'); // Redirection si pas d'ID
+            exit;
+        }
+    break;
 
-    case 'whishlist':
-        $controller = new HomeController();
-        $controller->whishlist(); 
+    // Nouveau cas pour la wishlist
+    case 'wishlist':
+        $controller = new WishlistController();
+        $controller->index(); 
+        break;
+    case 'wishlist-add':
+        $controller = new WishlistController();
+        if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+            $controller->add((int) $_GET['id']);
+        } else {
+            header('Location: index.php?page=offres');
+            exit;
+        }
+        break;
+    case 'toggle-wishlist':
+        $controller = new PostController();
+        if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+            $controller->toggleWishlist((int) $_GET['id']);
+        } else {
+            header('Location: index.php?page=offres');
+            exit;
+        }
         break;
     case 'contact':
         $controller = new HomeController();
