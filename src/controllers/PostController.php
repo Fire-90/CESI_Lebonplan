@@ -351,31 +351,50 @@ public function postuler($id) {
             $isAdult = ($_POST['Majeur'] === 'YES') ? 1 : 0;
 
             // Validation du fichier
-            $resumePath = "/files";
+            $resumePath = null;
+            $fileProvided = false;
+            $fileErrors = false;
+
             if (isset($_FILES['file-upload'])) {
                 $file = $_FILES['file-upload'];
-                $allowedFormats = ['pdf', 'doc', 'docx', 'odt', 'rtf', 'jpg', 'png'];
-                $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+                
+                // Vérifier si un fichier a été effectivement uploadé (pas juste un champ vide)
+                if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+                    $fileProvided = true;
+                    
+                    $allowedFormats = ['pdf', 'doc', 'docx', 'odt', 'rtf', 'jpg', 'png'];
+                    $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
-                if (!in_array($fileExtension, $allowedFormats)) {
-                    $errors[] = "Format de fichier non valide.";
-                } elseif ($file['size'] > 2 * 1024 * 1024) {
-                    $errors[] = "Le fichier est trop volumineux (max 2Mo).";
-                } else {
-                    $uploadDir = '../uploads/resumes/';
-                    if (!is_dir($uploadDir)) {
-                        mkdir($uploadDir, 0777, true);
+                    if (!in_array($fileExtension, $allowedFormats)) {
+                        $errors[] = "Format de fichier non valide.";
+                        $fileErrors = true;
+                    } elseif ($file['size'] > 2 * 1024 * 1024) {
+                        $errors[] = "Le fichier est trop volumineux (max 2Mo).";
+                        $fileErrors = true;
+                    } else {
+                        $uploadDir = '../uploads/resumes/';
+                        if (!is_dir($uploadDir)) {
+                            mkdir($uploadDir, 0777, true);
+                        }
+                        $resumePath = $uploadDir . uniqid() . '.' . $fileExtension;
+                        if (!move_uploaded_file($file['tmp_name'], $resumePath)) {
+                            $errors[] = "Erreur lors de l'enregistrement du fichier.";
+                            $fileErrors = true;
+                        }
                     }
-                    $resumePath = $uploadDir . uniqid() . '.' . $fileExtension;
-                    move_uploaded_file($file['tmp_name'], $resumePath);
                 }
             }
 
+            // Validation des autres champs
             if (empty($lastname)) $errors[] = "Le nom est requis.";
             if (empty($firstname)) $errors[] = "Le prénom est requis.";
             if (!$email) $errors[] = "L'email est invalide.";
             if (empty($message)) $errors[] = "Le message est requis.";
-            if (!$resumePath) $errors[] = "Le CV est requis.";
+
+            // Message "CV requis" uniquement si aucun fichier n'a été fourni
+            if (!$fileProvided && !$fileErrors) {
+                $errors[] = "Le CV est requis.";
+            }
 
             if (empty($errors)) {
                 // Enregistrement en base de données

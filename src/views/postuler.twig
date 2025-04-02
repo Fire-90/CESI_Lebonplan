@@ -12,8 +12,17 @@
         {% if successMessage %}
             <div class="alertt alertt-success">{{ successMessage }}</div>
         {% endif %}
+        
         {% if errorMessage %}
-            <div class="alertt alertt-danger">{{ errorMessage }}</div>
+            <div class="alertt alertt-danger">
+                {% if errorMessage is iterable %}
+                    {% for error in errorMessage %}
+                        {{ error }}<br>
+                    {% endfor %}
+                {% else %}
+                    {{ errorMessage }}
+                {% endif %}
+            </div>
         {% endif %}
 
 
@@ -43,22 +52,22 @@
             <h1>Envoyez votre candidature dès maintenant</h1>
 
             <div class="section">CIVILITÉ
-                <select name="Gender" required>
+                <select name="Gender">
                     <option value="Monsieur" {% if formData.Gender == 'Monsieur' %}selected{% endif %}>Monsieur</option>
                     <option value="Madame" {% if formData.Gender == 'Madame' %}selected{% endif %}>Madame</option>
                 </select>
             </div>
 
             <div class="section">NOM
-                <input name="lastname" type="text" size="25" value="{{ formData.lastname ?? '' }}" required>
+                <input name="lastname" type="text" size="25" value="{{ formData.lastname ?? '' }}">
             </div>
 
             <div class="section">PRÉNOM
-                <input name="surname" type="text" size="25" value="{{ formData.surname ?? '' }}" required>
+                <input name="surname" type="text" size="25" value="{{ formData.surname ?? '' }}">
             </div>
 
             <div class="section">COURRIEL
-                <input name="email" type="email" size="35" value="{{ formData.email ?? '' }}" required>
+                <input name="email" type="email" size="35" value="{{ formData.email ?? '' }}">
             </div>
 
             <div class="section">A PROPOS DE VOUS
@@ -93,13 +102,13 @@
             </div>
 
             <div class="section">VOTRE MESSAGE AU RECRUTEUR
-                <textarea name="feedbacks" rows="5" cols="100" required>{{ formData.feedbacks ?? '' }}</textarea>
+                <textarea name="feedbacks" rows="5" cols="100">{{ formData.feedbacks ?? '' }}</textarea>
             </div>
 
             <div>
                 <div class="file-container">
                     <!-- Input caché -->
-                    <input type="file" id="file-upload" name="file-upload" required accept=".pdf, .doc, .docx, .odt, .rtf, .jpg, .png">
+                    <input type="file" id="file-upload" name="file-upload" accept=".pdf, .doc, .docx, .odt, .rtf, .jpg, .png">
                     
                     <!-- Label stylisé comme un bouton -->
                     <label for="file-upload" id="upload-button" class="custom-upload-btn">AJOUTER MON CV</label>
