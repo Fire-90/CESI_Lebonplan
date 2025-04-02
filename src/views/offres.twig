@@ -11,6 +11,13 @@
         <h1 class="center">Postuler à nos offres disponibles</h1>
     </div>
 
+    {% if successMessage %}
+        <div class="alertt alertt-success">{{ successMessage }}</div>
+    {% endif %}
+    {% if errorMessage %}
+        <div class="alertt alertt-danger">{{ errorMessage }}</div>
+    {% endif %}
+
     <div class="search-container">
         <form action="{{ path('offres') }}" method="GET" class="search-form">
             <input type="hidden" name="page" value="offres">

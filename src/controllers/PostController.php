@@ -159,7 +159,7 @@ class PostController extends BaseController {
 
                 if (!empty($nom) && !empty($desc) && !empty($renum) && !empty($date)) {
                     $renum = number_format($renum, 0, ',', ' ') . '€/mois';
-                    
+
                     $stmt = $this->pdo->prepare("UPDATE Offer SET NameOffer = :nom, DescOffer = :descoffer, RemunOffer = :renum, DateOffer = :dateoffer WHERE idOffer = :id");
                     $stmt->execute([
                         ':nom' => $nom,
@@ -346,9 +346,12 @@ public function postuler($id) {
                     ':messageText' => $message
                 ]);
 
-                $_SESSION['success'] = "Votre candidature a été envoyée avec succès !";
-                header('Location: ?page=offres');
-                exit;
+                $this->render('postuler.twig', [
+                    'offer' => $offer,
+                    'success' => "Votre candidature a été envoyée avec succès !",
+                    'formData' => $_POST
+                ]);
+                return;
             }
 
             // Si erreurs, réafficher le formulaire avec les erreurs
@@ -367,11 +370,15 @@ public function postuler($id) {
 
     } catch (PDOException $e) {
         $this->render('postuler.twig', [
-            'error' => "Erreur lors de la récupération de l'offre: " . $e->getMessage()
+            'offer' => $offer ?? null,
+            'error' => "Erreur lors de la récupération de l'offre: " . $e->getMessage(),
+            'formData' => $_POST ?? []
         ]);
     } catch (\Exception $e) {
         $this->render('postuler.twig', [
-            'error' => $e->getMessage()
+            'offer' => $offer ?? null,
+            'error' => $e->getMessage(),
+            'formData' => $_POST ?? []
         ]);
     }
 }
