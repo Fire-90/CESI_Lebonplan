@@ -248,14 +248,8 @@ class PostController extends BaseController {
     /**
      * Suppression d'une offre
      */
-    public function delete($id) {
+    public function delete() {
         try {
-            // Mode debug
-            error_log("Méthode delete() appelée");
-            error_log("Méthode HTTP: " . $_SERVER['REQUEST_METHOD']);
-            error_log("Données POST: " . print_r($_POST, true));
-            error_log("Données GET: " . print_r($_GET, true));
-    
             // Récupération de l'ID
             $id = $_POST['id'] ?? $_GET['id'] ?? null;
             error_log("ID reçu: " . var_export($id, true));
@@ -274,23 +268,24 @@ class PostController extends BaseController {
                 throw new \Exception("Offre introuvable");
             }
     
-            // Vérification confirmation suppression
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                error_log("Tentative de suppression de l'offre ID: $id");
-                
-                $delete = $this->pdo->prepare("DELETE FROM Offer WHERE idOffer = ?");
-                $delete->execute([$id]);
-                
-                $count = $delete->rowCount();
-                error_log("Lignes affectées: $count");
-                
-                if ($count > 0) {
-                    error_log("Suppression réussie, redirection vers offres");
-                    header("Location: http://cesi-static.local/public/index.php?page=offres");
-                    exit;
-                }
-                throw new \Exception("Erreur lors de la suppression");
+        // Vérification confirmation suppression
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // D'abord supprimer les compétences associées
+            $deleteCompetences = $this->pdo->prepare("DELETE FROM OfferCompetence WHERE idOffer = ?");
+            $deleteCompetences->execute([$id]);
+            
+            // Ensuite supprimer l'offre
+            $delete = $this->pdo->prepare("DELETE FROM Offer WHERE idOffer = ?");
+            $delete->execute([$id]);
+            
+            $count = $delete->rowCount();
+            
+            if ($count > 0) {
+                header("Location: ?page=offres");
+                exit;
             }
+            throw new \Exception("Erreur lors de la suppression");
+        }
     
             // Affichage de la confirmation
             $this->render('delete-offer.twig', [
@@ -298,12 +293,15 @@ class PostController extends BaseController {
                 'current_url' => "http://cesi-static.local/public/index.php?page=delete-offer&id=$id"
             ]);
     
-        } catch (\Exception $e) {
-            error_log("ERREUR: " . $e->getMessage());
-            $this->render('error.twig', [
-                'message' => $e->getMessage()
-            ]);
-        }
+            } catch (\Exception $e) {
+                error_log("ERREUR: " . $e->getMessage());
+                $this->render('offres.twig', [
+                    'errorMessage' => $e->getMessage(),
+                    'Offer' => [],
+                    'currentPage' => 1,
+                    'totalPages' => 1
+                ]);
+            }
     }
     
 
