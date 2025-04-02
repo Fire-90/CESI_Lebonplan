@@ -255,12 +255,119 @@ a {
 }
 
 
+
+
+/* La sidebar est cachée par défaut */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px; /* La sidebar commence en dehors de l'écran */
+    width: 250px; /* Largeur de la sidebar */
+    height: 100vh; /* Hauteur à 100% de l'écran */
+    background-color: #1a1a1a; /* Couleur noire élégante */
+    color: white; /* Texte blanc */
+    padding-top: 50px; /* Espace pour ne pas que le contenu touche le haut */
+    transition: all 0.3s ease-in-out; /* Transition fluide lors de l'ouverture/fermeture */
+    z-index: 999; /* S'assurer que la sidebar est au-dessus */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5); /* Ombre pour un effet de profondeur */
+}
+
+/* Lorsque la sidebar a la classe 'active', elle se déplace à gauche */
+.sidebar.active {
+    left: 0; /* Fait glisser la sidebar vers la gauche */
+}
+
+/* Style des liens de la sidebar */
+.sidebar a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #f39c12; /* Orange doux pour le texte */
+    font-size: 18px; /* Taille de texte confortable */
+    transition: background-color 0.3s ease, padding-left 0.3s ease; /* Animation fluide sur le survol */
+}
+
+.sidebar a:hover {
+    background-color: #34495E; /* Légère variation de couleur au survol */
+    color: #fff; /* Garde le texte blanc au survol */
+    padding-left: 30px; /* Effet d'agrandissement au survol */
+}
+
+/* Style du dropdown */
+.sidebar .dropdown-content {
+    display: none;
+    background-color: #34495E;
+    border-top: 1px solid #BDC3C7;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar a:hover + .dropdown-content {
+    display: block; /* Affiche le contenu du dropdown lors du survol */
+}
+
+/* Style des liens dans le dropdown */
+.sidebar .dropdown-content a {
+    padding-left: 40px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar .dropdown-content a:hover {
+    background-color: #1F2C3C; /* Couleur de fond au survol du dropdown */
+}
+
+/* Style du bouton de connexion */
+.sidebar .connexion-inscription-btn {
+    display: block;
+    background-color: #3498db; /* Bleu élégant */
+    color: white;
+    text-align: center;
+    padding: 15px 20px;
+    font-size: 18px;
+    margin-top: 20px; /* Espacement supérieur */
+    border-radius: 5px; /* Coins arrondis */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transition fluide */
+}
+
+.sidebar .connexion-inscription-btn:hover {
+    background-color: #2980b9; /* Changement de couleur au survol */
+    transform: scale(1.05); /* Effet de zoom léger */
+}
+
+/* Réduction de la largeur pour les petits écrans */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 220px; /* Réduit la largeur pour les écrans plus petits */
+    }
+
+    .sidebar a {
+        font-size: 16px;
+    }
+
+    .sidebar .connexion-inscription-btn {
+        font-size: 16px; /* Réduit la taille du texte pour les petits écrans */
+        padding: 12px 18px; /* Réduit les marges du bouton */
+    }
+}
+
+  
+  
+
+
+  
 /* ---------------- Navigation Bar ---------------- */
 @media screen and (min-width: 701px) {
+    /* Cacher le burger sur desktop */
     .burger {
         display: none;
     }
 
+    /* Cacher la sidebar si elle est présente sur desktop */
+    .sidebar {
+        display: none;
+    }
+
+    /* Style de la navbar sur desktop */
     .navbar {
         display: flex;
         font-size: 20px;
@@ -276,7 +383,6 @@ a {
         );
         color: white;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); /* Ombre élégante et légère */
-        /* border-radius: 10px; */ /* Bordure arrondie pour un effet moderne */
         transition: all 0.4s ease-in-out; /* Transition fluide */
     }
 
@@ -402,6 +508,7 @@ a {
 }
 
 
+
 @media screen and (max-width: 701px) { 
     /* Cacher la navbar standard sur mobile */
     .navbar {
@@ -415,23 +522,23 @@ a {
         flex-direction: column;
         align-items: center;
         position: fixed;
-        top: 15px; /* Un peu plus d'espace depuis le haut */
-        left: 15px; /* Déplacé à gauche */
+        top: 5px; /* Un peu plus d'espace depuis le haut */
+        left: -8%; /* Déplacé à gauche */
         font-size: 18px; /* Plus lisible */
         transition: all 0.5s ease-out;
         color: white;
-        z-index: 999;
+        z-index: 1000;
     }
 
     /* Icône du burger */
     .burger .burger-icon {
         background-color: rgba(0, 0, 0, 0.65); /* Fond sombre */
-        width: 60px; /* Taille plus large */
-        height: 60px;
+        width: 45px; /* Taille plus large */
+        height: 45px;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 50%; /* Pour une forme circulaire */
+        border-radius: 25%; /* Pour une forme circulaire */
         transition: all 0.3s ease-out;
     }
 
@@ -490,23 +597,38 @@ a {
         border-radius: 5px;
     }
 
-    /* Effet de l'élément sélectionné */
-    .burger .bar div {
-        transition: all 0.3s ease-out;
+    /* Dropdown utilisateur dans le menu burger */
+    .burger .dropdown-content {
+        background-color: rgba(0, 0, 0, 0.75);
+        border-radius: 10px;
+        text-align: center;
     }
 
-    .burger .bar div:hover {
-        text-decoration: underline;
-        color: #FF6F00; /* Survol en orange */
+    /* Liens dans le dropdown */
+    .burger .dropdown-content a {
+        padding: 10px 20px;
+        display: block;
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        transition: all 0.3s ease;
     }
 
-    /* Section avec l'élément sélectionné */
-    .burger .bar div .selected {
+    /* Effet au survol des liens du dropdown */
+    .burger .dropdown-content a:hover {
+        background-color: #FF6F00; /* Orange vif */
+        color: white;
+        border-radius: 5px;
+    }
+
+    /* Style pour les éléments sélectionnés */
+    .burger .bar .selected {
         color: #FF6F00; /* Éléments sélectionnés en orange */
         font-family: 'Raleway', sans-serif;
         font-weight: bold;
     }
 }
+
 
 
 

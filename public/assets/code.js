@@ -200,21 +200,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// Script pour gérer l'ouverture/fermeture du menu burger
-const burgerIcon = document.getElementById('burger-icon');
-const burgerMenu = document.querySelector('.burger .bar');
+// Sélectionner les éléments nécessaires
+const burgerIcon = document.getElementById("burger-icon");
+const sidebar = document.getElementById("sidebar");
 
-// Lorsque l'icône du burger est cliquée
-burgerIcon.addEventListener('click', function() {
-    burgerMenu.classList.toggle('active'); // Ajoute ou enlève la classe 'active' pour afficher/masquer le menu
-});
+// Fonction pour afficher la sidebar
+function toggleSidebar() {
+    sidebar.classList.toggle("active");
+}
 
-// Fermer le menu burger lorsqu'on clique à l'extérieur du menu
-document.addEventListener('click', function(event) {
-    if (!burgerIcon.contains(event.target) && !burgerMenu.contains(event.target)) {
-        burgerMenu.classList.remove('active'); // Ferme le menu
+// Ajouter un écouteur d'événement pour ouvrir/fermer la sidebar lors du clic sur le burger
+burgerIcon.addEventListener("click", toggleSidebar);
+
+// Ajouter un écouteur d'événement pour fermer la sidebar en dehors
+document.addEventListener("click", function (event) {
+    if (!sidebar.contains(event.target) && !burgerIcon.contains(event.target)) {
+        sidebar.classList.remove("active");
     }
 });
+
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
