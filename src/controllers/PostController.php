@@ -31,7 +31,7 @@ class PostController extends BaseController {
             // Récupération des offres paginées
             $stmt = $this->pdo->prepare("
                 SELECT Offer.idOffer, Offer.NameOffer, Offer.DescOffer, Offer.RemunOffer, Offer.DateOffer, 
-                       Company.NameCompany 
+                Company.NameCompany 
                 FROM Offer
                 JOIN Company ON Offer.idCompany = Company.idCompany
                 LIMIT :start, :perPage
@@ -230,7 +230,12 @@ class PostController extends BaseController {
 
     public function postuler($id) {
         try {
-            $stmt = $this->pdo->prepare("SELECT * FROM Offer WHERE idOffer = :id");
+            $stmt = $this->pdo->prepare("
+                SELECT Offer.*, Company.NameCompany 
+                FROM Offer
+                JOIN Company ON Offer.idCompany = Company.idCompany
+                WHERE idOffer = :id
+            ");
             $stmt->execute([':id' => $id]);
             $offer = $stmt->fetch(PDO::FETCH_ASSOC);
     
