@@ -308,6 +308,7 @@ class PostController extends BaseController {
     
 
 public function postuler($id) {
+
     try {
         // Récupération de l'offre de base
         $stmt = $this->pdo->prepare("

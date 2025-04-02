@@ -134,3 +134,21 @@ topButton.addEventListener('click', function(e) {
         behavior: "smooth" // Faire défiler en douceur
     });
 });
+
+document.getElementById('reset-button').addEventListener('click', function() {
+    // Réinitialiser le formulaire
+    document.querySelector('input[name="lastname"]').value = '';
+    document.querySelector('input[name="surname"]').value = '';
+    document.querySelector('input[name="email"]').value = '';
+    document.querySelector('textarea[name="feedbacks"]').value = '';
+    document.querySelector('input[name="Permis"]').checked = false;
+    document.querySelector('input[name="Car"]').checked = false;
+    document.querySelector('input[name="Certication"]').checked = false;
+    document.querySelector('input[name="Majeur"][value="YES"]').checked = true;
+    
+    // Réinitialiser le sélecteur de civilité
+    document.querySelector('select[name="Gender"]').selectedIndex = 0;
+    
+    // Réinitialiser le champ fichier (nécessaire car le reset() standard ne le fait pas)
+    document.querySelector('input[type="file"]').value = '';
+});
