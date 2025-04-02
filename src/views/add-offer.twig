@@ -3,8 +3,8 @@
 {% block title %}Ajouter une offre - Lebonplan{% endblock %}
 
 {% block content %}
-    <section>
-        <h1 class="center">Ajouter une offre</h1>
+    <section class="form-section">
+        <h1 class="centerr">Ajouter une offre</h1>
 
         {% if error %}
             <div class="error">{{ error }}</div>
@@ -23,21 +23,18 @@
 
             <div class="form-group">
                 <label for="RemunOffer">Rémunération</label>
-                <input type="text" id="RemunOffer" name="RemunOffer" required>
+                <input type="number" id="RemunOffer" name="RemunOffer" required>
             </div>
 
             <div class="form-group">
-                <label for="DateOffer">Date de publication</label>
-                <input type="date" id="DateOffer" name="DateOffer" required>
-            </div>
-
             <label for="idCompany">Entreprise :</label>
-<select name="idCompany" id="idCompany" required>
-    <option value="">-- Sélectionnez une entreprise --</option>
-    {% for company in companies %}
-        <option value="{{ company.idCompany }}" data-city="{{ company.City }}">{{ company.NameCompany }}</option>
-    {% endfor %}
-</select>
+            <select name="idCompany" id="idCompany" required>
+                <option value="">-- Sélectionnez une entreprise --</option>
+                {% for company in companies %}
+                    <option value="{{ company.idCompany }}" data-city="{{ company.City }}">{{ company.NameCompany }}</option>
+                {% endfor %}
+            </select>
+            </div>
 
 <div class="form-group">
     <label for="City">Ville</label>

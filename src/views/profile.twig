@@ -6,10 +6,10 @@
     <h1 class="profile-title text-center">Mon Profil</h1>
     
     {% if successMessage %}
-        <div class="alertt alertt-success">{{ successMessage }}</div>
+        <div class="alertt alertt-success">{{ success }}</div>
     {% endif %}
     {% if errorMessage %}
-        <div class="alertt alertt-danger">{{ errorMessage }}</div>
+        <div class="alertt alertt-danger">{{ error }}</div>
     {% endif %}
 
     <div class="profile-offers">
@@ -88,6 +88,44 @@
                                 <a href="{{ path('profile') }}" class="btn btn-secondary">Annuler</a>
                             </div>
                         </form>
+                    </div>
+                {% endif %}
+
+                {# Nouvelle section pour les postulations #}
+                <h2 class="profile-heading" style="margin-top: 30px;">Mes Postulations</h2>
+                {% if applications is empty %}
+                    <p>Vous n'avez postulé à aucune offre pour le moment.</p>
+                {% else %}
+                    <div class="applications-list">
+                        {% for app in applications %}
+                            <div class="application-item" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                                <h3>Postulation du {{ app.DateApply|date("d/m/Y") }}</h3>
+                                <p><strong>Offre :</strong> 
+                                    <a href="?page=postuler&id={{ app.idOffer }}">{{ app.OfferName }}</a>
+                                </p>
+                                <p><strong>Entreprise :</strong> {{ app.CompanyName }}</p>
+                                <p><strong>Statut :</strong> 
+                                    {% if app.IsAdult %}
+                                        Majeur | 
+                                    {% else %}
+                                        Mineur | 
+                                    {% endif %}
+                                    {% if app.HasLicense %}
+                                        Permis de conduire | 
+                                    {% endif %}
+                                    {% if app.HasVehicle %}
+                                        Véhicule personnel | 
+                                    {% endif %}
+                                    {% if app.HasCertifications %}
+                                        Certifications
+                                    {% endif %}
+                                </p>
+                                <p><strong>Message :</strong> {{ app.Message }}</p>
+                                <p><strong>CV :</strong> 
+                                    <a href="{{ app.ResumeApply }}" target="_blank">Voir le CV</a>
+                                </p>
+                            </div>
+                        {% endfor %}
                     </div>
                 {% endif %}
 

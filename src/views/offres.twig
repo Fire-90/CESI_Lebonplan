@@ -11,22 +11,35 @@
         <h1 class="center">Postuler à nos offres disponibles</h1>
     </div>
 
-	<div class="search-container">
-		<form action="{{ path('offres') }}" method="GET" class="search-form">
-			<div class="search-wrapper">
-				<input 
-					type="text" 
-					name="recherche" 
-					placeholder="Rechercher une offre par mot-clé, entreprise ou lieu..." 
-					class="search-input"
-					value="{{ app.request.query.get('recherche') }}"
-				>
-				<button type="submit" class="search-button">
-					<p>🔎</p>
-				</button>
-			</div>
-		</form>
-	</div>
+    {% if successMessage %}
+        <div class="alertt alertt-success">{{ successMessage }}</div>
+    {% endif %}
+    {% if errorMessage %}
+        <div class="alertt alertt-danger">{{ errorMessage }}</div>
+    {% endif %}
+
+    <div class="search-container">
+        <form action="{{ path('offres') }}" method="GET" class="search-form">
+            <input type="hidden" name="page" value="offres">
+            <div class="search-wrapper">
+                <input 
+                    type="text" 
+                    name="recherche" 
+                    placeholder="Rechercher une offre par mot-clé, entreprise ou lieu..." 
+                    class="search-input"
+                    value="{{ searchTerm|default('') }}"
+                >
+
+                {% if searchTerm %}
+                    <a href="?page=offres" class="clear-search">×</a>
+                {% endif %}
+                <button type="submit" class="search-button">
+                    <p>🔎</p>
+                </button>
+            </div>
+        </form>
+    </div>
+
 
 
 
@@ -35,20 +48,22 @@
             <div class="offer hoverable">
                 <div style="text-align: right;">
                     <a href="?page=toggle-wishlist&id={{ offre.idOffer }}" title="{% if offre.isFavorite %}Retirer des favoris{% else %}Ajouter aux favoris{% endif %}">
-                        {% if offre.isFavorite %}
-                            ★
-                        {% else %}
-                            ☆
-                        {% endif %}
+                        <span class="wishlist-heart {% if offre.isFavorite %}active{% endif %}">
+                            {% if offre.isFavorite %}
+                                ♥
+                            {% else %}
+                                ♡
+                            {% endif %}
+                        </span>
                     </a>
                 </div>
 
-                <h1 class="title center">{{ offre.NameOffer }}</h1>
-                <h2 class="small center">{{ offre.DescOffer }} | {{ offre.RemunOffer }} </h2>
-				<h2 class="small center">{{ offre.NameCompany}} | Publiée le {{ offre.DateOffer|date("d/m/Y") }}</h2>
-                <h1 class="center">
-                    <a href="?page=postuler&id={{ offre.idOffer }}" class="postuler clickable"> POSTULER </a>
-                </h1>
+                    <h1 class="title center">{{ offre.NameOffer }}</h1>
+                    <h2 class="small center">{{ offre.DescOffer }} | {{ offre.RemunOffer }} </h2>
+                    <h2 class="small center">{{ offre.NameCompany}} | Publiée le {{ offre.DateOffer|date("d/m/Y") }}</h2>
+                    <h1 class="center">
+                        <a href="?page=postuler&id={{ offre.idOffer }}" class="postuler clickable"> POSTULER </a>
+                    </h1>
 
                 {% if permLVL == 2 %}
                     <a href="{{ path('edit-offer') }}&id={{ offre.idOffer }}" class="btn-edit">✏️ Modifier</a>
@@ -62,15 +77,15 @@
 
     <div class="pagination">
         {% if currentPage > 1 %}
-            <a href="?page=offres&pagination=1" class="btn-first">Début</a>
-            <a href="?page=offres&pagination={{ currentPage - 1 }}">Précédent</a>
+            <a href="?page=offres&pagination=1{% if searchTerm %}&recherche={{ searchTerm|url_encode }}{% endif %}" class="btn-first"><<</a>
+            <a href="?page=offres&pagination={{ currentPage - 1 }}{% if searchTerm %}&recherche={{ searchTerm|url_encode }}{% endif %}"><</a>
         {% endif %}
 
         <span>Page {{ currentPage }} / {{ totalPages }}</span>
 
         {% if currentPage < totalPages %}
-            <a href="?page=offres&pagination={{ currentPage + 1 }}">Suivant</a>
-            <a href="?page=offres&pagination={{ totalPages }}" class="btn-last">Fin</a>
+            <a href="?page=offres&pagination={{ currentPage + 1 }}{% if searchTerm %}&recherche={{ searchTerm|url_encode }}{% endif %}">></a>
+            <a href="?page=offres&pagination={{ totalPages }}{% if searchTerm %}&recherche={{ searchTerm|url_encode }}{% endif %}" class="btn-last">>></a>
         {% endif %}
     </div>
 {% endblock %}

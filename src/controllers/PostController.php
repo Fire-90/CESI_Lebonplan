@@ -23,46 +23,64 @@ class PostController extends BaseController {
             $page = max(1, (int)$page);
             $start = ($page - 1) * $perPage;
     
-            // Nombre total d'offres
-            $stmtTotal = $this->pdo->query("SELECT COUNT(*) as total FROM Offer" );
+            // Récupérer le terme de recherche
+            $searchTerm = filter_input(INPUT_GET, 'recherche', FILTER_SANITIZE_STRING);
+            $searchTerm = trim($searchTerm);
+    
+            // Requête de base
+            $sqlBase = "SELECT Offer.idOffer, Offer.NameOffer, Offer.DescOffer, Offer.RemunOffer, 
+                       Offer.DateOffer, Company.NameCompany, Company.City 
+                       FROM Offer JOIN Company ON Offer.idCompany = Company.idCompany";
+    
+            // Clause WHERE si recherche
+            $whereClause = "";
+            $params = [];
+            if (!empty($searchTerm)) {
+                $whereClause = " WHERE (Offer.NameOffer LIKE :searchTerm OR 
+                              Offer.DescOffer LIKE :searchTerm OR 
+                              Company.NameCompany LIKE :searchTerm OR 
+                              Company.City LIKE :searchTerm)";
+                $params[':searchTerm'] = "%$searchTerm%";
+            }
+    
+            // Comptage total
+            $stmtTotal = $this->pdo->prepare("SELECT COUNT(*) as total FROM Offer 
+                                            JOIN Company ON Offer.idCompany = Company.idCompany" . $whereClause);
+            foreach ($params as $key => $value) {
+                $stmtTotal->bindValue($key, $value);
+            }
+            $stmtTotal->execute();
             $totalOffre = $stmtTotal->fetch(PDO::FETCH_ASSOC)['total'];
             $totalPages = ceil($totalOffre / $perPage);
     
-            // Récupération des offres paginées
-            $stmt = $this->pdo->prepare("
-                SELECT Offer.idOffer, Offer.NameOffer, Offer.DescOffer, Offer.RemunOffer, Offer.DateOffer, 
-                Company.NameCompany 
-                FROM Offer
-                JOIN Company ON Offer.idCompany = Company.idCompany
-                LIMIT :start, :perPage
-            ");
+            // Récupération paginée
+            $sql = $sqlBase . $whereClause . " LIMIT :start, :perPage";
+            $stmt = $this->pdo->prepare($sql);
+            foreach ($params as $key => $value) {
+                $stmt->bindValue($key, $value);
+            }
             $stmt->bindValue(':start', $start, PDO::PARAM_INT);
             $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
             $stmt->execute();
             $offers = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-            // Vérification que les offres existent
-            if (!$offers) {
-                throw new \Exception("Aucune offre trouvée dans la base de données.");
-            }
-
+            // Gestion des favoris
             if ($this->user) {
                 foreach ($offers as &$offer) {
                     $offer['isFavorite'] = $this->isInWishlist($offer['idOffer']);
                 }
             }
     
-            // Affichage avec Twig
+            // Passage des données au template
             $this->render('offres.twig', [
                 'Offer' => $offers,
                 'currentPage' => $page,
-                'totalPages' => $totalPages
+                'totalPages' => $totalPages,
+                'searchTerm' => $searchTerm
             ]);
     
         } catch (PDOException $e) {
-            echo "Erreur SQL : " . $e->getMessage();
-        } catch (\Exception $e) {
-            echo "Erreur : " . $e->getMessage();
+            // Gestion des erreurs
         }
     }
     
@@ -76,24 +94,24 @@ class PostController extends BaseController {
                 $nom = filter_input(INPUT_POST, 'NameOffer', FILTER_SANITIZE_STRING);
                 $desc = filter_input(INPUT_POST, 'DescOffer', FILTER_SANITIZE_STRING);
                 $renum = filter_input(INPUT_POST, 'RemunOffer', FILTER_SANITIZE_STRING);
-                $date = filter_input(INPUT_POST, 'DateOffer', FILTER_SANITIZE_STRING);
                 $idCompany = filter_input(INPUT_POST, 'idCompany', FILTER_SANITIZE_NUMBER_INT);
+
+                $renum = number_format($renum, 0, ',', ' ') . '€/mois';
     
                 // Validation des données
-                if (empty($nom) || empty($desc) || empty($renum) || empty($date) || empty($idCompany)) {
+                if (empty($nom) || empty($desc) || empty($renum) || empty($idCompany)) {
                     throw new \Exception("Tous les champs doivent être remplis.");
                 }
     
                 // Insertion dans la base de données
                 $stmt = $this->pdo->prepare("INSERT INTO Offer 
                     (NameOffer, DescOffer, RemunOffer, DateOffer, idCompany) 
-                    VALUES (:nom, :desc, :renum, :date, :idCompany)");
+                    VALUES (:nom, :desc, :renum, NOW(), :idCompany)");
     
                 $stmt->execute([
                     ':nom' => $nom,
                     ':desc' => $desc,
                     ':renum' => $renum,
-                    ':date' => $date,
                     ':idCompany' => $idCompany
                 ]);
     
@@ -291,12 +309,12 @@ class PostController extends BaseController {
 
 public function postuler($id) {
     try {
-        // Récupération de l'offre
+        // Récupération de l'offre de base
         $stmt = $this->pdo->prepare("
             SELECT Offer.*, Company.NameCompany 
             FROM Offer
             JOIN Company ON Offer.idCompany = Company.idCompany
-            WHERE idOffer = :id
+            WHERE Offer.idOffer = :id
         ");
         $stmt->execute([':id' => $id]);
         $offer = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -304,6 +322,19 @@ public function postuler($id) {
         if (!$offer) {
             throw new \Exception("Offre non trouvée");
         }
+
+        // Récupération des compétences associées à l'offre avec leurs noms
+        $stmtCompetences = $this->pdo->prepare("
+            SELECT Competence.NameCompetence 
+            FROM OfferCompetence
+            JOIN Competence ON OfferCompetence.idCompetence = Competence.idCompetence
+            WHERE OfferCompetence.idOffer = :id
+        ");
+        $stmtCompetences->execute([':id' => $id]);
+        $competences = $stmtCompetences->fetchAll(PDO::FETCH_COLUMN);
+
+        // Ajout des compétences à l'offre pour le template
+        $offer['Competences'] = $competences;
 
         // Traitement du formulaire
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -375,9 +406,12 @@ public function postuler($id) {
                     ':messageText' => $message
                 ]);
 
-                $_SESSION['success'] = "Votre candidature a été envoyée avec succès !";
-                header('Location: ?page=offres');
-                exit;
+                $this->render('postuler.twig', [
+                    'offer' => $offer,
+                    'success' => "Votre candidature a été envoyée avec succès !",
+                    'formData' => $_POST
+                ]);
+                return;
             }
 
             // Si erreurs, réafficher le formulaire avec les erreurs
@@ -396,11 +430,15 @@ public function postuler($id) {
 
     } catch (PDOException $e) {
         $this->render('postuler.twig', [
-            'error' => "Erreur lors de la récupération de l'offre: " . $e->getMessage()
+            'offer' => $offer ?? null,
+            'error' => "Erreur lors de la récupération de l'offre: " . $e->getMessage(),
+            'formData' => $_POST ?? []
         ]);
     } catch (\Exception $e) {
         $this->render('postuler.twig', [
-            'error' => $e->getMessage()
+            'offer' => $offer ?? null,
+            'error' => $e->getMessage(),
+            'formData' => $_POST ?? []
         ]);
     }
 }

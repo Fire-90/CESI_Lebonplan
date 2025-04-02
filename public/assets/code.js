@@ -44,18 +44,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Gestion du bouton retour en haut de page
-    const backToTopButton = document.getElementById('backToTop');
+    const topButton = document.getElementById("topButton");
 
-    if (backToTopButton) {
+    if (topButton) {
         window.addEventListener("scroll", function () {
             if (window.scrollY > 200) {
-                backToTopButton.style.display = "block";
+                topButton.style.display = "block";
             } else {
-                backToTopButton.style.display = "none";
+                topButton.style.display = "none";
             }
         });
 
-        backToTopButton.addEventListener("click", function () {
+        topButton.addEventListener("click", function () {
             window.scrollTo({ top: 0, behavior: "smooth" });
         });
     }
@@ -92,4 +92,45 @@ document.addEventListener("DOMContentLoaded", function () {
         showSignupBtn.addEventListener("click", showSignup);
         showLoginBtn.addEventListener("click", showLogin);
     }
+});
+
+// Sélectionner les éléments nécessaires
+const burgerIcon = document.getElementById("burger-icon");
+const sidebar = document.getElementById("sidebar");
+
+// Fonction pour afficher la sidebar
+function toggleSidebar() {
+    sidebar.classList.toggle("active");
+}
+
+// Ajouter un écouteur d'événement pour ouvrir/fermer la sidebar lors du clic sur le burger
+burgerIcon.addEventListener("click", toggleSidebar);
+
+// Ajouter un écouteur d'événement pour fermer la sidebar en dehors
+document.addEventListener("click", function (event) {
+    if (!sidebar.contains(event.target) && !burgerIcon.contains(event.target)) {
+        sidebar.classList.remove("active");
+    }
+});
+
+// Sélectionner l'élément du bouton
+const topButton = document.getElementById("topButton");
+
+// Ajouter un événement pour détecter le défilement de la page
+window.onscroll = function() {
+    // Vérifier si l'utilisateur a fait défiler la page vers le bas
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        topButton.style.display = "block";  // Afficher le bouton
+    } else {
+        topButton.style.display = "none";  // Cacher le bouton
+    }
+};
+
+// Ajouter un événement pour faire défiler la page vers le haut lorsqu'on clique sur le bouton
+topButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth" // Faire défiler en douceur
+    });
 });
