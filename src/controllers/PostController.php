@@ -77,29 +77,29 @@ class PostController extends BaseController {
                 $nom = filter_input(INPUT_POST, 'NameOffer', FILTER_SANITIZE_STRING);
                 $desc = filter_input(INPUT_POST, 'DescOffer', FILTER_SANITIZE_STRING);
                 $renum = filter_input(INPUT_POST, 'RemunOffer', FILTER_SANITIZE_STRING);
-                $date = filter_input(INPUT_POST, 'DateOffer', FILTER_SANITIZE_STRING);
                 $idCompany = filter_input(INPUT_POST, 'idCompany', FILTER_SANITIZE_NUMBER_INT);
+
+                $renum = number_format($renum, 0, ',', ' ') . '€/mois';
     
                 // Validation des données
-                if (empty($nom) || empty($desc) || empty($renum) || empty($date) || empty($idCompany)) {
+                if (empty($nom) || empty($desc) || empty($renum) || empty($idCompany)) {
                     throw new \Exception("Tous les champs doivent être remplis.");
                 }
     
                 // Insertion dans la base de données
                 $stmt = $this->pdo->prepare("INSERT INTO Offer 
                     (NameOffer, DescOffer, RemunOffer, DateOffer, idCompany) 
-                    VALUES (:nom, :desc, :renum, :date, :idCompany)");
+                    VALUES (:nom, :desc, :renum, NOW(), :idCompany)");
     
                 $stmt->execute([
                     ':nom' => $nom,
                     ':desc' => $desc,
                     ':renum' => $renum,
-                    ':date' => $date,
                     ':idCompany' => $idCompany
                 ]);
     
                 // Redirection après succès
-                header('Location: ?page=offer');
+                header('Location: ?page=offres');
                 exit;
     
             } catch (PDOException $e) {
