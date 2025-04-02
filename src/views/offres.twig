@@ -31,38 +31,41 @@
 
 
     <div class="offers">
-        {% for offre in Offer %}
-            <div class="offer hoverable">
-                <div style="text-align: right;">
-                    <a href="?page=toggle-wishlist&id={{ offre.idOffer }}" title="{% if offre.isFavorite %}Retirer des favoris{% else %}Ajouter aux favoris{% endif %}">
+    {% for offre in Offer %}
+        <div class="offer hoverable">
+            <div style="text-align: right;">
+                <a href="?page=toggle-wishlist&id={{ offre.idOffer }}" title="{% if offre.isFavorite %}Retirer des favoris{% else %}Ajouter aux favoris{% endif %}">
+                    <span class="wishlist-heart {% if offre.isFavorite %}active{% endif %}">
                         {% if offre.isFavorite %}
-                            ★
+                            ♥
                         {% else %}
-                            ☆
+                            ♡
                         {% endif %}
-                    </a>
-                </div>
+                    </span>
+                </a>
+            </div>
 
                 <h1 class="title center">{{ offre.NameOffer }}</h1>
                 <h2 class="small center">{{ offre.DescOffer }} | {{ offre.RemunOffer }} </h2>
-				<h2 class="small center">{{ offre.idCompany}} | Publiée le {{ offre.DateOffer|date("d/m/Y") }}</h2>
+				<h2 class="small center">{{ offre.NameCompany}} | Publiée le {{ offre.DateOffer|date("d/m/Y") }}</h2>
                 <h1 class="center">
-                    <a href="{{ path('postuler', {'id': offre.idOffer}) }}" class="postuler clickable"> POSTULER </a>
+                    <a href="?page=postuler&id={{ offre.idOffer }}" class="postuler clickable"> POSTULER </a>
                 </h1>
 
-                {% if permLVL == 2 %}
-                    <a href="{{ path('edit-offres', {'id': offre.idOffer}) }}" class="btn-edit">✏️ Modifier</a>
-                    <a href="{{ path('delete-offres', {'id': offre.idOffer}) }}" class="btn-delete">🗑️ Supprimer</a>
-                {% endif %}
-            </div>
-        {% else %}
-            <p class="center">Aucune offre disponible pour le moment.</p>
-        {% endfor %}
-    </div>
+            {% if permLVL == 2 %}
+                <a href="{{ path('edit-offres', {'id': offre.idOffer}) }}" class="btn-edit">✏️ Modifier</a>
+                <a href="{{ path('delete-offres', {'id': offre.idOffer}) }}" class="btn-delete">🗑️ Supprimer</a>
+            {% endif %}
+        </div>
+    {% else %}
+        <p class="center">Aucune offre disponible pour le moment.</p>
+    {% endfor %}
+</div>
+
 
     <div class="pagination">
         {% if currentPage > 1 %}
-            <a href="?page=entreprises&pagination=1" class="btn-first">Début</a>
+            <a href="?page=offres&pagination=1" class="btn-first">Début</a>
             <a href="?page=offres&pagination={{ currentPage - 1 }}">Précédent</a>
         {% endif %}
 

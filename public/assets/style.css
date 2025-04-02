@@ -700,8 +700,30 @@ a {
 }
 
 .offer:hover {
-    transform: translateY(-10px);
+    transform: translateY(-3px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.offer .wishlist-heart {
+    font-size: 30px;
+    color: #a2a2a2;
+    transition: color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    margin-right: 1%;
+}
+
+.offer .wishlist-heart:hover {
+    color: #ff5733; /* Couleur du cœur lors du survol */
+    transform: scale(1.1);
+}
+
+.offer .wishlist-heart.active {
+    color: #ff5733; /* Couleur du cœur quand il est actif (ajouté aux favoris) */
+}
+
+/* Ajout d'un fond pour les offres */
+.offer .offer-content {
+    padding: 20px;
 }
 
 .postuler {

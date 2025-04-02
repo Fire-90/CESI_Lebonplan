@@ -4,29 +4,27 @@
 
 {% block content %}
     <link rel="stylesheet" href="/assets/style_formulaire.css">
-	<div class="top-button-container">
-		<button class="top-button" id="backToTop">▲ HAUT ▲</button>
-	</div>
+    <div class="top-button-container">
+        <button class="top-button" id="backToTop">▲ HAUT ▲</button>
+    </div>
 
-	<main>
-		<div>
-			<h1 class="center">Postuler à une offre de stage</h1>
-			<h2> Vous pouvez ici répondre directement à l'offre de stage qui a été déposée par l'entreprise. Soyez le
-				plus précis possible dans vos réponses !</h2>
-		</div>
-		<div class="title">
-			<h1>Stage - Administrateur Système et Réseau H/F</h1>
-			<h2 class="small">IBM | Pornichet - 44 | Publiée le 23/01/2025 | Ref. 123XYZ-44</h2>
-		</div>
-		<div class="infos">
-			<h3>Résumé de l'offre</h3>
-			<div class="list">
-				<span>3 mois</span>
-				<span>Bac+2, Bac +3</span>
-				<span>Systèmes, Réseaux, Cloud</span>
-				<span>Exp. - 1 an</span>
-			</div>
-		</div>
+    <main>
+        <div>
+            <h1 class="center">Postuler à une offre de stage</h1>
+            <h2> Vous pouvez ici répondre directement à l'offre de stage qui a été déposée par l'entreprise. Soyez le
+                plus précis possible dans vos réponses !</h2>
+        </div>
+        <div class="title">
+            <h1>{{ offer.NameOffer }}</h1>
+            <h2 class="small">{{ offer.NameCompany}} | Publiée le {{ offer.DateOffer|date("d/m/Y") }}</h2>
+        </div>
+        <div class="infos">
+            <h3>Résumé de l'offre</h3>
+            <div class="list">
+                <span>{{ offer.DescOffer }}</span>
+                <span>{{ offer.RemunOffer }}</span>
+            </div>
+        </div>
 
 		<div class="formulaire">
 			<h1>Envoyez votre candidature dès maintenant</h1>
