@@ -35,7 +35,7 @@
             <div class="offer hoverable">
                 <h1 class="title center">{{ offre.NameOffer }}</h1>
                 <h2 class="small center">{{ offre.DescOffer }} | {{ offre.RemunOffer }} </h2>
-				<h2 class="small center">{{ offre.idCompany}} | Publiée le {{ offre.DateOffer|date("d/m/Y") }}</h2>
+				<h2 class="small center">{{ offre.NameCompany}} | Publiée le {{ offre.DateOffer|date("d/m/Y") }}</h2>
                 <h1 class="center">
                     <a href="{{ path('postuler', {'id': offre.idOffer}) }}" class="postuler clickable"> POSTULER </a>
                 </h1>
@@ -52,7 +52,7 @@
 
     <div class="pagination">
         {% if currentPage > 1 %}
-            <a href="?page=entreprises&pagination=1" class="btn-first">Début</a>
+            <a href="?page=offres&pagination=1" class="btn-first">Début</a>
             <a href="?page=offres&pagination={{ currentPage - 1 }}">Précédent</a>
         {% endif %}
 
