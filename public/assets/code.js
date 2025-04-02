@@ -93,3 +93,22 @@ document.addEventListener("DOMContentLoaded", function () {
         showLoginBtn.addEventListener("click", showLogin);
     }
 });
+
+// Sélectionner les éléments nécessaires
+const burgerIcon = document.getElementById("burger-icon");
+const sidebar = document.getElementById("sidebar");
+
+// Fonction pour afficher la sidebar
+function toggleSidebar() {
+    sidebar.classList.toggle("active");
+}
+
+// Ajouter un écouteur d'événement pour ouvrir/fermer la sidebar lors du clic sur le burger
+burgerIcon.addEventListener("click", toggleSidebar);
+
+// Ajouter un écouteur d'événement pour fermer la sidebar en dehors
+document.addEventListener("click", function (event) {
+    if (!sidebar.contains(event.target) && !burgerIcon.contains(event.target)) {
+        sidebar.classList.remove("active");
+    }
+});
