@@ -128,7 +128,7 @@ a {
 /* Logo plus grand en mode mobile */
 @media screen and (max-width: 768px) {
     .hero-container img {
-        max-width: 70%;  /* Augmente la taille du logo pour les petits écrans */
+        max-width: 60%;  /* Augmente la taille du logo pour les petits écrans */
         margin-top: -10px;  /* Réduit l'écart si nécessaire */
     }
 }
@@ -1086,6 +1086,79 @@ a {
 }
 
 
+/* Style de base du select */
+#loginselect {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 5%;
+    background: #f0f4f7; /* Dégradé léger de fond */
+    border: 2px solid #007bff; /* Bordure bleue */
+    border-radius: 8px; /* Coins arrondis */
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    outline: none;
+    appearance: none; /* Enlève la flèche par défaut pour personnalisation */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Ajouter une flèche personnalisée à droite */
+#loginselect::-ms-expand {
+    display: none; /* Supprimer la flèche par défaut pour IE */
+}
+
+#loginselect::after {
+    content: '\2193'; /* Flèche vers le bas */
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    font-size: 18px;
+    color: #007bff;
+}
+
+/* Changement de la couleur du border au focus */
+#loginselect:focus {
+    border-color: #0056b3; /* Changer la couleur de la bordure au focus */
+    background-color: #e7f3fe; /* Légère variation de couleur en focus */
+}
+
+/* Effet de survol (hover) */
+#loginselect:hover {
+    border-color: #0056b3; /* Bordure bleue au survol */
+}
+
+/* Style de l'option */
+#loginselect option {
+    background: #fff;
+    color: #333;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Animation d'ouverture du select */
+#loginselect {
+    position: relative;
+    padding-right: 30px; /* Pour faire de la place pour la flèche personnalisée */
+}
+
+#loginselect:focus {
+    animation: bounceIn 0.5s ease-out;
+}
+
+
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    #loginselect {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+
 /* Conteneur d'authentification */
 .auth-container {
     display: flex;
@@ -1486,4 +1559,192 @@ input[type="password"]:focus {
 .mention-title{
     color: orangered;
     font-weight: bold;
+}
+
+
+
+/* ------ Profil ------ */
+
+/* Title */
+.profile-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #003366;
+    margin-bottom: 40px;
+    animation: fadeIn 1s ease-out;
+}
+
+.profile-heading {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #004c8c;
+    margin-bottom: 10px;
+    animation: fadeIn 1s ease-out;
+}
+
+/* Alerts */
+.alertt {
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.alertt-success {
+    text-align: center;
+    background-color: #c8e6c9;
+    color: #388e3c;
+}
+
+.alertt-danger {
+    text-align: center;
+    background-color: #f8d7da;
+    color: #d32f2f;
+}
+
+/* Profile Section */
+.profile-offers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.profile-offer {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    margin: 20px;
+    padding: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-offer:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Profile Edit & View Mode */
+.profile-view-mode, .profile-edit-mode {
+    margin-bottom: 30px;
+}
+
+.profile-view-mode p {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.profile-edit-mode form .form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #004c8c;
+    outline: none;
+}
+
+button {
+    background: linear-gradient(135deg, #007bff, #00b0ff);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #0056b3, #007bff);
+}
+
+/* Danger Zone */
+.text-danger {
+    color: #d32f2f;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #c62828, #d32f2f);
+}
+
+#deleteForm {
+    display: none;
+    margin-top: 20px;
+}
+
+/* Small Animation for Fade-In Effect */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .profile-title {
+        font-size: 2rem;
+    }
+
+    .profile-offer {
+        padding: 20px;
+        margin: 15px;
+    }
+
+    .form-control {
+        padding: 10px;
+    }
+
+    button {
+        padding: 10px 20px;
+    }
+
+    .profile-heading {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-title {
+        font-size: 1.8rem;
+    }
+
+    .profile-heading {
+        font-size: 1.1rem;
+    }
+
+    .profile-offer {
+        padding: 15px;
+    }
+
+    button {
+        padding: 8px 15px;
+    }
 }

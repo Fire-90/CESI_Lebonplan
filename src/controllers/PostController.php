@@ -45,10 +45,16 @@ class PostController extends BaseController {
             if (!$offers) {
                 throw new \Exception("Aucune offre trouvée dans la base de données.");
             }
+
+            if ($this->user) {
+                foreach ($offers as &$offer) {
+                    $offer['isFavorite'] = $this->isInWishlist($offer['idOffer']);
+                }
+            }
     
             // Affichage avec Twig
             $this->render('offres.twig', [
-                'Offer' => $offers,  // 🔥 Assure-toi que la clé transmise au template est bien 'Offer'
+                'Offer' => $offers,
                 'currentPage' => $page,
                 'totalPages' => $totalPages
             ]);
@@ -219,6 +225,109 @@ class PostController extends BaseController {
             } catch (PDOException $e) {
                 echo "Erreur : " . $e->getMessage();
             }
+        }
+    }
+
+
+    //================================================================================
+    /**
+    * Ajouter une offre aux favoris
+    */
+    public function addToWishlist($idOffer) {
+        if (!$this->user) {
+            header('Location: /login');
+            exit;
+        }
+
+        try {
+            // Vérifier si l'offre existe déjà dans les favoris
+            $checkStmt = $this->pdo->prepare("SELECT * FROM WishList WHERE idUser = :idUser AND idOffer = :idOffer");
+            $checkStmt->execute([
+                ':idUser' => $this->user['id'],
+                ':idOffer' => $idOffer
+            ]);
+
+            if ($checkStmt->fetch()) {
+                // Si déjà dans les favoris, on le retire
+                $stmt = $this->pdo->prepare("DELETE FROM WishList WHERE idUser = :idUser AND idOffer = :idOffer");
+            } else {
+                // Sinon on l'ajoute
+                $stmt = $this->pdo->prepare("INSERT INTO WishList (idUser, idOffer) VALUES (:idUser, :idOffer)");
+            }
+
+            $stmt->execute([
+                ':idUser' => $this->user['id'],
+                ':idOffer' => $idOffer
+            ]);
+
+            // Retourner un statut JSON pour une requête AJAX
+            header('Content-Type: application/json');
+            echo json_encode(['success' => true]);
+            exit;
+
+        } catch (PDOException $e) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+            exit;
+        }
+    }
+
+    /**
+     * Vérifier si une offre est dans les favoris
+     */
+    protected function isInWishlist($idOffer) {
+        if (!$this->user) return false;
+
+        try {
+            $stmt = $this->pdo->prepare("SELECT * FROM WishList WHERE idUser = :idUser AND idOffer = :idOffer");
+            $stmt->execute([
+                ':idUser' => $this->user['id'],
+                ':idOffer' => $idOffer
+            ]);
+            return (bool) $stmt->fetch();
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function toggleWishlist($idOffer) {
+        if (!$this->user) {
+            $_SESSION['error'] = "Vous devez être connecté pour ajouter aux favoris";
+            header('Location: ?page=login');
+            exit;
+        }
+    
+        try {
+            // Vérifier si l'offre existe déjà dans les favoris
+            $checkStmt = $this->pdo->prepare("SELECT * FROM WishList WHERE idUser = :idUser AND idOffer = :idOffer");
+            $checkStmt->execute([
+                ':idUser' => $this->user['id'],
+                ':idOffer' => $idOffer
+            ]);
+    
+            if ($checkStmt->fetch()) {
+                // Si déjà dans les favoris, on le retire
+                $stmt = $this->pdo->prepare("DELETE FROM WishList WHERE idUser = :idUser AND idOffer = :idOffer");
+                $message = "Offre retirée des favoris";
+            } else {
+                // Sinon on l'ajoute
+                $stmt = $this->pdo->prepare("INSERT INTO WishList (idUser, idOffer) VALUES (:idUser, :idOffer)");
+                $message = "Offre ajoutée aux favoris";
+            }
+    
+            $stmt->execute([
+                ':idUser' => $this->user['id'],
+                ':idOffer' => $idOffer
+            ]);
+    
+            $_SESSION['success'] = $message;
+            header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '?page=offres'));
+            exit;
+    
+        } catch (PDOException $e) {
+            $_SESSION['error'] = "Erreur: " . $e->getMessage();
+            header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '?page=offres'));
+            exit;
         }
     }
 }

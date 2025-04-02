@@ -1,45 +1,37 @@
 {% extends "base.twig" %}
 
-{% block title %}Wishlist - Lebonplan{% endblock %}
+{% block title %}Mes Favoris - Lebonplan{% endblock %}
 
 {% block content %}
-    <section class="wishlist-section">
-        <h1 class="center">Votre Wishlist - Suggestions et Questions</h1>
-        
-        <p class="center">
-            Vous avez des idées d'ajouts pour le site ou des questions à poser ? Partagez-les avec nous !
-            Remplissez le formulaire ci-dessous pour nous faire part de vos suggestions ou poser vos questions.
-        </p>
+    <h1 class="center">Mes Offres Favorites</h1>
 
-        <!-- Formulaire de suggestions et questions -->
-        <article>
-            <form class="wishlist-form">
-                <h2>Soumettez votre suggestion ou question</h2>
-                
-                <label for="fullname">Nom complet
-                    <input id="fullname" name="fullname" type="text" value="" size="100" required>
-                </label>
-
-                <label for="email">Adresse e-mail
-                    <input id="email" name="email" type="email" value="" size="100" required>
-                </label>
-
-                <label for="type">Type de demande
-                    <select id="type" name="type">
-                        <option value="suggestion">Suggestion d'ajout</option>
-                        <option value="question">Question</option>
-                    </select>
-                </label>
-
-                <label for="message">Votre message
-                    <textarea id="message" name="message" class="wishlist-formulaire" rows="5" cols="100" required></textarea>
-                </label>
-
-                <div class="buttons">
-                    <button type="submit">Envoyer</button>
-                    <input type="reset" value="Effacer">
+    {% if offers %}
+        <div class="offers">
+            {% for offre in offers %}
+                <div class="offer hoverable">
+                    {# Lien pour retirer des favoris #}
+                    <div style="text-align: right;">
+                        <a href="?page=toggle-wishlist&id={{ offre.idOffer }}" title="Retirer des favoris">★</a>
+                    </div>
+                    
+                    <h1 class="title center">{{ offre.NameOffer }}</h1>
+                    <h2 class="small center">{{ offre.DescOffer }} | {{ offre.RemunOffer }}</h2>
+                    <h2 class="small center">{{ offre.idCompany}} | Publiée le {{ offre.DateOffer|date("d/m/Y") }}</h2>
+                    <h1 class="center">
+                        <a href="{{ path('postuler', {'id': offre.idOffer}) }}" class="postuler clickable">POSTULER</a>
+                    </h1>
                 </div>
-            </form>
-        </article>					
-    </section>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="center">Vous n'avez aucune offre dans vos favoris.</p>
+    {% endif %}
+
+    {# Affichage des messages #}
+    {% if session.success %}
+        <div class="alert success">{{ session.success }}</div>
+    {% endif %}
+    {% if session.error %}
+        <div class="alert error">{{ session.error }}</div>
+    {% endif %}
 {% endblock %}

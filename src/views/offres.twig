@@ -33,6 +33,16 @@
     <div class="offers">
         {% for offre in Offer %}
             <div class="offer hoverable">
+                <div style="text-align: right;">
+                    <a href="?page=toggle-wishlist&id={{ offre.idOffer }}" title="{% if offre.isFavorite %}Retirer des favoris{% else %}Ajouter aux favoris{% endif %}">
+                        {% if offre.isFavorite %}
+                            ★
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    </a>
+                </div>
+
                 <h1 class="title center">{{ offre.NameOffer }}</h1>
                 <h2 class="small center">{{ offre.DescOffer }} | {{ offre.RemunOffer }} </h2>
 				<h2 class="small center">{{ offre.NameCompany}} | Publiée le {{ offre.DateOffer|date("d/m/Y") }}</h2>
