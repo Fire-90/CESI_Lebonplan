@@ -1,172 +1,180 @@
+/**
+ * Gestionnaire principal - s'exécute quand le DOM est chargé
+ */
 document.addEventListener("DOMContentLoaded", function () {
-    // Gestion du menu burger
-    const burgerIcon = document.getElementById('burger-icon');
-    const burgerMenu = document.querySelector('.burger .bar');
+    // Initialisation de toutes les fonctionnalités
+    initBurgerMenu();
+    initUserDropdown();
+    initBackToTop();
+    initCookieBanner();
+    initFormToggles();
+    initFileUpload();
+    initFormReset();
+});
 
-    if (burgerIcon && burgerMenu) {
-        burgerIcon.addEventListener('click', function() {
-            burgerMenu.classList.toggle('active');
-        });
+/**
+ * Initialise le menu burger pour mobile
+ */
+function initBurgerMenu() {
+    const burgerIcon = document.getElementById("burger-icon");
+    const sidebar = document.getElementById("sidebar");
 
-        // Fermer le menu burger lorsqu'on clique à l'extérieur
-        document.addEventListener('click', function(event) {
-            if (!burgerIcon.contains(event.target) && !burgerMenu.contains(event.target)) {
-                burgerMenu.classList.remove('active');
-            }
-        });
-    }
+    if (!burgerIcon || !sidebar) return;
 
-    // Gestion du menu dropdown utilisateur
-    const userDropdown = document.querySelector('.user-dropdown');
-    const dropdownContent = document.querySelector('.dropdown-content');
+    // Toggle sidebar
+    burgerIcon.addEventListener("click", function(e) {
+        e.stopPropagation();
+        sidebar.classList.toggle("active");
+    });
 
-    if (userDropdown && dropdownContent) {
-        function showDropdown() {
-            dropdownContent.style.display = 'block';
-            dropdownContent.style.opacity = '1';
-        }
+    // Fermer quand on clique ailleurs
+    document.addEventListener("click", function() {
+        sidebar.classList.remove("active");
+    });
+}
 
-        function hideDropdown() {
-            setTimeout(() => {
-                if (!userDropdown.matches(':hover') && !dropdownContent.matches(':hover')) {
-                    dropdownContent.style.opacity = '0';
-                    setTimeout(() => {
-                        dropdownContent.style.display = 'none';
-                    }, 300);
-                }
-            }, 200);
-        }
+/**
+ * Initialise le dropdown du profil utilisateur
+ */
+function initUserDropdown() {
+    const userDropdown = document.querySelector(".user-dropdown");
+    const dropdownContent = document.querySelector(".dropdown-content");
 
-        userDropdown.addEventListener('mouseenter', showDropdown);
-        dropdownContent.addEventListener('mouseenter', showDropdown);
-        userDropdown.addEventListener('mouseleave', hideDropdown);
-        dropdownContent.addEventListener('mouseleave', hideDropdown);
-    }
+    if (!userDropdown || !dropdownContent) return;
 
-    // Gestion du bouton retour en haut de page
+    userDropdown.addEventListener("click", function(e) {
+        e.stopPropagation();
+        dropdownContent.style.display = 
+            dropdownContent.style.display === "block" ? "none" : "block";
+    });
+
+    document.addEventListener("click", function() {
+        dropdownContent.style.display = "none";
+    });
+}
+
+/**
+ * Initialise le bouton "Retour en haut"
+ */
+function initBackToTop() {
     const topButton = document.getElementById("topButton");
+    if (!topButton) return;
 
-    if (topButton) {
-        window.addEventListener("scroll", function () {
-            if (window.scrollY > 200) {
-                topButton.style.display = "block";
-            } else {
-                topButton.style.display = "none";
-            }
-        });
+    window.addEventListener("scroll", function() {
+        topButton.style.display = 
+            (window.scrollY > 200) ? "block" : "none";
+    });
 
-        topButton.addEventListener("click", function () {
-            window.scrollTo({ top: 0, behavior: "smooth" });
+    topButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+}
+
+/**
+ * Initialise le bandeau de cookies
+ */
+function initCookieBanner() {
+    const cookieBanner = document.getElementById("cookieBanner");
+    if (!cookieBanner) return;
+
+    const acceptBtn = document.getElementById("acceptCookies");
+    const rejectBtn = document.getElementById("rejectCookies");
+
+    if (acceptBtn) {
+        acceptBtn.addEventListener("click", function() {
+            setCookie("cookies_accepted", "true", 365);
+            cookieBanner.style.display = "none";
         });
     }
 
-    // Gestion de la bascule entre login et signup
+    if (rejectBtn) {
+        rejectBtn.addEventListener("click", function() {
+            setCookie("cookies_accepted", "false", 365);
+            cookieBanner.style.display = "none";
+        });
+    }
+}
+
+/**
+ * Initialise la bascule entre login/signup
+ */
+function initFormToggles() {
     const loginForm = document.querySelector(".login");
     const signupForm = document.querySelector(".signup");
     const showSignupBtn = document.querySelector("#showSignup");
     const showLoginBtn = document.querySelector("#showLogin");
 
-    if (loginForm && signupForm && showSignupBtn && showLoginBtn) {
-        function showSignup() {
-            loginForm.style.opacity = "0";
-            setTimeout(() => {
-                loginForm.style.display = "none";
-                signupForm.style.display = "block";
-                setTimeout(() => {
-                    signupForm.style.opacity = "1";
-                }, 50);
-            }, 300);
-        }
+    if (!loginForm || !signupForm || !showSignupBtn || !showLoginBtn) return;
 
-        function showLogin() {
-            signupForm.style.opacity = "0";
-            setTimeout(() => {
-                signupForm.style.display = "none";
-                loginForm.style.display = "block";
-                setTimeout(() => {
-                    loginForm.style.opacity = "1";
-                }, 50);
-            }, 300);
-        }
+    showSignupBtn.addEventListener("click", function() {
+        toggleForms(loginForm, signupForm);
+    });
 
-        showSignupBtn.addEventListener("click", showSignup);
-        showLoginBtn.addEventListener("click", showLogin);
-    }
-});
-
-// Sélectionner les éléments nécessaires
-const burgerIcon = document.getElementById("burger-icon");
-const sidebar = document.getElementById("sidebar");
-
-// Fonction pour afficher la sidebar
-function toggleSidebar() {
-    sidebar.classList.toggle("active");
+    showLoginBtn.addEventListener("click", function() {
+        toggleForms(signupForm, loginForm);
+    });
 }
 
-// Ajouter un écouteur d'événement pour ouvrir/fermer la sidebar lors du clic sur le burger
-burgerIcon.addEventListener("click", toggleSidebar);
+/**
+ * Initialise l'affichage du nom de fichier uploadé
+ */
+function initFileUpload() {
+    const fileUpload = document.getElementById("file-upload");
+    const fileNameDisplay = document.getElementById("file-name-display");
 
-// Ajouter un écouteur d'événement pour fermer la sidebar en dehors
-document.addEventListener("click", function (event) {
-    if (!sidebar.contains(event.target) && !burgerIcon.contains(event.target)) {
-        sidebar.classList.remove("active");
-    }
-});
+    if (!fileUpload || !fileNameDisplay) return;
 
-// Sélectionner l'élément du bouton
-const topButton = document.getElementById("topButton");
-
-// Ajouter un événement pour détecter le défilement de la page
-window.onscroll = function() {
-    // Vérifier si l'utilisateur a fait défiler la page vers le bas
-    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        topButton.style.display = "block";  // Afficher le bouton
-    } else {
-        topButton.style.display = "none";  // Cacher le bouton
-    }
-};
-
-// Ajouter un événement pour faire défiler la page vers le haut lorsqu'on clique sur le bouton
-topButton.addEventListener('click', function(e) {
-    e.preventDefault();
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth" // Faire défiler en douceur
+    fileUpload.addEventListener("change", function() {
+        if (this.files.length > 0) {
+            fileNameDisplay.textContent = this.files[0].name;
+            fileNameDisplay.classList.add("has-file");
+        } else {
+            fileNameDisplay.textContent = "Aucun fichier sélectionné";
+            fileNameDisplay.classList.remove("has-file");
+        }
     });
-});
+}
 
-document.getElementById('reset-button').addEventListener('click', function() {
-    // Réinitialiser le formulaire
-    document.querySelector('input[name="lastname"]').value = '';
-    document.querySelector('input[name="surname"]').value = '';
-    document.querySelector('input[name="email"]').value = '';
-    document.querySelector('textarea[name="feedbacks"]').value = '';
-    document.querySelector('input[name="Permis"]').checked = false;
-    document.querySelector('input[name="Car"]').checked = false;
-    document.querySelector('input[name="Certication"]').checked = false;
-    document.querySelector('input[name="Majeur"][value="YES"]').checked = true;
-    
-    // Réinitialiser le sélecteur de civilité
-    document.querySelector('select[name="Gender"]').selectedIndex = 0;
-    
-    // Réinitialiser le champ fichier (nécessaire car le reset() standard ne le fait pas)
-    document.querySelector('input[type="file"]').value = '';
-});
+/**
+ * Initialise la réinitialisation du formulaire
+ */
+function initFormReset() {
+    const resetButton = document.getElementById("reset-button");
+    if (!resetButton) return;
 
-document.getElementById('file-upload').addEventListener('change', function(e) {
-    const fileNameDisplay = document.getElementById('file-name-display');
-    if (this.files.length > 0) {
-        fileNameDisplay.textContent = this.files[0].name;
-        fileNameDisplay.classList.add('has-file');
-    } else {
-        fileNameDisplay.textContent = 'Aucun fichier sélectionné';
-        fileNameDisplay.classList.remove('has-file');
-    }
-});
+    resetButton.addEventListener("click", function() {
+        const form = this.closest("form");
+        if (form) form.reset();
+        
+        const fileNameDisplay = document.getElementById("file-name-display");
+        if (fileNameDisplay) {
+            fileNameDisplay.textContent = "Aucun fichier sélectionné";
+            fileNameDisplay.classList.remove("has-file");
+        }
+    });
+}
 
-// Gestion du bouton de réinitialisation
-document.getElementById('reset-button').addEventListener('click', function() {
-    const fileNameDisplay = document.getElementById('file-name-display');
-    fileNameDisplay.textContent = 'Aucun fichier sélectionné';
-    fileNameDisplay.classList.remove('has-file');
-});
+/**
+ * Helper pour basculer entre deux formulaires avec animation
+ */
+function toggleForms(hideForm, showForm) {
+    hideForm.style.opacity = "0";
+    setTimeout(() => {
+        hideForm.style.display = "none";
+        showForm.style.display = "block";
+        setTimeout(() => {
+            showForm.style.opacity = "1";
+        }, 50);
+    }, 300);
+}
+
+/**
+ * Helper pour définir un cookie
+ */
+function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}

@@ -88,6 +88,21 @@
     <!-- Contenu principal -->
     <main>
         {% block content %}{% endblock %}
+
+
+        {% if not cookiesAccepted %}
+        <div class="cookie-banner" id="cookieBanner">
+            <div class="cookie-content">
+                <p>Nous utilisons des cookies pour améliorer votre expérience sur notre site. En continuant, vous acceptez notre utilisation des cookies.</p>
+                <div class="cookie-buttons">
+                    <button class="cookie-btn accept" id="acceptCookies">Accepter</button>
+                    <button class="cookie-btn reject" id="rejectCookies">Refuser</button>
+                    <a href="{{ path('cookie') }}" class="cookie-link">En savoir plus</a>
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
     </main>
 
     <!-- Pied de page -->
