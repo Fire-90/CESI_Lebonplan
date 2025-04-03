@@ -3,8 +3,8 @@
 {% block title %}Modifier l'offre - Lebonplan{% endblock %}
 
 {% block content %}
-    <section>
-        <h1 class="center">Modifier l'offre</h1>
+    <section class="form-section">
+        <h1 class="centerr">Modifier l'offre</h1>
 
         {% if successMessage is defined and successMessage %}
             <div class="alertt alertt-success">{{ successMessage }}</div>
@@ -13,7 +13,7 @@
             <div class="alertt alertt-danger">{{ errorMessage }}</div>
         {% endif %}
 
-        <form action="?page=edit-offer&id={{ offer.idOffer }}" method="POST">
+        <form class="form" action="?page=edit-offer&id={{ offer.idOffer }}" method="POST">
             <div class="form-group">
                 <label for="NameOffer">Nom du poste</label>
                 <input type="text" id="NameOffer" name="NameOffer" value="{{ formData.NameOffer|default(offer.NameOffer) }}" required>
@@ -48,7 +48,7 @@
             </div>
 
             <button type="submit" class="btn-submit">Enregistrer</button>
-            <a href="?page=offer" class="btn-cancel">Annuler</a>
+            <a href="?page=offer" class="btn-secondary">Annuler</a>
         </form>
     </section>
 {% endblock %}

@@ -43,6 +43,7 @@ main {
 
 .center {
     text-align: center;
+    color: black;
 }
 
 .centerrr {
@@ -932,6 +933,7 @@ a {
     font-weight: bold;
     margin-bottom: 30px;  /* Augmentation de l'espacement entre le titre et le formulaire */
     margin-top: -100px;
+    color: black;
 }
 
 /* Style pour les messages d'erreur */
@@ -1689,6 +1691,7 @@ input[type="password"]:focus {
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.3s ease;
+    margin-bottom: 1rem;
 }
 
 /* Effet de survol du bouton */
@@ -2267,70 +2270,153 @@ h1 {
     100% { transform: scale(1); opacity: 1; }
 }
 
+.card-title-h2{
+    font-size: 2rem;
+    color: #000000;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    animation: pop 0.5s ease-in-out;
+}
+
+.containerrr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+
 /* Carte de l'offre */
 .card {
-    background: linear-gradient(135deg, #fff, #ffe5ec);
+    background: linear-gradient(135deg, #ff7b54, #ff6a00, #ffcd3f);
     border: none;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease-in-out;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 70%);
+    transform: rotate(25deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .card:hover {
-    transform: scale(1.02);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card:hover::before {
+    opacity: 1;
 }
 
 /* Titre et texte de l'offre */
 .card-title {
-    font-size: 1.5rem;
-    color: #333;
+    font-size: 1.6rem;
+    color: #fff; /* Changement pour un meilleur contraste */
     font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .card-text {
-    font-size: 1rem;
-    color: #555;
+    font-size: 1.1rem;
+    color: #ddd; /* Texte plus clair pour améliorer la lisibilité */
+    text-align: center;
 }
 
 /* Liste des détails */
+.list-group {
+    margin-top: 15px;
+    padding: 0;
+}
+
 .list-group-item {
     background: transparent;
     border: none;
     font-size: 1rem;
-    color: #444;
+    color: #ddd; /* Texte plus clair */
+    padding: 10px 0;
+    text-align: center;
 }
-
 
 /* Bouton d'annulation */
 .btn-secondary {
     background: linear-gradient(135deg, #5f2c82, #49a09d);
-    color: #fff;
+    color: white;
     border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .btn-secondary:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 10px rgba(79, 195, 247, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(79, 195, 247, 0.5);
+    background: linear-gradient(135deg, #49a09d, #5f2c82);
 }
 
-/* Icônes */
-.btn i {
+/* Icônes des boutons */
+.btn-secondary i {
     font-size: 1.2rem;
+}
+
+/* Bouton "Confirmer" - Suppression magique */
+.btn-delete-magic {
+    background: linear-gradient(135deg, #ff4e50, #ff6a00);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-delete-magic:hover {
+    background: linear-gradient(135deg, #ff6a00, #ff4e50);
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(255, 106, 0, 0.6);
+}
+
+.btn-delete-magic i {
+    font-size: 1.3rem;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
-    .container {
-        padding: 15px;
-    }
-
-    form {
-        flex-direction: column;
-    }
-
     .btn {
         width: 100%;
         justify-content: center;
     }
 }
+

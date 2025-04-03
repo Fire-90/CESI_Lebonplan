@@ -3,8 +3,8 @@
 {% block title %}Modifier une entreprise - Lebonplan{% endblock %}
 
 {% block content %}
-    <section>
-        <h1 class="center">Modification de l'entreprise</h1>
+    <section class="form-section">
+        <h1 class="centerr">Modification de l'entreprise</h1>
 
         {% if successMessage is defined and successMessage %}
             <div class="alertt alertt-success">{{ successMessage }}</div>
@@ -13,7 +13,7 @@
             <div class="alertt alertt-danger">{{ errorMessage }}</div>
         {% endif %}
 
-        <form action="?page=edit-entreprise&id={{ entreprise.idCompany }}" method="POST">
+        <form class="form" action="?page=edit-entreprise&id={{ entreprise.idCompany }}" method="POST">
             <div class="form-group">
                 <label for="nom">Nom de l'entreprise</label>
                 <input type="text" id="nom" name="nom" value="{{ formData.nom|default(entreprise.NameCompany) }}" required>
@@ -30,8 +30,9 @@
                 <label for="ville">Ville</label>
                 <input type="text" id="ville" name="ville" value="{{ formData.ville|default(entreprise.City) }}" required>
             </div>
+
             <button type="submit" class="btn-submit">Modifier</button>
-            <a href="?page=entreprises" class="btn-cancel">Annuler</a>
+            <a href="?page=entreprises" class="btn-secondary">Annuler</a>
         </form>
     </section>
 {% endblock %}
