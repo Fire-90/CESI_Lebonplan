@@ -42,16 +42,40 @@ function initUserDropdown() {
 
     if (!userDropdown || !dropdownContent) return;
 
-    userDropdown.addEventListener("click", function(e) {
-        e.stopPropagation();
-        dropdownContent.style.display = 
-            dropdownContent.style.display === "block" ? "none" : "block";
+    let timeout;
+
+    // Ouvre le dropdown lorsque la souris passe dessus
+    userDropdown.addEventListener("mouseenter", function() {
+        clearTimeout(timeout); // Si un délai est déjà en cours, on le réinitialise
+        dropdownContent.style.display = "block";
     });
 
+    // Ferme le dropdown après un délai, quand la souris quitte le menu
+    userDropdown.addEventListener("mouseleave", function() {
+        timeout = setTimeout(function() {
+            dropdownContent.style.display = "none";
+        }, 300); // 300 ms de délai pour fermer le dropdown
+    });
+
+    // Empêche la fermeture immédiate si la souris est dans le dropdown
+    dropdownContent.addEventListener("mouseenter", function() {
+        clearTimeout(timeout);
+        dropdownContent.style.display = "block";
+    });
+
+    // Ferme le dropdown lorsque la souris quitte le dropdown
+    dropdownContent.addEventListener("mouseleave", function() {
+        timeout = setTimeout(function() {
+            dropdownContent.style.display = "none";
+        }, 300); // Délai pour la fermeture
+    });
+
+    // Ferme le dropdown si on clique à l'extérieur
     document.addEventListener("click", function() {
         dropdownContent.style.display = "none";
     });
 }
+
 
 /**
  * Initialise le bouton "Retour en haut"

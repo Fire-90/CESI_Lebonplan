@@ -45,6 +45,14 @@ main {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Ajout de la règle responsive */
+@media (max-width: 768px) {
+    main {
+        width: 95%;
+        padding: 20px;
+    }
+}
+
 h1, h2 {
     color: #333;
     font-weight: 600;
@@ -102,6 +110,16 @@ select {
     transition: all 0.3s ease;
 }
 
+/* Responsive pour les champs de saisie */
+@media (max-width: 768px) {
+    input[type="text"],
+    input[type="email"],
+    select {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
 textarea {
     width: 100%;
     margin-top: 10px;
@@ -110,6 +128,14 @@ textarea {
     font-size: 16px;
     background-color: #f9f9f9;
     transition: all 0.3s ease;
+}
+
+/* Responsive pour textarea */
+@media (max-width: 768px) {
+    textarea {
+        padding: 12px;
+        font-size: 14px;
+    }
 }
 
 input:focus,
@@ -132,7 +158,6 @@ textarea[name="feedbacks"] {
 #file-upload {
     display: none;
 }
-
 
 /* Style du bouton personnalisé */
 .custom-upload-btn {
@@ -159,8 +184,6 @@ textarea[name="feedbacks"] {
 .custom-upload-btn:active {
     transform: translateY(2px);
 }
-
-
 
 /* Alignement des checkboxes */
 .checkbox,
@@ -253,6 +276,14 @@ button[type="submit"] {
     font-size: 18px;
     padding: 15px;
     transition: all 0.3s ease;
+}
+
+/* Responsive pour le bouton submit */
+@media (max-width: 768px) {
+    button[type="submit"] {
+        font-size: 16px;
+        padding: 12px;
+    }
 }
 
 button[type="submit"]:hover {
