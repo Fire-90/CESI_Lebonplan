@@ -126,6 +126,10 @@ switch ($page) {
         $controller = new HomeController();
         $controller->legal(); 
         break;
+    case 'cookie':    
+            $controller = new HomeController();
+            $controller->cookie(); 
+            break;
     case 'profile':
         $controller = new AccountController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
