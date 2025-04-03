@@ -19,7 +19,7 @@ class PostController extends BaseController {
      */
     public function index($page = 1) {
         try {
-            $perPage = 10;
+            $perPage = 9;
             $page = max(1, (int)$page);
             $start = ($page - 1) * $perPage;
     
@@ -556,7 +556,7 @@ public function postuler($id) {
 
     public function toggleWishlist($idOffer) {
         if (!$this->user) {
-            $_SESSION['error'] = "Vous devez être connecté pour ajouter aux favoris";
+            $_SESSION['errorMessage'] = "Vous devez être connecté pour ajouter aux favoris";
             header('Location: ?page=login');
             exit;
         }
@@ -582,7 +582,6 @@ public function postuler($id) {
                 ':idOffer' => $idOffer
             ]);
     
-            $_SESSION['success'] = $message;
             header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '?page=offres'));
             exit;
     

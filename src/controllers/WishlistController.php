@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Core\database;
 use PDO;
+use PDOException;
 
 class WishlistController extends BaseController {
     private $pdo;

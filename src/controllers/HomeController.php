@@ -36,6 +36,10 @@ class HomeController extends BaseController {
         $this->render('legal-notice.twig');
     }
 
+    public function cookie() {
+        $this->render('cookie.twig');
+    }
+
     public function profile() {
         $this->render('profile.twig');
     }

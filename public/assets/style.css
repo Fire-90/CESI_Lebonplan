@@ -854,6 +854,10 @@ a {
 }
 
 .offer {
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+    flex-direction: column;
     width: 500px;
     background-color: #fff;
     border-radius: 12px;
@@ -867,7 +871,6 @@ a {
 }
 
 .offer .wishlist-heart {
-    font-size: 30px;
     color: #a2a2a2;
     transition: color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
@@ -2420,3 +2423,124 @@ h1 {
     }
 }
 
+
+
+/* Conteneur principal des mentions légales */
+.mention-legale-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    line-height: 1.7;
+    color: #444;
+}
+
+/* Titre principal */
+.mention-main-title {
+    color: #2c3e50;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.mention-main-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #9b59b6);
+}
+
+/* Sections des mentions */
+.mention-section-title {
+    color: #3498db;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-left: 0.8rem;
+    border-left: 4px solid #3498db;
+}
+
+/* Listes dans les mentions */
+.mention-list {
+    padding-left: 1.5rem;
+    margin: 1.2rem 0;
+}
+
+.mention-list li {
+    margin-bottom: 0.6rem;
+    position: relative;
+    padding-left: 1.2rem;
+    list-style-type: none;
+}
+
+.mention-list li::before {
+    content: "•";
+    color: #3498db;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    font-size: 1.2rem;
+}
+
+/* Paragraphes */
+.mention-paragraph {
+    margin: 1.2rem 0;
+    color: #555;
+    text-align: justify;
+}
+
+/* Liens */
+.mention-link {
+    color: #2980b9;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.mention-link:hover {
+    text-decoration: underline;
+    color: #3498db;
+}
+
+/* Date de mise à jour */
+.mention-update {
+    font-style: italic;
+    color: #7f8c8d;
+    text-align: right;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mention-legale-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .mention-main-title {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .mention-section-title {
+        font-size: 1.1rem;
+    }
+    
+    .mention-list li {
+        font-size: 0.95rem;
+    }
+    
+    .mention-paragraph {
+        font-size: 0.95rem;
+    }
+}

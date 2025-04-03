@@ -1,57 +1,72 @@
 {% extends "base.twig" %}
 
-{% block title %}Mention Légale - Lebonplan{% endblock %}
+{% block title %}Mentions Légales - Lebonplan{% endblock %}
 
 {% block content %}
-    <h1 class="center title">Le meilleur endroit pour trouver ou déposer votre annonce</h1>
+    <div class="mention-legale-container">
+        <h1 class="mention-main-title">Mentions Légales</h1>
+        
+        <h2 class="mention-section-title">1. Éditeur du site</h2>
+        <ul class="mention-list">
+            <li>Le présent site est édité par : Web4All</li>
+            <li>Forme juridique : SARL</li>
+            <li>Siège social : Paris, France</li>
+            <li>Numéro d'immatriculation : BF 806 RF</li>
+            <li>Capital social : 10 000 €</li>
+            <li>Email : contact@lebonplan.com</li>
+            <li>Téléphone : 06 42 88 23 14</li>
+        </ul>
+        
+        <h2 class="mention-section-title">2. Hébergement du site</h2>
+        <ul class="mention-list">
+            <li>Le site est hébergé par : Microsoft Azure</li>
+            <li>Adresse : 70 Sir Rogerson's Quay, Dublin, D02 R296, Irlande</li>
+            <li>Téléphone : +353 1 234 5678</li>
+        </ul>
 
-    
-    <p><h2 class="title"> Mention Légale</h2></p>
-    <p> <h4 class="mention-title">1. Éditeur du site</h4></p>
-    <div>
-        <li>Le présent site est édité par : Web4All </li>
-        <li>Forme juridique : SARL</li>
-        <li>Siège social : dans mes fesses</li>
-        <li>Numéro d’immatriculation : BF 806 RF</li>
-        <li>Capital social : PARIS</li>
-        <li>Email : fire_90@gmail.com</li>
-        <li>Téléphone : 0642882314</li>
+        <h2 class="mention-section-title">3. Propriété intellectuelle</h2>
+        <p class="mention-paragraph">
+            L'ensemble des éléments présents sur ce site (textes, images, logos, vidéos, etc.) sont protégés par les lois en vigueur sur la propriété intellectuelle. Toute reproduction, distribution ou modification sans autorisation écrite préalable est strictement interdite.
+        </p>
+
+        <h2 class="mention-section-title">4. Protection des données personnelles</h2>
+        <p class="mention-paragraph">
+            Conformément au Règlement Général sur la Protection des Données (RGPD), les utilisateurs disposent d'un droit d'accès, de rectification, de portabilité et de suppression de leurs données personnelles. Pour exercer ces droits ou pour toute question relative à la protection des données, vous pouvez nous contacter à : privacy@lebonplan.com.
+        </p>
+        <p class="mention-paragraph">
+            Nous nous engageons à répondre dans un délai maximum d'un mois à toute demande relative aux données personnelles.
+        </p>
+
+        <h2 class="mention-section-title">5. Cookies</h2>
+        <p class="mention-paragraph">
+            Notre site utilise des cookies pour améliorer l'expérience utilisateur et analyser le trafic. Les cookies nécessaires au fonctionnement du site sont activés par défaut. Pour les autres types de cookies, vous pouvez modifier vos préférences à tout moment via notre <a href="{{ path('cookie') }}" class="mention-link">Politique relative aux cookies</a>.
+        </p>
+
+        <h2 class="mention-section-title">6. Responsabilité</h2>
+        <p class="mention-paragraph">
+            L'éditeur du site met en œuvre tous les moyens raisonnables pour assurer l'exactitude des informations publiées. Toutefois, il ne saurait être tenu responsable des erreurs, omissions ou résultats obtenus par l'utilisation de ces informations.
+        </p>
+        <p class="mention-paragraph">
+            Les liens externes présents sur le site ne engagent pas la responsabilité de l'éditeur quant au contenu de ces sites.
+        </p>
+
+        <h2 class="mention-section-title">7. Droit applicable</h2>
+        <p class="mention-paragraph">
+            Les présentes mentions légales sont régies par le droit français. En cas de litige, et après échec de toute tentative de solution amiable, les tribunaux compétents seront ceux de Paris.
+        </p>
+
+        <h2 class="mention-section-title">8. Contact</h2>
+        <p class="mention-paragraph">
+            Pour toute question relative aux mentions légales ou au fonctionnement du site, vous pouvez nous contacter :
+        </p>
+        <ul class="mention-list">
+            <li>Par email : legal@lebonplan.com</li>
+            <li>Par courrier : Web4All - Service Juridique, 123 Avenue des Champs-Élysées, 75008 Paris</li>
+            <li>Par téléphone : 01 23 45 67 89 (du lundi au vendredi, 9h-18h)</li>
+        </ul>
+
+        <p class="mention-update">
+            Dernière mise à jour : {{ "now"|date("j F Y") }}
+        </p>
     </div>
-    
-
-    <p><h4 class="mention-title">2. Hébergement du site</h4></p>
-    
-    <div>
-        <li>Le site est hébergé par : Azure</li>
-        <li>Adresse : 
-        70 Sir Rogerson's Quay,
-        Dublin, D02 R296,
-        Irlande</li>
-        <li>Téléphone : 0101010101</li>
-    </div>
-
-    <p> <h4 class="mention-title">3. Propriété intellectuelle</h4></p>
-    
-    <p>L’ensemble des éléments présents sur ce site (textes, images, logos, vidéos, etc.) sont protégés par les lois en vigueur sur la propriété intellectuelle. Toute reproduction, distribution ou modification sans autorisation est interdite.</p>
-
-    <p> <h4 class="mention-title">4. Protection des données personnelles</h4></p>
-    
-    <p>Conformément au Règlement Général sur la Protection des Données (RGPD), les utilisateurs disposent d’un droit d’accès, de rectification et de suppression de leurs données personnelles. Pour exercer ces droits, contactez-nous à : fire_90@gmail.com.</p>
-
-    <p> <h4 class="mention-title">5. Cookies</h4></p>
-    
-    <p>Le site utilise des cookies afin d’améliorer l’expérience utilisateur. L’utilisateur peut à tout moment modifier ses préférences via les paramètres de son navigateur ou en consultant notre Politique de Confidentialité.</p>
-
-    <p> <h4 class="mention-title">6. Responsabilité</h4></p>
-
-    <p>L’éditeur du site ne saurait être tenu responsable des dommages directs ou indirects causés par l’utilisation du site.</p>
-
-    <p> <h4 class="mention-title">7. Droit applicable</h4></p>
-
-    <p>Les présentes mentions légales sont régies par le droit applicable en France. En cas de litige, les tribunaux compétents seront ceux de Paris.</p>
-
-    <p> <h4 class="mention-title">8. Contact</h4></p>
-
-    <p>Pour toute question relative aux mentions légales, vous pouvez nous contacter à : fire_90@gmail.com..</p>
-    
 {% endblock %}
