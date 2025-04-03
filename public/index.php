@@ -23,7 +23,7 @@ switch ($page) {
         $controller = new EntrepriseController();
         $controller->index($pagination); 
         break;
-    case 'ajout-entreprise':
+    case 'add-entreprise':
         $controller = new EntrepriseController();
         $controller->add(); 
         break;

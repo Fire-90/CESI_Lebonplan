@@ -1091,7 +1091,12 @@ input[readonly] {
 
 
 
-
+.candidatures-count {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
 
 .postuler {
     background: linear-gradient(135deg, #ff7f50, #ff4500); /* Dégradé orange doux */

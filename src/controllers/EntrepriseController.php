@@ -10,7 +10,7 @@ class EntrepriseController extends BaseController {
     private $pdo;
 
     public function __construct() {
-        parent::__construct(); // Appel du constructeur parent
+        parent::__construct();
         $this->pdo = Database::getConnection();
     }
 
@@ -39,11 +39,22 @@ class EntrepriseController extends BaseController {
             $this->render('entreprise.twig', [
                 'entreprises' => $entreprises,
                 'currentPage' => $page,
-                'totalPages' => $totalPages
+                'totalPages' => $totalPages,
+                'successMessage' => $_SESSION['success'] ?? null,
+                'errorMessage' => $_SESSION['error'] ?? null
             ]);
+            
+            // Nettoyer les messages après affichage
+            unset($_SESSION['success'], $_SESSION['error']);
     
         } catch (PDOException $e) {
-            echo "Erreur : " . $e->getMessage();
+            $_SESSION['error'] = "Erreur : " . $e->getMessage();
+            $this->render('entreprise.twig', [
+                'errorMessage' => $_SESSION['error'],
+                'entreprises' => [],
+                'currentPage' => 1,
+                'totalPages' => 1
+            ]);
         }
     }
     
@@ -67,25 +78,26 @@ class EntrepriseController extends BaseController {
                         ':ville' => $ville
                     ]);
     
+                    $_SESSION['success'] = "Entreprise ajoutée avec succès !";
                     header('Location: ?page=entreprises');
                     exit;
                 } else {
                     throw new \Exception("Tous les champs doivent être remplis.");
                 }
             } catch (PDOException $e) {
-                $this->render('ajout-entreprise.twig', [
-                    'error' => "Erreur lors de l'ajout de l'entreprise : " . $e->getMessage()
+                $this->render('add-entreprise.twig', [
+                    'errorMessage' => "Erreur lors de l'ajout de l'entreprise : " . $e->getMessage()
                 ]);
                 return;
             } catch (\Exception $e) {
-                $this->render('ajout-entreprise.twig', [
-                    'error' => $e->getMessage()
+                $this->render('add-entreprise.twig', [
+                    'errorMessage' => $e->getMessage()
                 ]);
                 return;
             }
         }
     
-        $this->render('ajout-entreprise.twig');
+        $this->render('add-entreprise.twig');
     }
     
     /**
@@ -107,6 +119,7 @@ class EntrepriseController extends BaseController {
                         ':id' => $id
                     ]);
     
+                    $_SESSION['success'] = "Entreprise modifiée avec succès !";
                     header('Location: index.php?page=entreprises');
                     exit;
                 } else {
@@ -114,7 +127,7 @@ class EntrepriseController extends BaseController {
                 }
             } catch (PDOException $e) {
                 $this->render('edit-entreprise.twig', [
-                    'error' => "Erreur lors de la modification : " . $e->getMessage(),
+                    'errorMessage' => "Erreur lors de la modification : " . $e->getMessage(),
                     'entreprise' => ['idCompany' => $id]
                 ]);
                 return;
@@ -127,65 +140,70 @@ class EntrepriseController extends BaseController {
             $entreprise = $stmt->fetch(PDO::FETCH_ASSOC);
     
             if (!$entreprise) {
+                $_SESSION['error'] = "Entreprise non trouvée";
                 header('Location: index.php?page=entreprises');
                 exit;
             }
     
-            // Passer l'entreprise à la vue Twig
-            $this->render('edit-entreprise.twig', ['entreprise' => $entreprise]);
+            $this->render('edit-entreprise.twig', [
+                'entreprise' => $entreprise,
+                'errorMessage' => $_SESSION['error'] ?? null
+            ]);
+            unset($_SESSION['error']);
+            
         } catch (PDOException $e) {
             $this->render('edit-entreprise.twig', [
-                'error' => "Erreur lors de la récupération de l'entreprise : " . $e->getMessage()
+                'errorMessage' => "Erreur lors de la récupération de l'entreprise : " . $e->getMessage()
             ]);
         }
     }
     
-
     /**
      * Suppression d'une entreprise
      */
     public function delete() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!isset($_POST['id']) || empty($_POST['id'])) {
-                echo "ID manquant pour la suppression.";
-                return;
+        try {
+            $id = $_POST['id'] ?? $_GET['id'] ?? null;
+            
+            if (!$id || !is_numeric($id)) {
+                throw new \Exception("ID d'entreprise invalide");
+            }
+            $id = (int)$id;
+    
+            // Vérification si l'entreprise existe
+            $stmt = $this->pdo->prepare("SELECT * FROM Company WHERE idCompany = ?");
+            $stmt->execute([$id]);
+            $entreprise = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            if (!$entreprise) {
+                throw new \Exception("Entreprise introuvable");
             }
     
-            $id = (int) $_POST['id']; // Sécurisation de l'ID
-    
-            try {
-                $stmt = $this->pdo->prepare("DELETE FROM Company WHERE idCompany = :id");
-                $stmt->execute([':id' => $id]);
-    
-                // Redirection après suppression
-                header('Location: index.php?page=entreprises');
-                exit;
-            } catch (PDOException $e) {
-                echo "Erreur lors de la suppression : " . $e->getMessage();
-            }
-        } else {
-            if (!isset($_GET['id']) || empty($_GET['id'])) {
-                echo "Aucune entreprise spécifiée.";
-                return;
-            }
-    
-            $id = (int) $_GET['id'];
-    
-            try {
-                $stmt = $this->pdo->prepare("SELECT * FROM Company WHERE idCompany = :id");
-                $stmt->execute([':id' => $id]);
-                $entreprise = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-                if (!$entreprise) {
-                    echo "Entreprise non trouvée.";
-                    return;
+            // Si confirmation reçue
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // Suppression de l'entreprise
+                $delete = $this->pdo->prepare("DELETE FROM Company WHERE idCompany = ?");
+                $delete->execute([$id]);
+                
+                if ($delete->rowCount() > 0) {
+                    $_SESSION['success'] = "L'entreprise a été supprimée avec succès !";
+                    header('Location: index.php?page=entreprises');
+                    exit;
                 }
-    
-                // Afficher la page de confirmation
-                echo $this->twig->render('delete-entreprise.twig', ['entreprise' => $entreprise]);
-            } catch (PDOException $e) {
-                echo "Erreur : " . $e->getMessage();
+                throw new \Exception("Erreur lors de la suppression");
             }
+    
+            // Affichage de la confirmation de suppression
+            $this->render('delete-entreprise.twig', [
+                'entreprise' => $entreprise,
+                'errorMessage' => $_SESSION['error'] ?? null
+            ]);
+            unset($_SESSION['error']);
+            
+        } catch (\Exception $e) {
+            $_SESSION['error'] = $e->getMessage();
+            header('Location: index.php?page=entreprises');
+            exit;
         }
-    }    
+    }
 }

@@ -5,7 +5,14 @@
 {% block content %}
     <h1 class="center">Liste des Entreprises</h1>
 
-    {% if permLVL == 2 %}<a href="{{ path('ajout-entreprise') }}" class="btn-add">➕ Ajouter une entreprise</a>{% endif %}
+    {% if successMessage is defined and successMessage %}
+        <div class="alertt alertt-success">{{ successMessage }}</div>
+    {% endif %}
+    {% if errorMessage is defined and errorMessage %}
+        <div class="alertt alertt-danger">{{ errorMessage }}</div>
+    {% endif %}
+
+    {% if permLVL == 2 %}<a href="{{ path('add-entreprise') }}" class="btn-add">➕ Ajouter une entreprise</a>{% endif %}
 
     {% if permLVL in [0, 2] %}
         <div class="table-container">
@@ -23,13 +30,13 @@
                 <tbody>
                     {% if entreprises is empty %}
                         <tr>
-                            <td colspan="{{ permLVL == 2 ? 5 : 4 }}" class="no-data">Aucune entreprise enregistrée.</td>
+                            <td colspan="{{ permLVL == 2 ? 6 : 5 }}" class="no-data">Aucune entreprise enregistrée.</td>
                         </tr>
                     {% else %}
                         {% for entreprise in entreprises %}
                             <tr>
                                 <td>{{ entreprise.NameCompany }}</td>
-                                {% if permLVL == 2 %}<th>{{entreprise.EmailCompany}}</th>{% endif %}
+                                {% if permLVL == 2 %}<td>{{ entreprise.EmailCompany }}</td>{% endif %}
                                 <td>{{ entreprise.Sector }}</td>
                                 <td>{{ entreprise.City }}</td>
                                 <td>
@@ -65,5 +72,4 @@
             <a href="?page=entreprises&pagination={{ totalPages }}" class="btn-last">>></a>
         {% endif %}
     </div>
-
 {% endblock %}
