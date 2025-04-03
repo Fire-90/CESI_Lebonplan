@@ -345,6 +345,14 @@ public function postuler($id) {
         // Ajout des compétences à l'offre pour le template
         $offer['Competences'] = $competences;
 
+                // Récupération du nombre de candidatures pour cette offre
+                $stmtCount = $this->pdo->prepare("
+                SELECT COUNT(*) as nbCandidatures 
+                FROM Apply WHERE idOffer = :id
+            ");
+        $stmtCount->execute([':id' => $id]);
+        $nbCandidatures = $stmtCount->fetch(PDO::FETCH_ASSOC)['nbCandidatures'];
+
         // Traitement du formulaire
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Validation des données
@@ -453,7 +461,8 @@ public function postuler($id) {
 
         // Affichage initial du formulaire
         $this->render('postuler.twig', [
-            'offer' => $offer
+            'offer' => $offer,
+            'nbCandidatures' => $nbCandidatures,
         ]);
 
     } catch (PDOException $e) {
