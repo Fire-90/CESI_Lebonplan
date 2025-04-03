@@ -2325,7 +2325,7 @@ h1 {
 
 /* Carte de l'offre */
 .card {
-    background: linear-gradient(135deg, #ff7b54, #ff6a00, #ffcd3f);
+    background: linear-gradient(135deg, #ffd6c9, #ff8731, #ffcd3f);
     border: none;
     border-radius: 15px;
     padding: 25px;
@@ -2574,4 +2574,37 @@ h1 {
     .mention-paragraph {
         font-size: 0.95rem;
     }
+}
+
+
+/* Bouton d'annulation */
+.btn-secondaryy {
+    background: linear-gradient(135deg, #6a1b9a, #0288d1);
+    margin-top: 1rem;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    letter-spacing: 1px;
+}
+
+.btn-secondaryy:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(79, 195, 247, 0.3);
+    background: linear-gradient(135deg, #0288d1, #6a1b9a);
+}
+
+.btn-secondaryy i {
+    font-size: 1.3rem;
 }
