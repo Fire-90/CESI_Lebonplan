@@ -8,6 +8,7 @@ class BaseController {
     protected $twig;
     protected $user;
     protected $permLVL;
+    protected $cookiesAccepted;
 
     public function __construct() {
         $this->startSession();
@@ -15,9 +16,12 @@ class BaseController {
         $this->user = $this->getUserFromSession();
         $this->permLVL = $this->getPermLVLFromSession();
         
-        // Ajout des variables globales pour Twig
+        // Gestion des cookies
+        $this->cookiesAccepted = $_COOKIE['cookies_accepted'] ?? false;
+        
         $this->twig->addGlobal('user', $this->user);
         $this->twig->addGlobal('permLVL', $this->permLVL);
+        $this->twig->addGlobal('cookiesAccepted', $this->cookiesAccepted);
     }
 
     protected function startSession() {
