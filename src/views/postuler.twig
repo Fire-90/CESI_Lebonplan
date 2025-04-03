@@ -31,7 +31,12 @@
             <h2> Vous pouvez ici répondre directement à l'offre de stage qui a été déposée par l'entreprise. Soyez le
                 plus précis possible dans vos réponses !</h2>
             {% if permLVL >= 1 %}
-                <p class="candidatures-count">Candidatures en cours : {{ nbCandidatures }}</p>
+
+                <p class="stats">
+                    STATISTIQUES :
+                    Candidatures en cours : {{ nbCandidatures }} |
+                    Personnes intéressées : {{ nbWishlist }}
+                </p>
             {% endif %}
         </div>
         <div class="title">
