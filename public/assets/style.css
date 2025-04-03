@@ -45,6 +45,12 @@ main {
     text-align: center;
 }
 
+.centerrr {
+    text-align: center;
+    color: black;
+}
+
+
 @media screen and (min-width: 701px) {
     h1 {
         font-size: 30px;
@@ -165,7 +171,9 @@ a {
 
 .services {
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
     padding: 50px 20px;
     background-color: #fff5e1;
     border-radius: 15px;
@@ -219,6 +227,26 @@ a {
     color: #222ce6;
     transform: scale(1.1);
 }
+
+/* Tablettes : 2 colonnes */
+@media (max-width: 900px) {
+    .service {
+        width: 45%;
+    }
+}
+
+/* Mobiles : 1 colonne */
+@media (max-width: 600px) {
+    .services {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service {
+        width: 90%;
+    }
+}
+
 
 .cta-footer {
     background: linear-gradient(180deg, #ff6f00, #ffb700);
@@ -882,11 +910,10 @@ a {
 }
 
 .form-account {
-    background: white;
+    background: rgba(255, 255, 255, 0);
     max-width: 1000px;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .form {
@@ -1070,7 +1097,12 @@ input[readonly] {
 
 
 
-
+.stats {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
 
 .postuler {
     background: linear-gradient(135deg, #ff7f50, #ff4500); /* Dégradé orange doux */
@@ -1227,6 +1259,7 @@ input[readonly] {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
     margin: 20px 0;
+    margin-left: 80px;
 }
 
 .btn-add:hover {
@@ -2118,5 +2151,186 @@ button:hover {
 
     button {
         padding: 8px 15px;
+    }
+}
+
+
+
+/* Style de l'avertissement */
+.warning {
+    color: #d9534f;
+    background-color: #f8d7da;
+    border: 1px solid #d9534f;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Style des détails de l'entreprise */
+.company-details {
+    background-color: #f9f9f9;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.company-details p {
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+/* Actions (boutons) */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.actions a,
+.actions button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.btn-cancel {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+}
+
+.btn-cancel:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .actions a,
+    .actions button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+/* Conteneur principal */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Titre principal */
+h1 {
+    font-size: 2rem;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    animation: pop 0.5s ease-in-out;
+}
+
+/* Animation de rebond léger */
+@keyframes pop {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Carte de l'offre */
+.card {
+    background: linear-gradient(135deg, #fff, #ffe5ec);
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+/* Titre et texte de l'offre */
+.card-title {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Liste des détails */
+.list-group-item {
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    color: #444;
+}
+
+
+/* Bouton d'annulation */
+.btn-secondary {
+    background: linear-gradient(135deg, #5f2c82, #49a09d);
+    color: #fff;
+    border: none;
+}
+
+.btn-secondary:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(79, 195, 247, 0.5);
+}
+
+/* Icônes */
+.btn i {
+    font-size: 1.2rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    form {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
     }
 }

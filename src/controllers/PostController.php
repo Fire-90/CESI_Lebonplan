@@ -345,6 +345,25 @@ public function postuler($id) {
         // Ajout des compétences à l'offre pour le template
         $offer['Competences'] = $competences;
 
+        // Récupération du nombre de candidatures pour cette offre
+        $stmtCount = $this->pdo->prepare("
+                SELECT COUNT(*) as nbCandidatures 
+                FROM Apply WHERE idOffer = :id
+            ");
+        $stmtCount->execute([':id' => $id]);
+        $nbCandidatures = $stmtCount->fetch(PDO::FETCH_ASSOC)['nbCandidatures'];
+
+
+        // Récupération du nombre d'utilisateurs ayant cette offre en wishlist
+        $stmtWishlistCount = $this->pdo->prepare("
+            SELECT COUNT(*) as nbWishlist 
+            FROM WishList 
+            WHERE idOffer = :id
+        ");
+        $stmtWishlistCount->execute([':id' => $id]);
+        $nbWishlist = $stmtWishlistCount->fetch(PDO::FETCH_ASSOC)['nbWishlist'];
+
+
         // Traitement du formulaire
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Validation des données
@@ -453,7 +472,9 @@ public function postuler($id) {
 
         // Affichage initial du formulaire
         $this->render('postuler.twig', [
-            'offer' => $offer
+            'offer' => $offer,
+            'nbWishlist' => $nbWishlist,
+            'nbCandidatures' => $nbCandidatures
         ]);
 
     } catch (PDOException $e) {
@@ -551,11 +572,9 @@ public function postuler($id) {
             if ($checkStmt->fetch()) {
                 // Si déjà dans les favoris, on le retire
                 $stmt = $this->pdo->prepare("DELETE FROM WishList WHERE idUser = :idUser AND idOffer = :idOffer");
-                $message = "Offre retirée des favoris";
             } else {
                 // Sinon on l'ajoute
                 $stmt = $this->pdo->prepare("INSERT INTO WishList (idUser, idOffer) VALUES (:idUser, :idOffer)");
-                $message = "Offre ajoutée aux favoris";
             }
     
             $stmt->execute([
