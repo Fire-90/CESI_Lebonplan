@@ -12,7 +12,7 @@
         <div class="alertt alertt-danger">{{ errorMessage }}</div>
     {% endif %}
 
-    {% if permLVL == 2 %}<a href="{{ path('ajout-entreprise') }}" class="btn-add">➕ Ajouter une entreprise</a>{% endif %}
+    {% if permLVL == 2 %}<a href="{{ path('add-entreprise') }}" class="btn-add">➕ Ajouter une entreprise</a>{% endif %}
 
     {% if permLVL in [0, 2] %}
         <div class="table-container">

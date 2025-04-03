@@ -10,7 +10,7 @@
             <div class="alertt alertt-danger">{{ errorMessage }}</div>
         {% endif %}
 
-        <form class="form" action="?page=ajout-entreprise" method="POST">
+        <form class="form" action="?page=add-entreprise" method="POST">
             <div class="form-group">
                 <label for="NameCompany">Nom de l'entreprise</label>
                 <input type="text" id="NameCompany" name="NameCompany" value="{{ formData.NameCompany|default('') }}" required>

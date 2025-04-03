@@ -85,19 +85,19 @@ class EntrepriseController extends BaseController {
                     throw new \Exception("Tous les champs doivent être remplis.");
                 }
             } catch (PDOException $e) {
-                $this->render('ajout-entreprise.twig', [
+                $this->render('add-entreprise.twig', [
                     'errorMessage' => "Erreur lors de l'ajout de l'entreprise : " . $e->getMessage()
                 ]);
                 return;
             } catch (\Exception $e) {
-                $this->render('ajout-entreprise.twig', [
+                $this->render('add-entreprise.twig', [
                     'errorMessage' => $e->getMessage()
                 ]);
                 return;
             }
         }
     
-        $this->render('ajout-entreprise.twig');
+        $this->render('add-entreprise.twig');
     }
     
     /**
