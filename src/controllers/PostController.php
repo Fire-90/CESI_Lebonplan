@@ -556,7 +556,7 @@ public function postuler($id) {
 
     public function toggleWishlist($idOffer) {
         if (!$this->user) {
-            $_SESSION['error'] = "Vous devez être connecté pour ajouter aux favoris";
+            $_SESSION['errorMessage'] = "Vous devez être connecté pour ajouter aux favoris";
             header('Location: ?page=login');
             exit;
         }
