@@ -6,24 +6,32 @@
     <section>
         <h1 class="center">Modification de l'entreprise</h1>
 
+        {% if successMessage is defined and successMessage %}
+            <div class="alertt alertt-success">{{ successMessage }}</div>
+        {% endif %}
+        {% if errorMessage is defined and errorMessage %}
+            <div class="alertt alertt-danger">{{ errorMessage }}</div>
+        {% endif %}
+
         <form action="?page=edit-entreprise&id={{ entreprise.idCompany }}" method="POST">
             <div class="form-group">
                 <label for="nom">Nom de l'entreprise</label>
-                <input type="text" id="nom" name="nom" value="{{ entreprise.NameCompany }}" required>
+                <input type="text" id="nom" name="nom" value="{{ formData.nom|default(entreprise.NameCompany) }}" required>
             </div>
             <div class="form-group">
-                <label for="EmailCompany">Email de l'entreprise</label>
-                <input type="text" id="email" name="email" value="{{ entreprise.EmailCompany }}" required>
+                <label for="email">Email de l'entreprise</label>
+                <input type="email" id="email" name="email" value="{{ formData.email|default(entreprise.EmailCompany) }}" required>
             </div>
             <div class="form-group">
                 <label for="secteur">Secteur</label>
-                <input type="text" id="secteur" name="secteur" value="{{ entreprise.Sector }}" required>
+                <input type="text" id="secteur" name="secteur" value="{{ formData.secteur|default(entreprise.Sector) }}" required>
             </div>
             <div class="form-group">
                 <label for="ville">Ville</label>
-                <input type="text" id="ville" name="ville" value="{{ entreprise.City }}" required>
+                <input type="text" id="ville" name="ville" value="{{ formData.ville|default(entreprise.City) }}" required>
             </div>
             <button type="submit" class="btn-submit">Modifier</button>
+            <a href="?page=entreprises" class="btn-cancel">Annuler</a>
         </form>
     </section>
 {% endblock %}

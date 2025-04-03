@@ -6,48 +6,55 @@
     <section class="form-section">
         <h1 class="centerr">Ajouter une offre</h1>
 
-        {% if error %}
-            <div class="error">{{ error }}</div>
+        {% if successMessage is defined and successMessage %}
+            <div class="alertt alertt-success">{{ successMessage }}</div>
+        {% endif %}
+        {% if errorMessage is defined and errorMessage %}
+            <div class="alertt alertt-danger">{{ errorMessage }}</div>
         {% endif %}
 
         <form class="form" action="?page=add-offer" method="POST">
             <div class="form-group">
                 <label for="NameOffer">Nom du poste</label>
-                <input type="text" id="NameOffer" name="NameOffer" required>
+                <input type="text" id="NameOffer" name="NameOffer" value="{{ formData.NameOffer|default('') }}" required>
             </div>
 
             <div class="form-group">
                 <label for="DescOffer">Description</label>
-                <textarea id="DescOffer" name="DescOffer" required></textarea>
+                <textarea id="DescOffer" name="DescOffer" required>{{ formData.DescOffer|default('') }}</textarea>
             </div>
 
             <div class="form-group">
                 <label for="RemunOffer">Rémunération</label>
-                <input type="number" id="RemunOffer" name="RemunOffer" required>
+                <input type="number" id="RemunOffer" name="RemunOffer" value="{{ formData.RemunOffer|default('') }}" required>
             </div>
 
             <div class="form-group">
-            <label for="idCompany">Entreprise :</label>
-            <select name="idCompany" id="idCompany" required>
-                <option value="">-- Sélectionnez une entreprise --</option>
-                {% for company in companies %}
-                    <option value="{{ company.idCompany }}" data-city="{{ company.City }}">{{ company.NameCompany }}</option>
-                {% endfor %}
-            </select>
+                <label for="idCompany">Entreprise :</label>
+                <select name="idCompany" id="idCompany" required>
+                    <option value="">-- Sélectionnez une entreprise --</option>
+                    {% for company in companies %}
+                        <option value="{{ company.idCompany }}" 
+                            data-city="{{ company.City }}"
+                            {% if formData.idCompany|default('') == company.idCompany %}selected{% endif %}>
+                            {{ company.NameCompany }}
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
 
-<div class="form-group">
-    <label for="City">Ville</label>
-    <input type="text" id="City" name="City" readonly>
-</div>
+            <div class="form-group">
+                <label for="City">Ville</label>
+                <input type="text" id="City" name="City" value="{{ formData.City|default('') }}" readonly>
+            </div>
 
-<script>
-    document.getElementById('idCompany').addEventListener('change', function() {
-        let selectedOption = this.options[this.selectedIndex]; // Récupère l'option sélectionnée
-        let city = selectedOption.getAttribute('data-city');  // Récupère la ville de l'attribut data
-        document.getElementById('City').value = city; // Remplit automatiquement l'input
-    });
-</script>
+            <script>
+                document.getElementById('idCompany').addEventListener('change', function() {
+                    let selectedOption = this.options[this.selectedIndex];
+                    let city = selectedOption.getAttribute('data-city');
+                    document.getElementById('City').value = city;
+                });
+            </script>
 
             <button type="submit" class="btn-submit">Ajouter</button>
         </form>

@@ -6,22 +6,26 @@
     <section class="form-entreprise">
         <h1 class="centerr">Ajouter une entreprise</h1>
 
+        {% if errorMessage is defined and errorMessage %}
+            <div class="alertt alertt-danger">{{ errorMessage }}</div>
+        {% endif %}
+
         <form class="form" action="?page=ajout-entreprise" method="POST">
             <div class="form-group">
                 <label for="NameCompany">Nom de l'entreprise</label>
-                <input type="text" id="NameCompany" name="NameCompany" required>
+                <input type="text" id="NameCompany" name="NameCompany" value="{{ formData.NameCompany|default('') }}" required>
             </div>
             <div class="form-group">
                 <label for="EmailCompany">Email de l'entreprise</label>
-                <input type="text" id="EmailCompany" name="EmailCompany" required>
+                <input type="email" id="EmailCompany" name="EmailCompany" value="{{ formData.EmailCompany|default('') }}" required>
             </div>
             <div class="form-group">
                 <label for="Sector">Secteur</label>
-                <input type="text" id="Sector" name="Sector" required>
+                <input type="text" id="Sector" name="Sector" value="{{ formData.Sector|default('') }}" required>
             </div>
             <div class="form-group">
                 <label for="City">Ville</label>
-                <input type="text" id="City" name="City" required>
+                <input type="text" id="City" name="City" value="{{ formData.City|default('') }}" required>
             </div>
             <button type="submit" class="btn-submit">Ajouter</button>
         </form>
