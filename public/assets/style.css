@@ -859,7 +859,7 @@ a {
     justify-content: space-evenly;
     flex-direction: column;
     width: 500px;
-    background-color: #fff;
+    background-color: #f7f7f7; /* Fond gris clair */
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -867,29 +867,60 @@ a {
 
 .offer:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); /* Ombre plus douce au survol */
 }
 
 .offer .wishlist-heart {
-    color: #a2a2a2;
+    color: #999; /* Couleur de base gris neutre */
     transition: color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
     margin-right: 1%;
 }
 
 .offer .wishlist-heart:hover {
-    color: #ff5733; /* Couleur du cœur lors du survol */
+    color: #e74c3c; /* Couleur du cœur lors du survol - rouge vif */
     transform: scale(1.1);
 }
 
 .offer .wishlist-heart.active {
-    color: #ff5733; /* Couleur du cœur quand il est actif (ajouté aux favoris) */
+    color: #e74c3c; /* Couleur du cœur quand il est actif (ajouté aux favoris) */
 }
 
 /* Ajout d'un fond pour les offres */
 .offer .offer-content {
     padding: 20px;
+    background-color: #fff; /* Fond blanc pour le contenu */
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .offer {
+        width: 45%;
+    }
+}
+
+@media (max-width: 768px) {
+    .offer {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .offers {
+        gap: 15px;
+    }
+
+    .offer {
+        width: 90%;
+    }
+
+    .offer .wishlist-heart {
+        font-size: 20px;
+    }
+}
+
 
 
 
