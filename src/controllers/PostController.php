@@ -572,11 +572,9 @@ public function postuler($id) {
             if ($checkStmt->fetch()) {
                 // Si déjà dans les favoris, on le retire
                 $stmt = $this->pdo->prepare("DELETE FROM WishList WHERE idUser = :idUser AND idOffer = :idOffer");
-                $message = "Offre retirée des favoris";
             } else {
                 // Sinon on l'ajoute
                 $stmt = $this->pdo->prepare("INSERT INTO WishList (idUser, idOffer) VALUES (:idUser, :idOffer)");
-                $message = "Offre ajoutée aux favoris";
             }
     
             $stmt->execute([
